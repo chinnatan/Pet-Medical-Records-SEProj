@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">PetMedicalRecords</string>
+
+    <!--Intro Fragment-->
+    <string name="title_intro_frag">Pet Medical Records</string>
+    <string name="login_intro_frag">เข้าสู่ระบบ</string>
+    <string name="register_intro_frag">สมัครสมาชิก</string>
 </resources>
