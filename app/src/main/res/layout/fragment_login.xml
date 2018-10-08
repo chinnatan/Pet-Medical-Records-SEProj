@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/loginFrg_emailHintTxt"
                     android:textColor="@color/colorWhite"
-                    android:drawableLeft="@drawable/ic_user"/>
+                    android:drawableLeft="@drawable/ic_acount_email"/>
 
                 <EditText
                     android:id="@+id/login_passwordTxt"
