@@ -1,8 +1,16 @@
 <resources>
     <string name="app_name">PetMedicalRecords</string>
 
+    <!--All Fragment Use Everthing-->
+    <string name="loginBtn">เข้าสู่ระบบ</string>
+    <string name="registerBtn">สมัครสมาชิก</string>
+
     <!--Intro Fragment-->
     <string name="title_intro_frag">Pet Medical Records</string>
-    <string name="login_intro_frag">เข้าสู่ระบบ</string>
-    <string name="register_intro_frag">สมัครสมาชิก</string>
+
+    <!--Login Fragment-->
+    <string name="loginFrg_emailTxt">E - mail</string>
+    <string name="loginFrg_passwordTxt">Password</string>
+    <string name="loginFrg_emailHintTxt">somchai@gmail.com</string>
+    <string name="loginFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
 </resources>
