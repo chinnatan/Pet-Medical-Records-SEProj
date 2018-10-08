@@ -43,16 +43,22 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/login_intro_frag" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#FFFFFF"/>
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/colorLine"/>
 
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:textColor="@color/colorButtonText"
                     android:text="@string/register_intro_frag" />
 
             </LinearLayout>
