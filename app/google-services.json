@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "463692004961",
+    "firebase_url": "https://project-2018-b7ebf.firebaseio.com",
+    "project_id": "project-2018-b7ebf",
+    "storage_bucket": "project-2018-b7ebf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:463692004961:android:35cca36771a43e25",
+        "android_client_info": {
+          "package_name": "com.brainnotfound.g04.petmedicalrecords"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "463692004961-ac11n3eq5akvd0q9fu4s1q0v2orf65tv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brainnotfound.g04.petmedicalrecords",
+            "certificate_hash": "ce63a585c6b0819e294572e668216a605375e75a"
+          }
+        },
+        {
+          "client_id": "463692004961-uldarqnp6dclqc35lm00ilh60jsfqjkr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS_X84YHcfKFf0HYVQpWv6RvVl84WmreQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463692004961-uldarqnp6dclqc35lm00ilh60jsfqjkr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
