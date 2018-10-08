@@ -24,13 +24,11 @@
                 android:layout_marginTop="50dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/title_intro_frag"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
+                <ImageView
+                    android:layout_width="324dp"
+                    android:layout_height="323dp"
+                    android:background="@drawable/logo"
+                    android:layout_gravity="center_horizontal"/>
 
             </LinearLayout>
 
