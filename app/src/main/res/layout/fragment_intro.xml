@@ -39,6 +39,7 @@
                 android:padding="35dp">
 
                 <Button
+                    android:id="@+id/intro_loginBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button"
@@ -53,6 +54,7 @@
                     android:background="@color/colorLine"/>
 
                 <Button
+                    android:id="@+id/intro_registerBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button"
