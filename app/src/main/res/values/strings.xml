@@ -9,8 +9,14 @@
     <string name="title_intro_frag">Pet Medical Records</string>
 
     <!--Login Fragment-->
-    <string name="loginFrg_emailTxt">E - mail</string>
-    <string name="loginFrg_passwordTxt">Password</string>
     <string name="loginFrg_emailHintTxt">somchai@gmail.com</string>
     <string name="loginFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
+
+    <!--Register Fragment-->
+    <string name="registerFrg_registerTxt">ลงทะเบียน</string>
+    <string name="registerFrg_firstnameHintTxt">Somchai</string>
+    <string name="registerFrg_lastnameHintTxt">Chaichan</string>
+    <string name="registerFrg_emailHintTxt">somchai@gmail.com</string>
+    <string name="registerFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
+    <string name="registerFrg_password2HintTxt">ยืนยันรหัสผ่านเดิมอีกครั้ง</string>
 </resources>
