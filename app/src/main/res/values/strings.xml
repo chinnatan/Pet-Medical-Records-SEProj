@@ -11,6 +11,7 @@
     <!--Login Fragment-->
     <string name="loginFrg_emailHintTxt">somchai@gmail.com</string>
     <string name="loginFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
+    <string name="loginFrg_passwordForgotTxt">ลืมรหัสผ่าน</string>
 
     <!--Register Fragment-->
     <string name="registerFrg_registerTxt">ลงทะเบียน</string>
