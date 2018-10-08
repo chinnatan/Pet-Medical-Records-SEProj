@@ -3,4 +3,11 @@
     <color name="colorPrimary">#39bcb6</color>
     <color name="colorPrimaryDark">#008b86</color>
     <color name="colorAccent">#74efe8</color>
+
+    <!--Button-->
+    <color name="colorButton">#44443f</color>
+    <color name="colorButtonText">#fffb63</color>
+
+    <!--Line-->
+    <color name="colorLine">#fffb63</color>
 </resources>
