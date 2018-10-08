@@ -20,4 +20,5 @@
     <string name="registerFrg_emailHintTxt">somchai@gmail.com</string>
     <string name="registerFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
     <string name="registerFrg_password2HintTxt">ยืนยันรหัสผ่านเดิมอีกครั้ง</string>
+    <string name="registerFrg_phonenumberHintTxt">0910000000</string>
 </resources>
