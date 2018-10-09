@@ -31,5 +31,13 @@ public class IntroFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new RegisterFragment()).addToBackStack(null).commit();
             }
         });
+
+        Button _loginBtn = getView().findViewById(R.id.intro_loginBtn);
+        _loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new LoginFragment()).addToBackStack(null).commit();
+            }
+        });
     }
 }
