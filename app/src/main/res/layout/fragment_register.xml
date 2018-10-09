@@ -89,6 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/registerFrg_phonenumberHintTxt"
+                    android:maxLength="10"
                     android:inputType="number"
                     android:textColor="@color/colorWhite"
                     android:drawableLeft="@drawable/ic_phonenumber"/>
