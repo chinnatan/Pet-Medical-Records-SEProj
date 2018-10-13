@@ -36,7 +36,7 @@ public class IntroFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                saveFragment.setName("LoginFragment");
+                saveFragment.setName("RegisterFragment");
 
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
