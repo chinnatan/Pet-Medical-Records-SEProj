@@ -5,13 +5,15 @@ public class Profile {
     private String firstname;
     private String lastname;
     private String phonenumber;
+    private String account_type;
 
     public Profile() {}
 
-    public Profile(String firstname, String lastname, String phonenumber) {
+    public Profile(String firstname, String lastname, String phonenumber, String account_type) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setPhonenumber(phonenumber);
+        this.setAccount_type(account_type);
     }
 
     public String getFirstname() {
@@ -36,5 +38,13 @@ public class Profile {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public String getAccount_type() {
+        return account_type;
+    }
+
+    public void setAccount_type(String account_type) {
+        this.account_type = account_type;
     }
 }

@@ -11,8 +11,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class IntroFragment extends Fragment {
+
+    private FirebaseAuth mAuth;
+    private SaveFragment saveFragment = SaveFragment.getSaveFragmentInstance();
 
     @Nullable
     @Override
@@ -24,11 +28,19 @@ public class IntroFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+        checkCurrentUser();
+
         Button _registerBtn = getView().findViewById(R.id.intro_registerBtn);
         _registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new RegisterFragment()).addToBackStack(null).commit();
+
+                saveFragment.setName("RegisterFragment");
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .replace(R.id.main_view, new RegisterFragment()).addToBackStack(null).commit();
             }
         });
 
@@ -36,8 +48,19 @@ public class IntroFragment extends Fragment {
         _loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new LoginFragment()).addToBackStack(null).commit();
+
+                saveFragment.setName("LoginFragment");
+
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .replace(R.id.main_view, new LoginFragment()).addToBackStack(null).commit();
             }
         });
+    }
+
+    void checkCurrentUser() {
+        if(mAuth.getCurrentUser() != null) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();
+        }
     }
 }
