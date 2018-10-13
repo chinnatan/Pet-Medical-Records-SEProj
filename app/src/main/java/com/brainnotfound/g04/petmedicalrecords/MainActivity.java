@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        if(SaveFragment.getName().equals("registerFragment")) {
+        if(SaveFragment.getName().equals("RegisterFragment")) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new IntroFragment()).commit();
+        } else if(SaveFragment.getName().equals("LoginFragment")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new IntroFragment()).commit();
         }
     }
