@@ -73,7 +73,7 @@ public class RegisterFragment extends Fragment {
                 @Override
                 public void onSuccess(AuthResult authResult) {
                     sendVerifiedEmail(authResult.getUser());
-                    Profile profileToDatabase = new Profile(_firstnameStr, _lastnameStr, _phonenumberStr);
+                    Profile profileToDatabase = new Profile(_firstnameStr, _lastnameStr, _phonenumberStr, "customer");
                     mStore.collection("account").document(authResult.getUser().getUid())
                             .collection("profile").document(authResult.getUser().getUid())
                             .set(profileToDatabase).addOnSuccessListener(new OnSuccessListener<Void>() {
