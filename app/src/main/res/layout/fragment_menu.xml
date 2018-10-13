@@ -96,10 +96,11 @@
                 android:padding="10dp">
 
                 <LinearLayout
+                    android:id="@+id/layout_fragment_menu_profile"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/button"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -108,31 +109,24 @@
                         android:layout_height="49dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/logo" />
+                        android:background="@drawable/menu_profile" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
-                        android:text="ข้อมูล"
-                        android:textColor="@color/colorButtonText"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal"
-                        android:text="ส่วนตัว"
+                        android:text="Profile"
                         android:textColor="@color/colorButtonText"
                         android:textSize="16dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_fragment_menu_pet"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/button"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -141,31 +135,24 @@
                         android:layout_height="49dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/logo" />
+                        android:background="@drawable/menu_pet" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
-                        android:text="สัตว์เลี้ยง"
-                        android:textColor="@color/colorButtonText"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal"
-                        android:text="ของคุณ"
+                        android:text="Pet"
                         android:textColor="@color/colorButtonText"
                         android:textSize="16dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_fragment_menu_veterinary"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/button"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -174,21 +161,13 @@
                         android:layout_height="49dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/logo" />
+                        android:background="@drawable/menu_doctor" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
-                        android:text="สัตวแพทย์"
-                        android:textColor="@color/colorButtonText"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal"
-                        android:text="ของคุณ"
+                        android:text="Veterinary"
                         android:textColor="@color/colorButtonText"
                         android:textSize="16dp" />
 
@@ -205,10 +184,11 @@
                 android:padding="10dp">
 
                 <LinearLayout
+                    android:id="@+id/layout_fragment_menu_history"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/button"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -217,31 +197,24 @@
                         android:layout_height="49dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/logo" />
+                        android:background="@drawable/menu_history" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
-                        android:text="ข้อมูล"
-                        android:textColor="@color/colorButtonText"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal"
-                        android:text="ส่วนตัว"
+                        android:text="History"
                         android:textColor="@color/colorButtonText"
                         android:textSize="16dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_fragment_menu_medicine"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/button"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -250,31 +223,24 @@
                         android:layout_height="49dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/logo" />
+                        android:background="@drawable/menu_medical" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
-                        android:text="สัตว์เลี้ยง"
-                        android:textColor="@color/colorButtonText"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal"
-                        android:text="ของคุณ"
+                        android:text="Medicine"
                         android:textColor="@color/colorButtonText"
                         android:textSize="16dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layout_fragment_menu_request"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/shape"
+                    android:background="@drawable/button"
                     android:orientation="vertical"
                     android:padding="10dp">
 
@@ -283,27 +249,55 @@
                         android:layout_height="49dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="5dp"
-                        android:background="@drawable/logo" />
+                        android:background="@drawable/menu_request" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
-                        android:text="สัตวแพทย์"
-                        android:textColor="@color/colorButtonText"
-                        android:textSize="16dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center_horizontal"
-                        android:text="ของคุณ"
+                        android:text="Request"
                         android:textColor="@color/colorButtonText"
                         android:textSize="16dp" />
 
                 </LinearLayout>
 
             </LinearLayout>
+            <!--End Frame 4-->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_fragment_menu_setting"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_marginLeft="20dp">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="49dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/menu_settings" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_horizontal"
+                        android:text="Setting"
+                        android:textColor="@color/colorButtonText"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--End Frame 5-->
 
         </LinearLayout>
 

@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterFragment extends Fragment {
 
+    SaveFragment _saveFragment = SaveFragment.getSaveFragmentInstance();
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
 
@@ -38,7 +39,7 @@ public class RegisterFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
 
-        SaveFragment.setName("registerFragment");
+        _saveFragment.setName("registerFragment");
 
         initRegisterBtn();
     }
