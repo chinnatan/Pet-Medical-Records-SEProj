@@ -170,7 +170,6 @@
                                 android:layout_width="106dp"
                                 android:layout_height="37dp"
                                 android:background="@color/colorButton"
-                                android:text="@string/manu_profileFrg_profile"
                                 android:textColor="@color/colorAccent" />
                         </LinearLayout>
 
