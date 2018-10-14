@@ -49,7 +49,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="end"
-                                android:text="Sign out" />
+                                android:text="@string/menuFrg_signoutTxt" />
 
                         </LinearLayout>
 
@@ -59,9 +59,9 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/menu_profilename"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:text="Chinnatan Chatthong"
                                 android:textSize="18dp" />
 
                         </LinearLayout>
@@ -80,10 +80,10 @@
                 android:padding="10dp">
 
                 <TextView
+                    android:id="@+id/menu_show_count_pet"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_horizontal"
-                    android:text="จำนวนสัตว์เลี้ยงทั้งหมดของคุณคือ 2 ตัว"
                     android:textSize="16dp" />
 
             </LinearLayout>
