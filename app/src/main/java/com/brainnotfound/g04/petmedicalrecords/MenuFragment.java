@@ -41,7 +41,7 @@ public class MenuFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
-        _getProfile = new Profile();
+        _getProfile = Profile.getProfileInstance();
 
         getProfile(mAuth.getCurrentUser());
         getCountPet(mAuth.getCurrentUser());
@@ -62,26 +62,30 @@ public class MenuFragment extends Fragment {
     }
 
     void getProfile(FirebaseUser _user) {
-        mStore.collection("account").document(_user.getUid())
-                .collection("profile").document(_user.getUid())
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot.exists()) {
-                    Map<String, Object> checkData = documentSnapshot.getData();
-                    if(checkData.size() != 0) {
-                        _getProfile.setFirstname(documentSnapshot.getString("firstname"));
-                        _getProfile.setLastname(documentSnapshot.getString("lastname"));
-                        initProfile(_getProfile);
+        if(_getProfile.getFirstname().isEmpty()) {
+            mStore.collection("account").document(_user.getUid())
+                    .collection("profile").document(_user.getUid())
+                    .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot.exists()) {
+                        Map<String, Object> checkData = documentSnapshot.getData();
+                        if (checkData.size() != 0) {
+                            _getProfile.setFirstname(documentSnapshot.getString("firstname"));
+                            _getProfile.setLastname(documentSnapshot.getString("lastname"));
+                            initProfile(_getProfile);
+                        }
                     }
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        } else {
+            initProfile(_getProfile);
+        }
     }
 
     void initProfile(Profile _profile) {

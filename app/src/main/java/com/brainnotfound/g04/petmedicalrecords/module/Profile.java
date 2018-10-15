@@ -7,13 +7,22 @@ public class Profile {
     private String phonenumber;
     private String account_type;
 
-    public Profile() {}
+    private static Profile profileInstance;
+
+    private Profile() {}
 
     public Profile(String firstname, String lastname, String phonenumber, String account_type) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setPhonenumber(phonenumber);
         this.setAccount_type(account_type);
+    }
+
+    public static Profile getProfileInstance() {
+        if(profileInstance == null) {
+            profileInstance = new Profile();
+        }
+        return profileInstance;
     }
 
     public String getFirstname() {
