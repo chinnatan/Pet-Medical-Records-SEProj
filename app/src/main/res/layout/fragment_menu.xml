@@ -268,6 +268,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="horizontal"
                 android:padding="10dp">
 
@@ -278,7 +279,7 @@
                     android:background="@drawable/button"
                     android:orientation="vertical"
                     android:padding="10dp"
-                    android:layout_marginLeft="20dp">
+                    android:layout_marginRight="10dp">
 
                     <ImageView
                         android:layout_width="50dp"
@@ -294,6 +295,16 @@
                         android:text="Setting"
                         android:textColor="@color/colorButtonText"
                         android:textSize="16dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_fragment_menu_setting"
+                    android:layout_width="210dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_marginRight="10dp">
 
                 </LinearLayout>
 
