@@ -2,7 +2,7 @@ package com.brainnotfound.g04.petmedicalrecords.module;
 
 public class Profile {
 
-    private String firstname;
+    private String firstname = null;
     private String lastname;
     private String phonenumber;
     private String account_type;

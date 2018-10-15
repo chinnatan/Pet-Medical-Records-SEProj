@@ -62,7 +62,7 @@ public class MenuFragment extends Fragment {
     }
 
     void getProfile(FirebaseUser _user) {
-        if(_getProfile.getFirstname().isEmpty()) {
+        if(_getProfile.getFirstname() == null) {
             mStore.collection("account").document(_user.getUid())
                     .collection("profile").document(_user.getUid())
                     .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
