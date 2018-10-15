@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new IntroFragment()).commit();
         } else if(SaveFragment.getName().equals("LoginFragment")) {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new IntroFragment()).commit();
+        } else {
+            finish();
         }
     }
 }
