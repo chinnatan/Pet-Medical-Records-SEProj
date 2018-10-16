@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -14,11 +15,27 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_back"
-            android:backgroundTint="@color/colorWhite" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/frg_menu_profile_backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/profileFrg_header"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
+                android:gravity="end"/>
+
+        </LinearLayout>
 
     </LinearLayout>
     <!--End Frame 1 (Back Button)-->
@@ -71,6 +88,7 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:id="@+id/frg_menu_profile_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Chinnatan"
@@ -93,6 +111,7 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:id="@+id/frg_menu_profile_phonenumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0914535162"
@@ -115,6 +134,7 @@
                         android:textSize="16dp" />
 
                     <TextView
+                        android:id="@+id/frg_menu_profile_rule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Customer"
@@ -133,6 +153,7 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/frg_menu_profile_editBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_blue"
