@@ -24,4 +24,9 @@
 
     <!--Menu Fragment-->
     <string name="menuFrg_signoutTxt">Sign out</string>
+
+    <!--Profile Fragment-->
+    <string name="profileFrg_name">ชื่อ : </string>
+    <string name="profileFrg_phonenumber">เบอร์โทรศัพท์ : </string>
+    <string name="profileFrg_rule">บทบาท : </string>
 </resources>
