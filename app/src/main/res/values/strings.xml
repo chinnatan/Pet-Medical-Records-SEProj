@@ -30,4 +30,9 @@
     <string name="profileFrg_name">ชื่อ : </string>
     <string name="profileFrg_phonenumber">เบอร์โทรศัพท์ : </string>
     <string name="profileFrg_rule">บทบาท : </string>
+    <string name="profileFrg_edit">แก้ไขข้อมูล</string>
+
+    <!--Edit Profile Fragment-->
+    <string name="editProfileFrg_header">Edit Your Profile</string>
+    <string name="editProfileFrg_submit">ยืนยัน</string>
 </resources>
