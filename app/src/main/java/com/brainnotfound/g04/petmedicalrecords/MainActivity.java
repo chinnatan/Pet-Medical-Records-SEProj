@@ -22,9 +22,13 @@ public class MainActivity extends AppCompatActivity {
         super.onBackPressed();
 
         if(SaveFragment.getName().equals("RegisterFragment")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new IntroFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new IntroFragment()).commit();
         } else if(SaveFragment.getName().equals("LoginFragment")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new IntroFragment()).commit();
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new IntroFragment()).commit();
         } else {
             finish();
         }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
+import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,8 @@ public class MenuFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
     private Profile _getProfile;
+    private SaveFragment saveFragment;
+
 
     @Nullable
     @Override
@@ -42,9 +45,11 @@ public class MenuFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
         _getProfile = Profile.getProfileInstance();
+        saveFragment = SaveFragment.getSaveFragmentInstance();
+        String _userUid = mAuth.getCurrentUser().getUid();
 
-        getProfile(mAuth.getCurrentUser());
-        getCountPet(mAuth.getCurrentUser());
+        getProfile(_userUid);
+        getCountPet(_userUid);
         initSignoutBtn();
     }
 
@@ -53,6 +58,7 @@ public class MenuFragment extends Fragment {
         _signoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                saveFragment.setName("LoginFragment");
                 mAuth.signOut();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
@@ -61,10 +67,10 @@ public class MenuFragment extends Fragment {
         });
     }
 
-    void getProfile(FirebaseUser _user) {
+    void getProfile(String userUid) {
         if(_getProfile.getFirstname() == null) {
-            mStore.collection("account").document(_user.getUid())
-                    .collection("profile").document(_user.getUid())
+            mStore.collection("account").document(userUid)
+                    .collection("profile").document(userUid)
                     .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -93,8 +99,8 @@ public class MenuFragment extends Fragment {
         _profileNameTxt.setText(_profile.getFirstname() + " " + _profile.getLastname());
     }
 
-    void getCountPet(FirebaseUser _user) {
-        mStore.collection("account").document(_user.getUid())
+    void getCountPet(String userUid) {
+        mStore.collection("account").document(userUid)
                 .collection("pet").orderBy("name", Query.Direction.DESCENDING)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
