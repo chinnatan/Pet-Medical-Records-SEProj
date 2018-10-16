@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +52,7 @@ public class MenuFragment extends Fragment {
         getProfile(_userUid);
         getCountPet(_userUid);
         initSignoutBtn();
+        initProfileBtn();
     }
 
     void initSignoutBtn() {
@@ -67,6 +69,20 @@ public class MenuFragment extends Fragment {
         });
     }
 
+    void initProfileBtn() {
+        LinearLayout _profileLiBtn = getView().findViewById(R.id.layout_fragment_menu_profile);
+        _profileLiBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveFragment.setName("ProfileFragment");
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, new ProfileFragment()).commit();
+            }
+        });
+    }
+
     void getProfile(String userUid) {
         if(_getProfile.getFirstname() == null) {
             mStore.collection("account").document(userUid)
@@ -79,6 +95,8 @@ public class MenuFragment extends Fragment {
                         if (checkData.size() != 0) {
                             _getProfile.setFirstname(documentSnapshot.getString("firstname"));
                             _getProfile.setLastname(documentSnapshot.getString("lastname"));
+                            _getProfile.setPhonenumber(documentSnapshot.getString("phonenumber"));
+                            _getProfile.setAccount_type(documentSnapshot.getString("account_type"));
                             initProfile(_getProfile);
                         }
                     }

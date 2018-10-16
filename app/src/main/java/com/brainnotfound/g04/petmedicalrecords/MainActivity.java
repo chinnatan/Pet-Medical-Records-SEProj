@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
         if(SaveFragment.getName().equals("RegisterFragment")) {
             getSupportFragmentManager().beginTransaction()
@@ -29,8 +28,12 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.main_view, new IntroFragment()).commit();
+        } else if (SaveFragment.getName().equals("ProfileFragment")){
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new MenuFragment()).commit();
         } else {
-            finish();
+            super.onBackPressed();
         }
     }
 }
