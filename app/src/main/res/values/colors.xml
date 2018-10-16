@@ -9,6 +9,7 @@
     <!--Button-->
     <color name="colorButton">#44443f</color>
     <color name="colorButtonText">#fffb63</color>
+    <color name="colorButtonBlue">#005ce6</color>
 
     <!--Line-->
     <color name="colorLine">#fffb63</color>
