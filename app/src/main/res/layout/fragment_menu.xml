@@ -103,7 +103,8 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/button"
                     android:orientation="vertical"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:clickable="true">
 
                     <ImageView
                         android:layout_width="50dp"
