@@ -86,7 +86,8 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_user"
                         android:hint="@string/registerFrg_firstnameHintTxt"
-                        android:textColor="@color/colorWhite" />
+                        android:background="@drawable/edittext_rounded"
+                        android:padding="5dp" />
 
                 </LinearLayout>
 
@@ -102,7 +103,8 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_user"
                         android:hint="@string/registerFrg_lastnameHintTxt"
-                        android:textColor="@color/colorWhite" />
+                        android:background="@drawable/edittext_rounded"
+                        android:padding="5dp" />
 
                 </LinearLayout>
 
@@ -120,7 +122,8 @@
                         android:hint="@string/registerFrg_phonenumberHintTxt"
                         android:inputType="number"
                         android:maxLength="10"
-                        android:textColor="@color/colorWhite" />
+                        android:background="@drawable/edittext_rounded"
+                        android:padding="5dp" />
 
                 </LinearLayout>
 
@@ -139,7 +142,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/button"
                     android:text="@string/editProfileFrg_submit"
-                    android:textColor="@color/colorButtonText" />
+                    android:textColor="@color/colorWhite"
+                    android:layout_marginBottom="5dp"/>
 
             </LinearLayout>
             <!--End Frame (Edit Information Button)-->

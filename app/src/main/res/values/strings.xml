@@ -11,7 +11,7 @@
     <!--Login Fragment-->
     <string name="loginFrg_emailHintTxt">somchai@gmail.com</string>
     <string name="loginFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
-    <string name="loginFrg_passwordForgotTxt">ลืมรหัสผ่าน</string>
+    <string name="loginFrg_passwordForgotTxt">Forgot Password?</string>
 
     <!--Register Fragment-->
     <string name="registerFrg_registerTxt">ลงทะเบียน</string>
@@ -30,7 +30,7 @@
     <string name="profileFrg_name">ชื่อ : </string>
     <string name="profileFrg_phonenumber">เบอร์โทรศัพท์ : </string>
     <string name="profileFrg_rule">บทบาท : </string>
-    <string name="profileFrg_edit">แก้ไขข้อมูล</string>
+    <string name="profileFrg_edit">แก้ไขข้อมูลส่วนตัว</string>
 
     <!--Edit Profile Fragment-->
     <string name="editProfileFrg_header">Edit Your Profile</string>

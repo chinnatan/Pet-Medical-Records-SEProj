@@ -48,8 +48,10 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/registerFrg_emailHintTxt"
                     android:inputType="textEmailAddress"
-                    android:textColor="@color/colorWhite"
-                    android:drawableLeft="@drawable/ic_acount_email"/>
+                    android:drawableLeft="@drawable/ic_acount_email"
+                    android:background="@drawable/edittext_rounded"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <EditText
                     android:id="@+id/register_passwordTxt"
@@ -57,32 +59,40 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/registerFrg_passwordHintTxt"
                     android:inputType="textPassword"
-                    android:textColor="@color/colorWhite"
-                    android:drawableLeft="@drawable/ic_password"/>
+                    android:drawableLeft="@drawable/ic_password"
+                    android:background="@drawable/edittext_rounded"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"/>
                 <EditText
                     android:id="@+id/register_password2Txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/registerFrg_password2HintTxt"
                     android:inputType="textPassword"
-                    android:textColor="@color/colorWhite"
-                    android:drawableLeft="@drawable/ic_password"/>
+                    android:drawableLeft="@drawable/ic_password"
+                    android:background="@drawable/edittext_rounded"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <EditText
                     android:id="@+id/register_firstnameTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/registerFrg_firstnameHintTxt"
-                    android:textColor="@color/colorWhite"
-                    android:drawableLeft="@drawable/ic_user"/>
+                    android:drawableLeft="@drawable/ic_user"
+                    android:background="@drawable/edittext_rounded"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <EditText
                     android:id="@+id/register_lastnameTxt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/registerFrg_lastnameHintTxt"
-                    android:textColor="@color/colorWhite"
-                    android:drawableLeft="@drawable/ic_user"/>
+                    android:drawableLeft="@drawable/ic_user"
+                    android:background="@drawable/edittext_rounded"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <EditText
                     android:id="@+id/register_phonenumberTxt"
@@ -91,8 +101,10 @@
                     android:hint="@string/registerFrg_phonenumberHintTxt"
                     android:maxLength="10"
                     android:inputType="number"
-                    android:textColor="@color/colorWhite"
-                    android:drawableLeft="@drawable/ic_phonenumber"/>
+                    android:drawableLeft="@drawable/ic_phonenumber"
+                    android:background="@drawable/edittext_rounded"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -106,8 +118,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button"
-                    android:textColor="@color/colorButtonText"
-                    android:text="@string/registerBtn" />
+                    android:textColor="@color/colorWhite"
+                    android:text="@string/registerBtn"
+                    android:layout_marginBottom="5dp"/>
 
             </LinearLayout>
 

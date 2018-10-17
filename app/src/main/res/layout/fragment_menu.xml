@@ -118,7 +118,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:text="Profile"
-                        android:textColor="@color/colorButtonText"
+                        android:textColor="@color/colorWhite"
                         android:textSize="16dp" />
 
                 </LinearLayout>
@@ -144,7 +144,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:text="Pet"
-                        android:textColor="@color/colorButtonText"
+                        android:textColor="@color/colorWhite"
                         android:textSize="16dp" />
 
                 </LinearLayout>
@@ -170,7 +170,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:text="Veterinary"
-                        android:textColor="@color/colorButtonText"
+                        android:textColor="@color/colorWhite"
                         android:textSize="16dp" />
 
                 </LinearLayout>
@@ -206,7 +206,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:text="History"
-                        android:textColor="@color/colorButtonText"
+                        android:textColor="@color/colorWhite"
                         android:textSize="16dp" />
 
                 </LinearLayout>
@@ -232,7 +232,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:text="Medicine"
-                        android:textColor="@color/colorButtonText"
+                        android:textColor="@color/colorWhite"
                         android:textSize="16dp" />
 
                 </LinearLayout>
@@ -258,7 +258,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:text="Request"
-                        android:textColor="@color/colorButtonText"
+                        android:textColor="@color/colorWhite"
                         android:textSize="16dp" />
 
                 </LinearLayout>
@@ -294,7 +294,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_horizontal"
                         android:text="Setting"
-                        android:textColor="@color/colorButtonText"
+                        android:textColor="@color/colorWhite"
                         android:textSize="16dp" />
 
                 </LinearLayout>
