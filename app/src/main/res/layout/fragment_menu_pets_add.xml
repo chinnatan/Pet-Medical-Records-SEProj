@@ -141,7 +141,7 @@
                         android:background="@drawable/spinner_rounded"
                         android:layout_marginBottom="5dp"
                         android:spinnerMode="dialog"
-                        android:prompt="@string/petFrg_petType">
+                        android:prompt="@string/petFrg_petSex">
 
                     </Spinner>
 
@@ -166,7 +166,7 @@
                         android:background="@drawable/spinner_rounded"
                         android:layout_marginBottom="5dp"
                         android:spinnerMode="dialog"
-                        android:prompt="@string/petFrg_petType">
+                        android:prompt="@string/petFrg_petAge">
 
                     </Spinner>
 
