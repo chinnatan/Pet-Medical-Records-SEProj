@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.main_view, new ProfileFragment()).commit();
+        } else if (SaveFragment.getName().equals("PetsFragment")){
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new MenuFragment()).commit();
+        } else if (SaveFragment.getName().equals("AddPetsFragment")){
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new PetsFragment()).commit();
         } else {
             super.onBackPressed();
         }

@@ -18,7 +18,7 @@
     <string name="registerFrg_firstnameHintTxt">Somchai</string>
     <string name="registerFrg_lastnameHintTxt">Chaichan</string>
     <string name="registerFrg_emailHintTxt">somchai@gmail.com</string>
-    <string name="registerFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
+    <string name="registerFrg_passwordHintTxt">รหัสผ่านมากกว่า 6 ตัวอักษร</string>
     <string name="registerFrg_password2HintTxt">ยืนยันรหัสผ่านเดิมอีกครั้ง</string>
     <string name="registerFrg_phonenumberHintTxt">0910000000</string>
 
@@ -38,4 +38,6 @@
 
     <!--Pet Fragment-->
     <string name="petFrg_header">Your Pets</string>
+    <string name="petFrg_notfound">Pet Not Found..</string>
+    <string name="petFrg_addpet">Add Your Pet</string>
 </resources>

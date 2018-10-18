@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:elevation="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/frg_menu_pets_add_backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/petFrg_addpet"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
+                android:gravity="end"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--End Frame 1 (Back Button)-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical"
+            android:layout_marginTop="40dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="149dp"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/logo" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="35dp">
+
+                <Spinner
+                    android:id="@+id/frg_menu_pets_add_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_rounded"
+                    android:layout_marginBottom="5dp">
+
+
+                </Spinner>
+
+                <EditText
+                    android:id="@+id/register_passwordTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:drawableLeft="@drawable/ic_password"
+                    android:hint="@string/registerFrg_passwordHintTxt"
+                    android:inputType="textPassword"
+                    android:padding="5dp" />
+
+                <EditText
+                    android:id="@+id/register_password2Txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:drawableLeft="@drawable/ic_password"
+                    android:hint="@string/registerFrg_password2HintTxt"
+                    android:inputType="textPassword"
+                    android:padding="5dp" />
+
+                <EditText
+                    android:id="@+id/register_firstnameTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:drawableLeft="@drawable/ic_user"
+                    android:hint="@string/registerFrg_firstnameHintTxt"
+                    android:padding="5dp" />
+
+                <EditText
+                    android:id="@+id/register_lastnameTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:drawableLeft="@drawable/ic_user"
+                    android:hint="@string/registerFrg_lastnameHintTxt"
+                    android:padding="5dp" />
+
+                <EditText
+                    android:id="@+id/register_phonenumberTxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/edittext_rounded"
+                    android:drawableLeft="@drawable/ic_phonenumber"
+                    android:hint="@string/registerFrg_phonenumberHintTxt"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:padding="5dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/colorLine" />
+
+                <Button
+                    android:id="@+id/register_registerBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/button"
+                    android:text="@string/registerBtn"
+                    android:textColor="@color/colorWhite" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

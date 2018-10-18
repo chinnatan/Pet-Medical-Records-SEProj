@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -53,6 +54,7 @@ public class MenuFragment extends Fragment {
         getCountPet(_userUid);
         initSignoutBtn();
         initProfileBtn();
+        initPetsBtn();
     }
 
     void initSignoutBtn() {
@@ -79,6 +81,20 @@ public class MenuFragment extends Fragment {
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                         .addToBackStack(null)
                         .replace(R.id.main_view, new ProfileFragment()).commit();
+            }
+        });
+    }
+
+    void initPetsBtn() {
+        LinearLayout _petsBtn = getView().findViewById(R.id.layout_fragment_menu_pet);
+        _petsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveFragment.setName("PetsFragment");
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, new PetsFragment()).commit();
             }
         });
     }
