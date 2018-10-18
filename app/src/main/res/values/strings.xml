@@ -35,4 +35,7 @@
     <!--Edit Profile Fragment-->
     <string name="editProfileFrg_header">Edit Your Profile</string>
     <string name="editProfileFrg_submit">ยืนยัน</string>
+
+    <!--Pet Fragment-->
+    <string name="petFrg_header">Your Pets</string>
 </resources>

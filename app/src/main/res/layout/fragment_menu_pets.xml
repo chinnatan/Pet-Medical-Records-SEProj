@@ -4,181 +4,218 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:elevation="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/frg_menu_profile_backBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_back"
+                android:backgroundTint="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/petFrg_header"
+                android:textColor="@color/colorWhite"
+                android:textSize="20dp"
+                android:gravity="end"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <!--End Frame 1 (Back Button)-->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-
-        tools:layout_editor_absoluteY="165dp">
+        android:elevation="1dp"
+        android:gravity="center_horizontal|center_vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:orientation="horizontal">
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:id="@+id/pets_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:indeterminateTint="@color/colorWhite"/>
 
         </LinearLayout>
 
+    </LinearLayout>
+    <!--End Frame 2 (Loading)-->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="161dp"
-            android:gravity="center_horizontal"
-            android:background="@color/colorPrimaryDark"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="146dp"
-                android:layout_height="142dp"
-                app:srcCompat="@drawable/logo" />
-
-            <LinearLayout
-                android:layout_width="12dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
-
-            <LinearLayout
+            <ListView
+                android:id="@+id/frg_menu_pets_list"
                 android:layout_width="match_parent"
-                android:layout_height="161dp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:dividerHeight="2dp">
 
-                <LinearLayout
+            </ListView>
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:background="@drawable/shape"-->
+            <!--android:padding="10dp">-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<ImageView-->
+            <!--android:layout_width="80dp"-->
+            <!--android:layout_height="79dp"-->
+            <!--android:background="@drawable/logo"-->
+            <!--android:layout_marginRight="10dp"/>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical">-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="ประเภท : สุนัข"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="ชื่อ : หมาน้อย"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="เพศ : เมีย"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<TextViPew-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="อายุ : 6 เดือน"/>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="right">-->
+
+            <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="ดูเพิ่มเติม"-->
+            <!--android:textColor="@color/colorWhite"-->
+            <!--android:background="@drawable/button"-->
+            <!--android:layout_marginBottom="5dp" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+        </LinearLayout>
+
+    </ScrollView>
+    <!--End Frame 3 (Pets list view)-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:elevation="1dp"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:gravity="right">
+
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button_colorPrimaryDark"
+                android:padding="10dp">
+
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="103dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ic_add"
+                    android:backgroundTint="@color/colorWhite"/>
 
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="12dp"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/manu_profile_name"
-                            android:layout_width="49dp"
-                            android:layout_height="29dp"
-                            android:textColor="@color/colorWhite"
-                            android:text="ชื่อ :"
-                            android:textSize="22dp" />
-
-                        <TextView
-                            android:id="@+id/manu_profile_name_output"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:text="มะนาว"
-                            android:textSize="22dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/manu_profile_age"
-                            android:layout_width="61dp"
-                            android:layout_height="29dp"
-                            android:textColor="@color/colorWhite"
-                            android:text="อายุ :"
-                            android:textSize="22dp" />
-
-                        <TextView
-                            android:id="@+id/manu_profile_age_output"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:text="2"
-                            android:textSize="22dp" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:id="@+id/manu_profile_breed"
-                            android:layout_width="61dp"
-                            android:layout_height="29dp"
-                            android:text="พันธ์ :"
-                            android:textColor="@color/colorWhite"
-                            android:textSize="22dp" />
-
-                        <TextView
-                            android:id="@+id/manu_profile_breed_output"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:textColor="@color/colorWhite"
-                            android:text="บางแก้ว"
-                            android:textSize="22dp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="87dp"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="107dp"
-                        android:layout_height="62dp"
-                        android:orientation="vertical">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="60dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <Button
-                                android:id="@+id/manu_profile_view"
-                                android:layout_width="106dp"
-                                android:layout_height="37dp"
-                                android:background="@color/colorButton"
-                                android:textColor="@color/colorAccent" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+    <!--End Frame 4 (Add Pet Button)-->
+
 </android.support.constraint.ConstraintLayout>
