@@ -88,7 +88,21 @@ public class AddPetsFragment extends Fragment {
         ageData.add("9 เดือน");
         ageData.add("10 เดือน");
         ageData.add("11 เดือน");
-        ageData.add("12 เดือน");
+        ageData.add("1 ปี");
+        ageData.add("2 ปี");
+        ageData.add("3 ปี");
+        ageData.add("4 ปี");
+        ageData.add("5 ปี");
+        ageData.add("6 ปี");
+        ageData.add("7 ปี");
+        ageData.add("8 ปี");
+        ageData.add("9 ปี");
+        ageData.add("10 ปี");
+        ageData.add("11 ปี");
+        ageData.add("12 ปี");
+        ageData.add("13 ปี");
+        ageData.add("14 ปี");
+        ageData.add("15 ปี");
     }
 
     private void setDataInSpinner() {
