@@ -50,21 +50,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical"
-            android:layout_marginTop="40dp">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_gravity="center_horizontal"
+                android:clickable="true"
+                android:background="@drawable/rounded">
 
                 <ImageView
+                    android:id="@+id/frg_menu_pets_add_images"
                     android:layout_width="150dp"
-                    android:layout_height="149dp"
+                    android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
-                    android:background="@drawable/logo" />
+                    android:background="@mipmap/ic_camera"
+                    android:scaleType="fitXY"/>
 
             </LinearLayout>
 
@@ -72,86 +75,109 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="35dp">
+                android:padding="20dp">
 
-                <Spinner
-                    android:id="@+id/frg_menu_pets_add_type"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_rounded"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/petFrg_petType"
+                        android:textSize="20dp"/>
+
+                    <Spinner
+                        android:id="@+id/frg_menu_pets_add_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_rounded"
+                        android:layout_marginBottom="5dp"
+                        android:spinnerMode="dialog"
+                        android:prompt="@string/petFrg_petType">
+
+                    </Spinner>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/petFrg_petName"
+                        android:textSize="20dp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/edittext_rounded"
+                        android:inputType="text"
+                        android:padding="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_marginBottom="5dp">
 
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/petFrg_petSex"
+                        android:textSize="20dp"/>
 
-                </Spinner>
+                    <Spinner
+                        android:id="@+id/frg_menu_pets_add_sex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_rounded"
+                        android:layout_marginBottom="5dp"
+                        android:spinnerMode="dialog"
+                        android:prompt="@string/petFrg_petType">
 
-                <EditText
-                    android:id="@+id/register_passwordTxt"
+                    </Spinner>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:hint="@string/registerFrg_passwordHintTxt"
-                    android:inputType="textPassword"
-                    android:padding="5dp" />
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="5dp">
 
-                <EditText
-                    android:id="@+id/register_password2Txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:hint="@string/registerFrg_password2HintTxt"
-                    android:inputType="textPassword"
-                    android:padding="5dp" />
+                    <TextView
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/petFrg_petAge"
+                        android:textSize="20dp"/>
 
-                <EditText
-                    android:id="@+id/register_firstnameTxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:drawableLeft="@drawable/ic_user"
-                    android:hint="@string/registerFrg_firstnameHintTxt"
-                    android:padding="5dp" />
+                    <Spinner
+                        android:id="@+id/frg_menu_pets_add_age"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/spinner_rounded"
+                        android:layout_marginBottom="5dp"
+                        android:spinnerMode="dialog"
+                        android:prompt="@string/petFrg_petType">
 
-                <EditText
-                    android:id="@+id/register_lastnameTxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:drawableLeft="@drawable/ic_user"
-                    android:hint="@string/registerFrg_lastnameHintTxt"
-                    android:padding="5dp" />
+                    </Spinner>
 
-                <EditText
-                    android:id="@+id/register_phonenumberTxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:background="@drawable/edittext_rounded"
-                    android:drawableLeft="@drawable/ic_phonenumber"
-                    android:hint="@string/registerFrg_phonenumberHintTxt"
-                    android:inputType="number"
-                    android:maxLength="10"
-                    android:padding="5dp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/colorLine" />
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/register_registerBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/button"
-                    android:text="@string/registerBtn"
+                    android:text="@string/petFrg_addPetBtn"
                     android:textColor="@color/colorWhite" />
 
             </LinearLayout>

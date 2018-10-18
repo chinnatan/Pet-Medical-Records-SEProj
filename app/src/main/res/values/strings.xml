@@ -10,7 +10,7 @@
 
     <!--Login Fragment-->
     <string name="loginFrg_emailHintTxt">somchai@gmail.com</string>
-    <string name="loginFrg_passwordHintTxt">มากกว่า 6 ตัวอักษร</string>
+    <string name="loginFrg_passwordHintTxt">รหัสผ่านมากกว่า 6 ตัวอักษร</string>
     <string name="loginFrg_passwordForgotTxt">Forgot Password?</string>
 
     <!--Register Fragment-->
@@ -40,4 +40,9 @@
     <string name="petFrg_header">Your Pets</string>
     <string name="petFrg_notfound">Pet Not Found..</string>
     <string name="petFrg_addpet">Add Your Pet</string>
+    <string name="petFrg_petType">ประเภท </string>
+    <string name="petFrg_petName">ชื่อสัตว์เลี้ยง</string>
+    <string name="petFrg_petSex">เพศสัตว์เลี้ยง</string>
+    <string name="petFrg_petAge">อายุสัตว์เลี้ยง</string>
+    <string name="petFrg_addPetBtn">เพิ่มสัตว์เลี้ยง</string>
 </resources>
