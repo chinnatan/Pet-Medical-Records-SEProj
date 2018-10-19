@@ -47,6 +47,8 @@ public class MenuFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        saveFragment.setName("MenuFragment");
+
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
         _getProfile = Profile.getProfileInstance();
