@@ -56,4 +56,5 @@ public class Profile {
     public void setAccount_type(String account_type) {
         this.account_type = account_type;
     }
+
 }
