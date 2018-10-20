@@ -49,6 +49,8 @@ public class PetsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        _saveFragment.setName("PetsFragment");
+
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
         userUid = mAuth.getCurrentUser().getUid();

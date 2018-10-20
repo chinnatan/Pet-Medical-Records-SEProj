@@ -44,5 +44,8 @@
     <string name="petFrg_petName">ชื่อสัตว์เลี้ยง</string>
     <string name="petFrg_petSex">เพศสัตว์เลี้ยง</string>
     <string name="petFrg_petAge">อายุสัตว์เลี้ยง</string>
+    <string name="petFrg_petAgeDay">วัน</string>
+    <string name="petFrg_petAgeMonth">เดือน</string>
+    <string name="petFrg_petAgeYear">ปี</string>
     <string name="petFrg_addPetBtn">เพิ่มสัตว์เลี้ยง</string>
 </resources>

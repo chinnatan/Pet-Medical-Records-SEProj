@@ -113,6 +113,7 @@
                         android:textSize="20dp"/>
 
                     <EditText
+                        android:id="@+id/frg_menu_pets_add_petname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
@@ -159,16 +160,89 @@
                         android:text="@string/petFrg_petAge"
                         android:textSize="20dp"/>
 
-                    <Spinner
-                        android:id="@+id/frg_menu_pets_add_age"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/spinner_rounded"
-                        android:layout_marginBottom="5dp"
-                        android:spinnerMode="dialog"
-                        android:prompt="@string/petFrg_petAge">
+                </LinearLayout>
 
-                    </Spinner>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center_horizontal">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="5dp">
+
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/petFrg_petAgeDay"
+                            android:textSize="20dp"/>
+
+                        <Spinner
+                            android:id="@+id/frg_menu_pets_add_age_day"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_rounded"
+                            android:layout_marginBottom="5dp"
+                            android:spinnerMode="dialog"
+                            android:prompt="@string/petFrg_petAge">
+
+                        </Spinner>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="5dp">
+
+                        <TextView
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/petFrg_petAgeMonth"
+                            android:textSize="20dp"/>
+
+                        <Spinner
+                            android:id="@+id/frg_menu_pets_add_age_month"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_rounded"
+                            android:layout_marginBottom="5dp"
+                            android:spinnerMode="dialog"
+                            android:prompt="@string/petFrg_petAge">
+
+                        </Spinner>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="30dp"
+                            android:layout_height="wrap_content"
+                            android:text="@string/petFrg_petAgeYear"
+                            android:textSize="20dp"/>
+
+                        <Spinner
+                            android:id="@+id/frg_menu_pets_add_age_year"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/spinner_rounded"
+                            android:layout_marginBottom="5dp"
+                            android:spinnerMode="dialog"
+                            android:prompt="@string/petFrg_petAge">
+
+                        </Spinner>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
