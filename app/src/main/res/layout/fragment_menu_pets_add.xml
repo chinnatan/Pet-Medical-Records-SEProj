@@ -247,6 +247,7 @@
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/frg_menu_pets_add_addBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
