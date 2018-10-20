@@ -57,7 +57,7 @@ public class MenuFragment extends Fragment {
         String _userUid = mAuth.getCurrentUser().getUid();
 
         invisibleMenu();
-        getProfileAndCountPet(_userUid);
+        getProfile(_userUid);
         getCountPet(_userUid);
         initSignoutBtn();
         initProfileBtn();
@@ -107,7 +107,7 @@ public class MenuFragment extends Fragment {
         });
     }
 
-    private void getProfileAndCountPet(String userUid) {
+    private void getProfile(String userUid) {
         if(_getProfile.getFirstname() == null) {
             mStore.collection("account").document(userUid)
                     .collection("profile").document(userUid)
@@ -144,12 +144,14 @@ public class MenuFragment extends Fragment {
 
     private void getCountPet(String userUid) {
         mStore.collection("account").document(userUid)
-                .collection("pet").orderBy("name", Query.Direction.DESCENDING)
+                .collection("pets").orderBy("pet_name", Query.Direction.DESCENDING)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(queryDocumentSnapshots.isEmpty()) {
-                    initCountPet();
+                    initCountPet(queryDocumentSnapshots);
+                } else {
+                    initCountPet(queryDocumentSnapshots);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -165,9 +167,9 @@ public class MenuFragment extends Fragment {
         _profileNameTxt.setText(_profile.getFirstname() + " " + _profile.getLastname());
     }
 
-    void initCountPet() {
+    void initCountPet(QuerySnapshot queryDocumentSnapshots) {
         TextView _countPet = getView().findViewById(R.id.menu_show_count_pet);
-        _countPet.setText("จำนวนสัตว์เลี้ยงทั้งหมดของคุณคือ 0 ตัว");
+        _countPet.setText("จำนวนสัตว์เลี้ยงทั้งหมดของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
     }
 
     private void invisibleMenu() {

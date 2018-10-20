@@ -20,6 +20,15 @@ import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.R;
 import com.brainnotfound.g04.petmedicalrecords.module.ImageConverter;
+import com.brainnotfound.g04.petmedicalrecords.module.Profile;
+import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
@@ -31,6 +40,14 @@ public class AddPetsFragment extends Fragment {
     private ArrayList<String> ageMonthData = new ArrayList<String>();
     private ArrayList<String> ageYearData = new ArrayList<String>();
     private ImageView imageView;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
+    private FirebaseStorage mStorage;
+    private StorageReference storageReference;
+    private Profile profile;
+    private Uri uri;
+    private SaveFragment saveFragment;
+    private Pets intoDataPetStore = Pets.getGetPetsInstance();
 
     @Nullable
     @Override
@@ -42,9 +59,17 @@ public class AddPetsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        saveFragment = SaveFragment.getSaveFragmentInstance();
+        saveFragment.setName("AddPetsFragment");
+        mAuth = FirebaseAuth.getInstance();
+        String userUid = mAuth.getCurrentUser().getUid();
+        mStore = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        profile = Profile.getProfileInstance();
+
         imageController();
         setDataInSpinner();
-        initAddPet();
+        initAddPet(userUid);
         initBackBtn();
     }
 
@@ -66,7 +91,7 @@ public class AddPetsFragment extends Fragment {
 
         if(resultCode == getActivity().RESULT_OK) {
             try {
-                Uri uri = data.getData();
+                uri = data.getData();
                 Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri));
                 Bitmap circleBitmap = ImageConverter.getRoundedConnerBitmap(bitmap, 150);
                 imageView.setImageBitmap(circleBitmap);
@@ -133,17 +158,18 @@ public class AddPetsFragment extends Fragment {
         });
     }
 
-    private void initAddPet() {
+    private void initAddPet(final String userUid) {
         Button addPetBtn = getView().findViewById(R.id.frg_menu_pets_add_addBtn);
         addPetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getPetsData();
+                getPetsData(userUid);
             }
         });
     }
 
-    private void getPetsData() {
+    private void getPetsData(String userUid) {
+        final String _userUid = userUid;
         Spinner typeTxt = getView().findViewById(R.id.frg_menu_pets_add_type);
         Spinner sexTxt = getView().findViewById(R.id.frg_menu_pets_add_sex);
         Spinner dayTxt = getView().findViewById(R.id.frg_menu_pets_add_age_day);
@@ -156,12 +182,50 @@ public class AddPetsFragment extends Fragment {
         String dayStr = dayTxt.getSelectedItem().toString();
         String monthStr = monthTxt.getSelectedItem().toString();
         String yearStr = yearTxt.getSelectedItem().toString();
-        String petnameStr = petnameTxt.getText().toString();
+        final String petnameStr = petnameTxt.getText().toString();
 
         if(typeStr.isEmpty() || sexStr.isEmpty() || dayStr.isEmpty() || monthStr.isEmpty() || yearStr.isEmpty() || petnameStr.isEmpty()) {
             Toast.makeText(getActivity(), "กรุณาใส่ข้อมูลให้ครบถ้วน", Toast.LENGTH_LONG).show();
         } else if(imageView.getDrawable() == null) {
             Toast.makeText(getActivity(), "กรุณาเลือกรูปภาพของสัตว์เลี้ยง", Toast.LENGTH_SHORT).show();
+        } else {
+
+            storageReference = mStorage.getReference().child("images/pets/" + _userUid + "/" + petnameStr);
+
+            intoDataPetStore.setPet_name(petnameStr);
+            intoDataPetStore.setPet_type(typeStr);
+            intoDataPetStore.setPet_sex(sexStr);
+            intoDataPetStore.setPet_ageDay(dayStr);
+            intoDataPetStore.setPet_ageMonth(monthStr);
+            intoDataPetStore.setPet_ageYear(yearStr);
+            intoDataPetStore.setUrlImage(storageReference.getPath());
+
+            mStore.collection("account").document(_userUid)
+                    .collection("pets").document(petnameStr)
+                    .set(intoDataPetStore).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            saveFragment.setName("PetsFragment");
+                            getActivity().getSupportFragmentManager().beginTransaction()
+                                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                    .replace(R.id.main_view, new PetsFragment()).commit();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 }
