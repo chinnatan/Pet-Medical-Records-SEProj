@@ -28,7 +28,7 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
     List<Pets> pet = new ArrayList<Pets>();
     Context context;
     StorageReference storageReference;
-    ImageView _petImg;
+
 
     public PetsAdapter(Context context, int resource, List<Pets> objects){
         super(context, resource, objects);
@@ -40,13 +40,13 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View _petsItem = LayoutInflater.from(context).inflate(R.layout.fragment_menu_pets_item, parent, false);
+        final View _petsItem = LayoutInflater.from(context).inflate(R.layout.fragment_menu_pets_item, parent, false);
 
         TextView _nameTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_name);
         TextView _typeTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_type);
         TextView _sexTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_sex);
         TextView _ageTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_age);
-        _petImg = _petsItem.findViewById(R.id.frg_menu_pets_item_image);
+        final ImageView _petImg = _petsItem.findViewById(R.id.frg_menu_pets_item_image);
 
 
         Pets _rows = pet.get(position);
@@ -54,7 +54,7 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
         storageReference.child(_rows.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(context).load(uri).apply(RequestOptions.circleCropTransform()).into(_petImg);
+                Glide.with(_petsItem).load(uri).apply(RequestOptions.circleCropTransform()).into(_petImg);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
