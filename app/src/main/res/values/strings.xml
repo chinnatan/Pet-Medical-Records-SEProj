@@ -54,4 +54,5 @@
     <string name="petInfFrg_editInfBtn">แก้ไขข้อมูล</string>
     <string name="petInfFrg_qrCodeBtn">QR CODE</string>
     <string name="petInfFrg_deleteBtn">ลบข้อมูล</string>
+    <string name="petInfFrg_historyTreatmentBtn">ประวัติการรักษา</string>
 </resources>
