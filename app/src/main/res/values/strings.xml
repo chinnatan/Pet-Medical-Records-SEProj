@@ -48,4 +48,10 @@
     <string name="petFrg_petAgeMonth">เดือน</string>
     <string name="petFrg_petAgeYear">ปี</string>
     <string name="petFrg_addPetBtn">เพิ่มสัตว์เลี้ยง</string>
+
+    <!--Pet Information Fragment-->
+    <string name="petInfFrg_header">Pet Information</string>
+    <string name="petInfFrg_editInfBtn">แก้ไขข้อมูล</string>
+    <string name="petInfFrg_qrCodeBtn">QR CODE</string>
+    <string name="petInfFrg_deleteBtn">ลบข้อมูล</string>
 </resources>
