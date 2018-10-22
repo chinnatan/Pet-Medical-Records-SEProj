@@ -2,8 +2,8 @@ package com.brainnotfound.g04.petmedicalrecords;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
+import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetInformationFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 
@@ -45,10 +45,14 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.main_view, new PetsFragment()).commit();
-        }  else if (SaveFragment.getName().equals("PetInformationFragment")){
+        } else if (SaveFragment.getName().equals("PetInformationFragment")){
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.main_view, new PetsFragment()).commit();
+        } else if (SaveFragment.getName().equals("PetInformationEditFragment")){
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new PetInformationFragment()).commit();
         } else if (SaveFragment.getName().equals("MenuFragment")){
             finish();
         } else {

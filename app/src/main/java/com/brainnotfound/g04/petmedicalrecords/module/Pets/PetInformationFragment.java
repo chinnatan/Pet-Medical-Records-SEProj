@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,7 +41,7 @@ public class PetInformationFragment extends Fragment {
         saveFragment = SaveFragment.getSaveFragmentInstance();
         saveFragment.setName("PetInformationFragment");
         showPetInformation(petInformation);
-        initBackBtn();
+        initBtn();
     }
 
     private void showPetInformation(Pets pets) {
@@ -68,6 +69,11 @@ public class PetInformationFragment extends Fragment {
         _petAgeTxt.setText("อายุ : " + pets.getPet_ageYear() + " ปี " + pets.getPet_ageMonth() + " เดือน " + pets.getPet_ageDay() + " วัน");
     }
 
+    private void initBtn() {
+        initEditBtn();
+        initBackBtn();
+    }
+
     private void initBackBtn() {
         ImageView _backBtn = getView().findViewById(R.id.frg_pet_inf_backBtn);
         _backBtn.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +82,19 @@ public class PetInformationFragment extends Fragment {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                         .replace(R.id.main_view, new PetsFragment()).commit();
+            }
+        });
+    }
+
+    private void initEditBtn() {
+        Button _editBtn = getView().findViewById(R.id.frg_pet_inf_editBtn);
+        _editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, new PetInformationEditFragment()).commit();
             }
         });
     }
