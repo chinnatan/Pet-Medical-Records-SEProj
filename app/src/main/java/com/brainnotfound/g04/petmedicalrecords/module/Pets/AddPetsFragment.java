@@ -1,8 +1,10 @@
 package com.brainnotfound.g04.petmedicalrecords.module.Pets;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,6 +52,7 @@ public class AddPetsFragment extends Fragment {
     private Uri uri;
     private SaveFragment saveFragment;
     private Pets intoDataPetStore = Pets.getGetPetsInstance();
+    private ProgressDialog csprogress;
 
     @Nullable
     @Override
@@ -68,6 +71,7 @@ public class AddPetsFragment extends Fragment {
         mStore = FirebaseFirestore.getInstance();
         mStorage = FirebaseStorage.getInstance();
         profile = Profile.getProfileInstance();
+        csprogress = new ProgressDialog(getActivity());
 
         imageController();
         setDataInSpinner();
@@ -163,6 +167,7 @@ public class AddPetsFragment extends Fragment {
         addPetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                csprogress.setMessage("Adding...");
                 getPetsData(userUid);
             }
         });
@@ -189,6 +194,7 @@ public class AddPetsFragment extends Fragment {
         } else if(imageView.getDrawable() == null) {
             Toast.makeText(getActivity(), "กรุณาเลือกรูปภาพของสัตว์เลี้ยง", Toast.LENGTH_SHORT).show();
         } else {
+            csprogress.show();
             DateFormat dateFormat = new SimpleDateFormat("ddMMYYYYHHmmss");
             Date date = new Date();
 
@@ -212,6 +218,8 @@ public class AddPetsFragment extends Fragment {
                     storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(getActivity(), "เพิ่มข้อมูลสัตว์เลี้ยงเรียบร้อย", Toast.LENGTH_LONG).show();
+                            csprogress.dismiss();
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                                     .replace(R.id.main_view, new PetsFragment()).commit();

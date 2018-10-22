@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords.module.Pets;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,6 +20,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -26,6 +29,13 @@ public class PetInformationFragment extends Fragment {
 
     private Pets petInformation;
     private SaveFragment saveFragment;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
+    private FirebaseStorage mStorage;
+    private String userUid;
+    private StorageReference storageReference;
+    private StorageReference deleteRef;
+    private ProgressDialog csprogress;
 
     @Nullable
     @Override
@@ -40,6 +50,14 @@ public class PetInformationFragment extends Fragment {
         petInformation = Pets.getGetPetsInstance();
         saveFragment = SaveFragment.getSaveFragmentInstance();
         saveFragment.setName("PetInformationFragment");
+
+        mAuth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        userUid = mAuth.getCurrentUser().getUid();
+        storageReference = mStorage.getReference();
+        csprogress = new ProgressDialog(getActivity());
+
         showPetInformation(petInformation);
         initBtn();
     }
@@ -71,6 +89,7 @@ public class PetInformationFragment extends Fragment {
 
     private void initBtn() {
         initEditBtn();
+        initDeleteBtn();
         initBackBtn();
     }
 
@@ -95,6 +114,37 @@ public class PetInformationFragment extends Fragment {
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                         .addToBackStack(null)
                         .replace(R.id.main_view, new PetInformationEditFragment()).commit();
+            }
+        });
+    }
+
+    private void initDeleteBtn() {
+        Button _deleteBtn = getView().findViewById(R.id.frg_pet_inf_deleteBtn);
+        _deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                csprogress.setMessage("Deleting...");
+                csprogress.show();
+                mStore.collection("account").document(userUid)
+                        .collection("pets").document(petInformation.getKey())
+                        .delete();
+
+                deleteRef = storageReference.child(petInformation.getUrlImage());
+                deleteRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        csprogress.dismiss();
+                        Toast.makeText(getActivity(), "ลบข้อมูลสัตว์เลี้ยงสำเร็จ", Toast.LENGTH_LONG).show();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .replace(R.id.main_view, new PetsFragment()).commit();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }

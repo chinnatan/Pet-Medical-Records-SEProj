@@ -1,6 +1,8 @@
 package com.brainnotfound.g04.petmedicalrecords;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginFragment extends Fragment {
 
     private FirebaseAuth mAuth;
+    private ProgressDialog csprogress;
 
     @Nullable
     @Override
@@ -32,6 +35,7 @@ public class LoginFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         mAuth = FirebaseAuth.getInstance();
+        csprogress = new ProgressDialog(getActivity());
 
         checkCurrentUser();
         initLoginBtn();
@@ -79,7 +83,16 @@ public class LoginFragment extends Fragment {
         _loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                csprogress.setMessage("Loading...");
+                csprogress.show();
                 getEmailAndPasswordToLogin();
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        csprogress.dismiss();
+                    }
+                }, 1000);
             }
         });
     }
