@@ -1,14 +1,17 @@
 package com.brainnotfound.g04.petmedicalrecords.module.Pets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,19 +30,21 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
 
     List<Pets> pet = new ArrayList<Pets>();
     Context context;
+    FragmentActivity fragmentActivity;
     StorageReference storageReference;
 
 
-    public PetsAdapter(Context context, int resource, List<Pets> objects){
+    public PetsAdapter(Context context, int resource, List<Pets> objects, FragmentActivity fragmentActivity){
         super(context, resource, objects);
 
         this.pet = objects;
         this.context = context;
+        this.fragmentActivity = fragmentActivity;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final View _petsItem = LayoutInflater.from(context).inflate(R.layout.fragment_menu_pets_item, parent, false);
 
         TextView _nameTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_name);
@@ -47,9 +52,10 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
         TextView _sexTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_sex);
         TextView _ageTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_age);
         final ImageView _petImg = _petsItem.findViewById(R.id.frg_menu_pets_item_image);
+        Button _moreBtn = _petsItem.findViewById(R.id.frg_menu_pets_item_moreBtn);
 
 
-        Pets _rows = pet.get(position);
+        final Pets _rows = pet.get(position);
         storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child(_rows.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -66,6 +72,23 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
         _typeTxt.setText("ประเภท : " + _rows.getPet_type());
         _sexTxt.setText("เพศ : " + _rows.getPet_sex());
         _ageTxt.setText("อายุ : " + _rows.getPet_ageDay() + " วัน " + _rows.getPet_ageMonth() + " เดือน " + _rows.getPet_ageYear() + " ปี");
+        _moreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Pets petInformation = Pets.getGetPetsInstance();
+                petInformation.setPet_name(_rows.getPet_name());
+                petInformation.setPet_type(_rows.getPet_type());
+                petInformation.setPet_sex(_rows.getPet_sex());
+                petInformation.setPet_ageDay(_rows.getPet_ageDay());
+                petInformation.setPet_ageMonth(_rows.getPet_ageMonth());
+                petInformation.setPet_ageYear(_rows.getPet_ageYear());
+                petInformation.setUrlImage(_rows.getUrlImage());
+                        fragmentActivity.getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .addToBackStack(null)
+                                .replace(R.id.main_view, new PetInformationFragment()).commit();
+            }
+        });
 
         return _petsItem;
     }

@@ -59,14 +59,14 @@ public class PetsFragment extends Fragment {
         petsNotFound = getView().findViewById(R.id.frg_menu_pets_notfound);
 
         petsList = getView().findViewById(R.id.frg_menu_pets_list);
-        petsAdapter = new PetsAdapter(getActivity(), R.layout.fragment_menu_pets_item, pets);
+        petsAdapter = new PetsAdapter(getActivity(), R.layout.fragment_menu_pets_item, pets, getActivity());
 
         initAddPet();
         loadPets(userUid);
         initBackBtn();
     }
 
-    void loadPets(String userUid) {
+    private void loadPets(String userUid) {
         mStore.collection("account").document(userUid)
                 .collection("pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
@@ -96,7 +96,7 @@ public class PetsFragment extends Fragment {
         });
     }
 
-    void initAddPet() {
+    private void initAddPet() {
         LinearLayout addPets = getView().findViewById(R.id.frg_menu_pets_addBtn);
         addPets.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +110,7 @@ public class PetsFragment extends Fragment {
         });
     }
 
-    void initBackBtn() {
+    private void initBackBtn() {
         ImageView _backBtn = getView().findViewById(R.id.frg_menu_pets_backBtn);
         _backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
