@@ -22,6 +22,8 @@ import com.brainnotfound.g04.petmedicalrecords.R;
 import com.brainnotfound.g04.petmedicalrecords.module.ImageConverter;
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -92,9 +94,7 @@ public class AddPetsFragment extends Fragment {
         if(resultCode == getActivity().RESULT_OK) {
             try {
                 uri = data.getData();
-                Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri));
-                Bitmap circleBitmap = ImageConverter.getRoundedConnerBitmap(bitmap, 150);
-                imageView.setImageBitmap(circleBitmap);
+                Glide.with(getActivity()).load(uri).apply(RequestOptions.circleCropTransform()).into(imageView);
             } catch (Exception e) {
                 e.printStackTrace();
             }

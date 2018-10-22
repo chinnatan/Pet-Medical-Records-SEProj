@@ -1,5 +1,8 @@
 package com.brainnotfound.g04.petmedicalrecords.module.Pets;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.R;
+import com.brainnotfound.g04.petmedicalrecords.module.ImageConverter;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -35,6 +39,8 @@ public class PetInformationEditFragment extends Fragment {
     private ArrayList<String> ageDayData = new ArrayList<String>();
     private ArrayList<String> ageMonthData = new ArrayList<String>();
     private ArrayList<String> ageYearData = new ArrayList<String>();
+    private Uri uriImages;
+    private ImageView _imagePet;
 
     @Nullable
     @Override
@@ -53,14 +59,41 @@ public class PetInformationEditFragment extends Fragment {
         getInformation(pets);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == getActivity().RESULT_OK) {
+            try {
+                uriImages = data.getData();
+                Glide.with(getActivity()).load(uriImages).apply(RequestOptions.circleCropTransform()).into(_imagePet);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void imageController(ImageView imageView) {
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "กรุณาเลือกรูปภาพสัตว์เลี้ยงของคุณ"), 1);
+            }
+        });
+    }
+
     private void getInformation(Pets pets) {
-        final ImageView _imagePet = getView().findViewById(R.id.frg_pet_inf_edit_image);
+        _imagePet = getView().findViewById(R.id.frg_pet_inf_edit_image);
         Spinner _typeTxt = getView().findViewById(R.id.frg_pet_inf_edit_type);
         EditText _petnameTxt = getView().findViewById(R.id.frg_pet_inf_edit_petname);
         Spinner _sexTxt = getView().findViewById(R.id.frg_pet_inf_edit_sex);
         Spinner _dayAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_day);
         Spinner _monthAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_month);
         Spinner _yearAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_year);
+
+        imageController(_imagePet);
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child(pets.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -77,6 +110,7 @@ public class PetInformationEditFragment extends Fragment {
 
         getData(pets);
         setDataSpinner(_typeTxt, _sexTxt, _dayAgeTxt, _monthAgeTxt, _yearAgeTxt);
+        _petnameTxt.setText(pets.getPet_name());
 
     }
 
@@ -141,7 +175,7 @@ public class PetInformationEditFragment extends Fragment {
     }
 
     private void initBackBtn() {
-        ImageView _backBtn = getView().findViewById(R.id.frg_pet_inf_backBtn);
+        ImageView _backBtn = getView().findViewById(R.id.frg_pet_inf_edit_backBtn);
         _backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
