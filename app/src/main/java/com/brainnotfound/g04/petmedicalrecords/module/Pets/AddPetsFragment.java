@@ -1,8 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords.module.Pets;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.R;
-import com.brainnotfound.g04.petmedicalrecords.module.ImageConverter;
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 import com.bumptech.glide.Glide;
@@ -32,7 +29,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AddPetsFragment extends Fragment {
 
@@ -189,6 +189,8 @@ public class AddPetsFragment extends Fragment {
         } else if(imageView.getDrawable() == null) {
             Toast.makeText(getActivity(), "กรุณาเลือกรูปภาพของสัตว์เลี้ยง", Toast.LENGTH_SHORT).show();
         } else {
+            DateFormat dateFormat = new SimpleDateFormat("ddMMYYYYHHmmss");
+            Date date = new Date();
 
             storageReference = mStorage.getReference().child("images/pets/" + _userUid + "/" + petnameStr);
 
@@ -199,16 +201,17 @@ public class AddPetsFragment extends Fragment {
             intoDataPetStore.setPet_ageMonth(monthStr);
             intoDataPetStore.setPet_ageYear(yearStr);
             intoDataPetStore.setUrlImage(storageReference.getPath());
+            intoDataPetStore.setKey(dateFormat.format(date));
+
 
             mStore.collection("account").document(_userUid)
-                    .collection("pets").document(petnameStr)
+                    .collection("pets").document(dateFormat.format(date))
                     .set(intoDataPetStore).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
                     storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            saveFragment.setName("PetsFragment");
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                                     .replace(R.id.main_view, new PetsFragment()).commit();

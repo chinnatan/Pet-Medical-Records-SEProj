@@ -1,31 +1,33 @@
 package com.brainnotfound.g04.petmedicalrecords.module.Pets;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.R;
-import com.brainnotfound.g04.petmedicalrecords.module.ImageConverter;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
@@ -41,6 +43,18 @@ public class PetInformationEditFragment extends Fragment {
     private ArrayList<String> ageYearData = new ArrayList<String>();
     private Uri uriImages;
     private ImageView _imagePet;
+    private Spinner _typeTxt;
+    private Spinner _sexTxt;
+    private Spinner _dayAgeTxt;
+    private Spinner _monthAgeTxt;
+    private Spinner _yearAgeTxt;
+    private EditText _petnameTxt;
+    private Button _submitBtn;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
+    private FirebaseStorage mStorage;
+    private String userUid;
+    private StorageReference storageReference;
 
     @Nullable
     @Override
@@ -54,9 +68,16 @@ public class PetInformationEditFragment extends Fragment {
         saveFragment = SaveFragment.getSaveFragmentInstance();
         saveFragment.setName("PetInformationEditFragment");
         pets = Pets.getGetPetsInstance();
+        mAuth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        userUid = mAuth.getCurrentUser().getUid();
+        storageReference = mStorage.getReference();
 
-        initBtn();
+        getLayoutId();
+        imageController();
         getInformation(pets);
+        initBtn();
     }
 
     @Override
@@ -73,8 +94,8 @@ public class PetInformationEditFragment extends Fragment {
         }
     }
 
-    private void imageController(ImageView imageView) {
-        imageView.setOnClickListener(new View.OnClickListener() {
+    private void imageController() {
+        _imagePet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -85,17 +106,6 @@ public class PetInformationEditFragment extends Fragment {
     }
 
     private void getInformation(Pets pets) {
-        _imagePet = getView().findViewById(R.id.frg_pet_inf_edit_image);
-        Spinner _typeTxt = getView().findViewById(R.id.frg_pet_inf_edit_type);
-        EditText _petnameTxt = getView().findViewById(R.id.frg_pet_inf_edit_petname);
-        Spinner _sexTxt = getView().findViewById(R.id.frg_pet_inf_edit_sex);
-        Spinner _dayAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_day);
-        Spinner _monthAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_month);
-        Spinner _yearAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_year);
-
-        imageController(_imagePet);
-
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child(pets.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -111,7 +121,6 @@ public class PetInformationEditFragment extends Fragment {
         getData(pets);
         setDataSpinner(_typeTxt, _sexTxt, _dayAgeTxt, _monthAgeTxt, _yearAgeTxt);
         _petnameTxt.setText(pets.getPet_name());
-
     }
 
     private void getData(Pets pets) {
@@ -170,8 +179,66 @@ public class PetInformationEditFragment extends Fragment {
         yearAge.setAdapter(adapterAgeYear);
     }
 
+    private void getLayoutId() {
+        _imagePet = getView().findViewById(R.id.frg_pet_inf_edit_image);
+        _typeTxt = getView().findViewById(R.id.frg_pet_inf_edit_type);
+        _petnameTxt = getView().findViewById(R.id.frg_pet_inf_edit_petname);
+        _sexTxt = getView().findViewById(R.id.frg_pet_inf_edit_sex);
+        _dayAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_day);
+        _monthAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_month);
+        _yearAgeTxt = getView().findViewById(R.id.frg_pet_inf_edit_year);
+        _submitBtn = getView().findViewById(R.id.frg_pet_inf_edit_submitBtn);
+    }
+
+    private void updateData() {
+        String petnameStr = _petnameTxt.getText().toString();
+        String typeStr = _typeTxt.getSelectedItem().toString();
+        String sexStr = _sexTxt.getSelectedItem().toString();
+        String dayStr = _dayAgeTxt.getSelectedItem().toString();
+        String monthStr = _monthAgeTxt.getSelectedItem().toString();
+        String yearStr = _yearAgeTxt.getSelectedItem().toString();
+
+        if(petnameStr.isEmpty() || typeStr.isEmpty() || sexStr.isEmpty() || dayStr.isEmpty() || monthStr.isEmpty() || yearStr.isEmpty()) {
+            Toast.makeText(getActivity(), "กรุณาใส่ข้อมูลให้ครบถ้วน", Toast.LENGTH_LONG).show();
+        } else if(_imagePet.getDrawable() == null) {
+            Toast.makeText(getActivity(), "กรุณาเลือกรูปภาพของสัตว์เลี้ยง", Toast.LENGTH_SHORT).show();
+        } else {
+            StorageReference storageReferencePut = mStorage.getReference().child("images/pets/" + userUid + "/" + petnameStr);
+
+            mStore.collection("account").document(userUid)
+                    .collection("pets").document(pets.getKey())
+                    .update("pet_name", petnameStr,
+                            "pet_sex", sexStr,
+                            "pet_type", typeStr,
+                            "pet_ageDay", dayStr,
+                            "pet_ageMonth", monthStr,
+                            "pet_ageYear", yearStr,
+                            "urlImage", storageReferencePut.getPath());
+            pets.setPet_name(petnameStr);
+            pets.setPet_type(typeStr);
+            pets.setPet_sex(sexStr);
+            pets.setPet_ageDay(dayStr);
+            pets.setPet_ageMonth(monthStr);
+            pets.setPet_ageYear(yearStr);
+            storageReferencePut.putFile(uriImages).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .replace(R.id.main_view, new PetInformationFragment()).commit();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
     private void initBtn() {
         initBackBtn();
+        initSubmitBtn();
     }
 
     private void initBackBtn() {
@@ -186,4 +253,12 @@ public class PetInformationEditFragment extends Fragment {
         });
     }
 
+    private void initSubmitBtn() {
+        _submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateData();
+            }
+        });
+    }
 }

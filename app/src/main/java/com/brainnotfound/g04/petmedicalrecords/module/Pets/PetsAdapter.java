@@ -14,12 +14,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -32,7 +36,6 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
     Context context;
     FragmentActivity fragmentActivity;
     StorageReference storageReference;
-
 
     public PetsAdapter(Context context, int resource, List<Pets> objects, FragmentActivity fragmentActivity){
         super(context, resource, objects);
@@ -71,7 +74,7 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
         _nameTxt.setText("ชื่อ : " + _rows.getPet_name());
         _typeTxt.setText("ประเภท : " + _rows.getPet_type());
         _sexTxt.setText("เพศ : " + _rows.getPet_sex());
-        _ageTxt.setText("อายุ : " + _rows.getPet_ageDay() + " วัน " + _rows.getPet_ageMonth() + " เดือน " + _rows.getPet_ageYear() + " ปี");
+        _ageTxt.setText("อายุ : " + _rows.getPet_ageYear() + " ปี " + _rows.getPet_ageMonth() + " เดือน " + _rows.getPet_ageDay() + " วัน");
         _moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,10 +86,11 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
                 petInformation.setPet_ageMonth(_rows.getPet_ageMonth());
                 petInformation.setPet_ageYear(_rows.getPet_ageYear());
                 petInformation.setUrlImage(_rows.getUrlImage());
-                        fragmentActivity.getSupportFragmentManager().beginTransaction()
-                                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                                .addToBackStack(null)
-                                .replace(R.id.main_view, new PetInformationFragment()).commit();
+                petInformation.setKey(_rows.getKey());
+                fragmentActivity.getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .addToBackStack(null)
+                        .replace(R.id.main_view, new PetInformationFragment()).commit();
             }
         });
 

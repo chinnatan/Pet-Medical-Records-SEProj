@@ -11,6 +11,7 @@ public class Pets  {
     private String pet_ageMonth;
     private String pet_ageYear;
     private String urlImage;
+    private String key;
     private static Pets getPetsInstance;
 
     private Pets() {}
@@ -93,5 +94,13 @@ public class Pets  {
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
