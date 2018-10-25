@@ -60,6 +60,7 @@ public class LoginFragment extends Fragment {
                     if(authResult.getUser().isEmailVerified()) {
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();
                     } else {
+                        mAuth.signOut();
                         Toast.makeText(getActivity(), "กรุณายืนยัน email ก่อนเข้าใช้งาน", Toast.LENGTH_LONG).show();
                     }
                 }
