@@ -60,7 +60,7 @@ public class LoginFragment extends Fragment {
                     if(authResult.getUser().isEmailVerified()) {
                         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();
                     } else {
-                        Toast.makeText(getActivity(), "กรุณายืนยัน email", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "กรุณายืนยัน email ก่อนเข้าใช้งาน", Toast.LENGTH_LONG).show();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -72,13 +72,13 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    void checkCurrentUser() {
-        if(mAuth.getCurrentUser() != null) {
+    private void checkCurrentUser() {
+        if (mAuth.getCurrentUser() != null) {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();
         }
     }
 
-    void initLoginBtn() {
+    private void initLoginBtn() {
         Button _loginBtn = getView().findViewById(R.id.login_loginBtn);
         _loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

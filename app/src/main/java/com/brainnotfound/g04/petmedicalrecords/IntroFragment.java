@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class IntroFragment extends Fragment {
 
@@ -58,8 +59,8 @@ public class IntroFragment extends Fragment {
         });
     }
 
-    void checkCurrentUser() {
-        if(mAuth.getCurrentUser() != null) {
+    private void checkCurrentUser() {
+        if (mAuth.getCurrentUser() != null) {
             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new MenuFragment()).commit();
         }
     }

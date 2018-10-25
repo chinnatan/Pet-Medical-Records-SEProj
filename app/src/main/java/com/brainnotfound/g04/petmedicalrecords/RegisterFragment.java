@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ public class RegisterFragment extends Fragment {
     SaveFragment _saveFragment = SaveFragment.getSaveFragmentInstance();
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
+    private ProgressDialog csprogress;
 
     @Nullable
     @Override
@@ -36,6 +38,7 @@ public class RegisterFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        csprogress = new ProgressDialog(getActivity());
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
 
@@ -79,6 +82,7 @@ public class RegisterFragment extends Fragment {
                             .set(profileToDatabase).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            csprogress.dismiss();
                             mAuth.signOut();
                             getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new IntroFragment()).commit();
                         }
@@ -117,6 +121,8 @@ public class RegisterFragment extends Fragment {
         _registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                csprogress.setMessage("Registering");
+                csprogress.show();
                 getInformationNewAccount();
             }
         });
