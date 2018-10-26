@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,14 +11,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class ProfileFragment extends Fragment {
 
     private Profile _profile;
     private SaveFragment saveFragment;
+    private ImageView imageView;
+    private FirebaseStorage mStorage;
+    private StorageReference storageReference;
 
     @Nullable
     @Override
@@ -31,6 +42,9 @@ public class ProfileFragment extends Fragment {
 
         _profile = Profile.getProfileInstance();
         saveFragment = SaveFragment.getSaveFragmentInstance();
+        mStorage = FirebaseStorage.getInstance();
+        storageReference = mStorage.getReference();
+        imageView = getView().findViewById(R.id.frg_menu_profile_image);
 
         getProfile(_profile);
         saveFragment.setName("ProfileFragment");
@@ -46,6 +60,17 @@ public class ProfileFragment extends Fragment {
         _nameView.setText(" " + profile.getFirstname() + " " + profile.getLastname());
         _phonenumberView.setText(" " + profile.getPhonenumber());
         _ruleView.setText(" " + profile.getAccount_type());
+        storageReference.child(_profile.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Glide.with(getActivity()).load(uri).apply(RequestOptions.circleCropTransform()).into(imageView);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     void initBackBtn() {
