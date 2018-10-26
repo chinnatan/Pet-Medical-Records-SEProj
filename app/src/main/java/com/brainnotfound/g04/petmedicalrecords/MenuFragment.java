@@ -158,6 +158,17 @@ public class MenuFragment extends Fragment {
             loadingMenu.setVisibility(View.GONE);
             visibleMenu();
             initProfile(_getProfile);
+            storageReference.child(_getProfile.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Glide.with(getActivity()).load(uri).apply(RequestOptions.circleCropTransform()).into(_profileImage);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
