@@ -6,16 +6,18 @@ public class Profile {
     private String lastname;
     private String phonenumber;
     private String account_type;
+    private String urlImage;
 
     private static Profile profileInstance;
 
     private Profile() {}
 
-    public Profile(String firstname, String lastname, String phonenumber, String account_type) {
+    public Profile(String firstname, String lastname, String phonenumber, String account_type, String urlImage) {
         this.setFirstname(firstname);
         this.setLastname(lastname);
         this.setPhonenumber(phonenumber);
         this.setAccount_type(account_type);
+        this.setUrlImage(urlImage);
     }
 
     public static Profile getProfileInstance() {
@@ -57,4 +59,11 @@ public class Profile {
         this.account_type = account_type;
     }
 
+    public String getUrlImage() {
+        return urlImage;
+    }
+
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
 }
