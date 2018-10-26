@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +26,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.Map;
 
@@ -30,9 +35,12 @@ public class MenuFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore mStore;
+    private FirebaseStorage mStorage;
     private Profile _getProfile;
     private SaveFragment saveFragment;
     private ProgressBar loadingMenu;
+    private StorageReference storageReference;
+    private ImageView _profileImage;
 
     @Nullable
     @Override
@@ -48,11 +56,14 @@ public class MenuFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
+        mStorage = FirebaseStorage.getInstance();
+        storageReference = mStorage.getReference();
         _getProfile = Profile.getProfileInstance();
         saveFragment = SaveFragment.getSaveFragmentInstance();
         loadingMenu = getView().findViewById(R.id.menu_loading);
         String _userUid = mAuth.getCurrentUser().getUid();
 
+        _profileImage = getView().findViewById(R.id.menu_profileImages);
         invisibleMenu();
         getProfile(_userUid);
         getCountPet(_userUid);
@@ -111,10 +122,6 @@ public class MenuFragment extends Fragment {
                     .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                    loadingMenu.setVisibility(View.GONE);
-                    visibleMenu();
-
                     if (documentSnapshot.exists()) {
                         Map<String, Object> checkData = documentSnapshot.getData();
                         if (checkData.size() != 0) {
@@ -122,9 +129,24 @@ public class MenuFragment extends Fragment {
                             _getProfile.setLastname(documentSnapshot.getString("lastname"));
                             _getProfile.setPhonenumber(documentSnapshot.getString("phonenumber"));
                             _getProfile.setAccount_type(documentSnapshot.getString("account_type"));
+                            _getProfile.setUrlImage(documentSnapshot.getString("urlImage"));
                             initProfile(_getProfile);
                         }
                     }
+
+                    storageReference.child(_getProfile.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            Glide.with(getActivity()).load(uri).apply(RequestOptions.circleCropTransform()).into(_profileImage);
+                            loadingMenu.setVisibility(View.GONE);
+                            visibleMenu();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -170,7 +192,6 @@ public class MenuFragment extends Fragment {
     }
 
     private void invisibleMenu() {
-        ImageView _profileImage = getView().findViewById(R.id.menu_profileImages);
         TextView _signoutBtn = getView().findViewById(R.id.menu_signoutBtn);
         TextView _name = getView().findViewById(R.id.menu_profilename);
         TextView _countpet = getView().findViewById(R.id.menu_show_count_pet);
@@ -196,7 +217,6 @@ public class MenuFragment extends Fragment {
     }
 
     private void visibleMenu() {
-        ImageView _profileImage = getView().findViewById(R.id.menu_profileImages);
         TextView _signoutBtn = getView().findViewById(R.id.menu_signoutBtn);
         TextView _name = getView().findViewById(R.id.menu_profilename);
         TextView _countpet = getView().findViewById(R.id.menu_show_count_pet);
