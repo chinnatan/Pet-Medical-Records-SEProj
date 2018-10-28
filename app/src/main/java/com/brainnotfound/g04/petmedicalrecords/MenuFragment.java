@@ -192,14 +192,18 @@ public class MenuFragment extends Fragment {
         });
     }
 
-    void initProfile(Profile _profile) {
+    private void initProfile(Profile _profile) {
         TextView _profileNameTxt = getView().findViewById(R.id.menu_profilename);
         _profileNameTxt.setText(_profile.getFirstname() + " " + _profile.getLastname());
     }
 
-    void initCountPet(QuerySnapshot queryDocumentSnapshots) {
+    private void initCountPet(QuerySnapshot queryDocumentSnapshots) {
         TextView _countPet = getView().findViewById(R.id.menu_show_count_pet);
-        _countPet.setText("จำนวนสัตว์เลี้ยงทั้งหมดของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
+        if(_getProfile.getAccount_type().equals("customer")) {
+            _countPet.setText("จำนวนสัตว์เลี้ยงทั้งหมดของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
+        } else {
+            _countPet.setText("จำนวนสัตว์เลี้ยงที่ได้รับอนุญาติของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
+        }
     }
 
     private void invisibleMenu() {
@@ -245,10 +249,12 @@ public class MenuFragment extends Fragment {
         _countpet.setVisibility(View.VISIBLE);
         _profile.setVisibility(View.VISIBLE);
         _pets.setVisibility(View.VISIBLE);
-        _veterinary.setVisibility(View.VISIBLE);
-        _history.setVisibility(View.VISIBLE);
-        _medicine.setVisibility(View.VISIBLE);
-        _request.setVisibility(View.VISIBLE);
-        _setting.setVisibility(View.VISIBLE);
+        if(!_getProfile.getAccount_type().equals("veterinary")) {
+            _veterinary.setVisibility(View.VISIBLE);
+            _history.setVisibility(View.VISIBLE);
+            _medicine.setVisibility(View.VISIBLE);
+            _request.setVisibility(View.VISIBLE);
+            _setting.setVisibility(View.VISIBLE);
+        }
     }
 }
