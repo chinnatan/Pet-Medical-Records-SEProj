@@ -138,8 +138,6 @@ public class MenuFragment extends Fragment {
                         @Override
                         public void onSuccess(Uri uri) {
                             Glide.with(getActivity()).load(uri).apply(RequestOptions.circleCropTransform()).into(_profileImage);
-                            loadingMenu.setVisibility(View.GONE);
-                            visibleMenu();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -155,8 +153,6 @@ public class MenuFragment extends Fragment {
                 }
             });
         } else {
-            loadingMenu.setVisibility(View.GONE);
-            visibleMenu();
             initProfile(_getProfile);
             storageReference.child(_getProfile.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                 @Override
@@ -180,8 +176,12 @@ public class MenuFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 if(queryDocumentSnapshots.isEmpty()) {
                     initCountPet(queryDocumentSnapshots);
+                    loadingMenu.setVisibility(View.GONE);
+                    visibleMenu();
                 } else {
                     initCountPet(queryDocumentSnapshots);
+                    loadingMenu.setVisibility(View.GONE);
+                    visibleMenu();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
