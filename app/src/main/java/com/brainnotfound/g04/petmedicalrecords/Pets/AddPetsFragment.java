@@ -1,4 +1,4 @@
-package com.brainnotfound.g04.petmedicalrecords.Pets;
+package com.brainnotfound.g04.petmedicalrecords.pets;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
