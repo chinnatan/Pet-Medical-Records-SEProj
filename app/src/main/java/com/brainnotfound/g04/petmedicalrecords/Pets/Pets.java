@@ -1,6 +1,4 @@
-package com.brainnotfound.g04.petmedicalrecords.module.Pets;
-
-import android.net.Uri;
+package com.brainnotfound.g04.petmedicalrecords.Pets;
 
 public class Pets  {
 

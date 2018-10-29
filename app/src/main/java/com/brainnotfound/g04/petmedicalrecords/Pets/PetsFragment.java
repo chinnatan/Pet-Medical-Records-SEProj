@@ -1,4 +1,4 @@
-package com.brainnotfound.g04.petmedicalrecords.module.Pets;
+package com.brainnotfound.g04.petmedicalrecords.Pets;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;

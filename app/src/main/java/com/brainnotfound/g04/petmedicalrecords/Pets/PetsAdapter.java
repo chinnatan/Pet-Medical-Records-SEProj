@@ -1,6 +1,5 @@
-package com.brainnotfound.g04.petmedicalrecords.module.Pets;
+package com.brainnotfound.g04.petmedicalrecords.Pets;
 
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -14,16 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.R;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 

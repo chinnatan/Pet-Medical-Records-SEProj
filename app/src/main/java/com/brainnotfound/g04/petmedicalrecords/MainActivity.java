@@ -3,8 +3,8 @@ package com.brainnotfound.g04.petmedicalrecords;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetInformationFragment;
-import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetsFragment;
+import com.brainnotfound.g04.petmedicalrecords.Pets.PetInformationFragment;
+import com.brainnotfound.g04.petmedicalrecords.Pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 
 public class MainActivity extends AppCompatActivity {

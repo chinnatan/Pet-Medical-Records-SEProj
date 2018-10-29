@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.brainnotfound.g04.petmedicalrecords.module.Pets.PetsFragment;
+import com.brainnotfound.g04.petmedicalrecords.Pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
 import com.bumptech.glide.Glide;

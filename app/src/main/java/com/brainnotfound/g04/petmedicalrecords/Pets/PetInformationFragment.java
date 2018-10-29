@@ -1,4 +1,4 @@
-package com.brainnotfound.g04.petmedicalrecords.module.Pets;
+package com.brainnotfound.g04.petmedicalrecords.Pets;
 
 import android.app.ProgressDialog;
 import android.net.Uri;
