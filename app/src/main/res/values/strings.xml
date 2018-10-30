@@ -48,6 +48,7 @@
     <string name="petFrg_petAgeMonth">เดือน</string>
     <string name="petFrg_petAgeYear">ปี</string>
     <string name="petFrg_addPetBtn">เพิ่มสัตว์เลี้ยง</string>
+    <string name="petFrgVer_petcode">รหัสประจำตัวสัตว์เลี้ยง</string>
 
     <!--Pet Information Fragment-->
     <string name="petInfFrg_header">Pet Information</string>

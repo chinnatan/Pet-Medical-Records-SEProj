@@ -59,6 +59,7 @@ public class RegisterFragment extends Fragment {
 
         imageController();
         initRegisterBtn();
+        initBackBtn();
     }
 
     private void imageController() {
@@ -87,7 +88,7 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    void getInformationNewAccount() {
+    private void getInformationNewAccount() {
         EditText _emailTxt = getView().findViewById(R.id.register_emailTxt);
         EditText _passwordTxt = getView().findViewById(R.id.register_passwordTxt);
         EditText _password2Txt = getView().findViewById(R.id.register_password2Txt);
@@ -177,7 +178,7 @@ public class RegisterFragment extends Fragment {
         });
     }
 
-    void initRegisterBtn() {
+    private void initRegisterBtn() {
         Button _registerBtn = getView().findViewById(R.id.register_registerBtn);
         _registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +186,18 @@ public class RegisterFragment extends Fragment {
                 csprogress.setMessage("Registering");
                 csprogress.show();
                 getInformationNewAccount();
+            }
+        });
+    }
+
+    private void initBackBtn() {
+        Button _backBtn = getView().findViewById(R.id.register_backBtn);
+        _backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .replace(R.id.main_view, new IntroFragment()).commit();
             }
         });
     }
