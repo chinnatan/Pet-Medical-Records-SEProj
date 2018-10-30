@@ -209,8 +209,8 @@ public class AddPetsFragment extends Fragment {
             intoDataPetStore.setKey(dateFormat.format(date));
 
 
-            mStore.collection("account").document(_userUid)
-                    .collection("pets").document(dateFormat.format(date))
+            mStore.collection("pets").document(_userUid)
+                    .collection("detail").document(dateFormat.format(date))
                     .set(intoDataPetStore).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {

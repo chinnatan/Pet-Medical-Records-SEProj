@@ -67,8 +67,8 @@ public class PetsFragment extends Fragment {
     }
 
     private void loadPets(String userUid) {
-        mStore.collection("account").document(userUid)
-                .collection("pets").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        mStore.collection("pets").document(userUid)
+                .collection("detail").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 petsAdapter.clear();

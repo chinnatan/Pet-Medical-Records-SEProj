@@ -86,6 +86,20 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/frg_pet_inf_petcode"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="รหัสประจำตัวสัตว์เลี้ยง : xxxxx"
+                            android:textSize="18dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
                             android:id="@+id/frg_pet_inf_petname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -160,26 +174,9 @@
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button"
-                        android:text="@string/petInfFrg_qrCodeBtn"
+                        android:text="@string/petInfFrg_historyTreatmentBtn"
                         android:textColor="@color/colorWhite"
                         android:layout_marginRight="10dp"/>
-
-                    <Button
-                        android:layout_width="110dp"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/button"
-                        android:text="@string/petInfFrg_historyTreatmentBtn"
-                        android:textColor="@color/colorWhite" />
-
-                </LinearLayout>
-                <!--End Frame Button 1-->
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_marginBottom="5dp">
 
                     <Button
                         android:id="@+id/frg_pet_inf_deleteBtn"
@@ -190,7 +187,7 @@
                         android:textColor="@color/colorWhite" />
 
                 </LinearLayout>
-                <!--End Frame Button Delete-->
+                <!--End Frame Button 1-->
 
             </LinearLayout>
 

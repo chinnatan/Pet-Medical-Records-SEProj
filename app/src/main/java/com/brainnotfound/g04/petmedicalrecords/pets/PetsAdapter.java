@@ -45,6 +45,7 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
     public View getView(final int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         final View _petsItem = LayoutInflater.from(context).inflate(R.layout.fragment_menu_pets_item, parent, false);
 
+        TextView _codeTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_petcode);
         TextView _nameTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_name);
         TextView _typeTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_type);
         TextView _sexTxt = _petsItem.findViewById(R.id.frg_menu_pets_item_sex);
@@ -66,6 +67,7 @@ public class PetsAdapter extends ArrayAdapter<Pets> {
                 Log.d("PetsAdapter", e.getMessage());
             }
         });
+        _codeTxt.setText("รหัสประจำตัวสัตว์เลี้ยง : " + _rows.getKey());
         _nameTxt.setText("ชื่อ : " + _rows.getPet_name());
         _typeTxt.setText("ประเภท : " + _rows.getPet_type());
         _sexTxt.setText("เพศ : " + _rows.getPet_sex());

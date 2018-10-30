@@ -68,6 +68,7 @@ public class PetInformationFragment extends Fragment {
         TextView _petTypeTxt = getView().findViewById(R.id.frg_pet_inf_type);
         TextView _petSexTxt = getView().findViewById(R.id.frg_pet_inf_sex);
         TextView _petAgeTxt = getView().findViewById(R.id.frg_pet_inf_age);
+        TextView _petCodeTxt = getView().findViewById(R.id.frg_pet_inf_petcode);
 
         StorageReference storageReference = FirebaseStorage.getInstance().getReference();
         storageReference.child(pets.getUrlImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -85,6 +86,7 @@ public class PetInformationFragment extends Fragment {
         _petTypeTxt.setText("ประเภท : " + pets.getPet_type());
         _petSexTxt.setText("เพศ : " + pets.getPet_sex());
         _petAgeTxt.setText("อายุ : " + pets.getPet_ageYear() + " ปี " + pets.getPet_ageMonth() + " เดือน " + pets.getPet_ageDay() + " วัน");
+        _petCodeTxt.setText("รหัสประจำตัวสัตว์เลี้ยง : " + pets.getKey());
     }
 
     private void initBtn() {
@@ -125,8 +127,8 @@ public class PetInformationFragment extends Fragment {
             public void onClick(View v) {
                 csprogress.setMessage("Deleting...");
                 csprogress.show();
-                mStore.collection("account").document(userUid)
-                        .collection("pets").document(petInformation.getKey())
+                mStore.collection("pets").document(userUid)
+                        .collection("detail").document(petInformation.getKey())
                         .delete();
 
                 deleteRef = storageReference.child(petInformation.getUrlImage());

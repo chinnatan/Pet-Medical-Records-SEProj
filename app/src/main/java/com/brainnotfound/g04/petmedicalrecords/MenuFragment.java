@@ -169,8 +169,8 @@ public class MenuFragment extends Fragment {
     }
 
     private void getCountPet(String userUid) {
-        mStore.collection("account").document(userUid)
-                .collection("pets").orderBy("pet_name", Query.Direction.DESCENDING)
+        mStore.collection("pets").document(userUid)
+                .collection("detail").orderBy("pet_name", Query.Direction.DESCENDING)
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

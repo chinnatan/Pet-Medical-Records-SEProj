@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords.pets;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ public class PetInformationEditFragment extends Fragment {
     private FirebaseStorage mStorage;
     private String userUid;
     private StorageReference storageReference;
+    private ProgressDialog csprogress;
 
     @Nullable
     @Override
@@ -65,6 +67,7 @@ public class PetInformationEditFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         saveFragment = SaveFragment.getSaveFragmentInstance();
+        csprogress = new ProgressDialog(getActivity());
         saveFragment.setName("PetInformationEditFragment");
         pets = Pets.getGetPetsInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -204,8 +207,8 @@ public class PetInformationEditFragment extends Fragment {
         } else {
             StorageReference storageReferencePut = mStorage.getReference().child("images/pets/" + userUid + "/" + petnameStr);
 
-            mStore.collection("account").document(userUid)
-                    .collection("pets").document(pets.getKey())
+            mStore.collection("pets").document(userUid)
+                    .collection("detail").document(pets.getKey())
                     .update("pet_name", petnameStr,
                             "pet_sex", sexStr,
                             "pet_type", typeStr,
@@ -219,19 +222,28 @@ public class PetInformationEditFragment extends Fragment {
             pets.setPet_ageDay(dayStr);
             pets.setPet_ageMonth(monthStr);
             pets.setPet_ageYear(yearStr);
-            storageReferencePut.putFile(uriImages).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                            .replace(R.id.main_view, new PetInformationFragment()).commit();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+
+            if(uriImages == null) {
+                csprogress.dismiss();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .replace(R.id.main_view, new PetInformationFragment()).commit();
+            } else {
+                storageReferencePut.putFile(uriImages).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        csprogress.dismiss();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .replace(R.id.main_view, new PetInformationFragment()).commit();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 
@@ -256,6 +268,8 @@ public class PetInformationEditFragment extends Fragment {
         _submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                csprogress.setMessage("Updating...");
+                csprogress.show();
                 updateData();
             }
         });
