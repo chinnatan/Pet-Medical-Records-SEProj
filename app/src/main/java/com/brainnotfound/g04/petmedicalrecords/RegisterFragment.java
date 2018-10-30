@@ -191,7 +191,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void initBackBtn() {
-        Button _backBtn = getView().findViewById(R.id.register_backBtn);
+        ImageView _backBtn = getView().findViewById(R.id.register_backBtn);
         _backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
