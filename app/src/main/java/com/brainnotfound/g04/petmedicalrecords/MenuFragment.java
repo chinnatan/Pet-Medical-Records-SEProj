@@ -2,6 +2,7 @@ package com.brainnotfound.g04.petmedicalrecords;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -109,7 +110,7 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveFragment.setName("PetsFragment");
-                if(_getProfile.getAccount_type().equals("customer")) {
+                if (_getProfile.getAccount_type().equals("customer")) {
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                             .addToBackStack(null)
@@ -125,7 +126,7 @@ public class MenuFragment extends Fragment {
     }
 
     private void getProfile(String userUid) {
-        if(_getProfile.getFirstname() == null) {
+        if (_getProfile.getFirstname() == null) {
             mStore.collection("account").document(userUid)
                     .collection("profile").document(userUid)
                     .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -183,7 +184,7 @@ public class MenuFragment extends Fragment {
                 .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if(queryDocumentSnapshots.isEmpty()) {
+                if (queryDocumentSnapshots.isEmpty()) {
                     initCountPet(queryDocumentSnapshots);
                     loadingMenu.setVisibility(View.GONE);
                     visibleMenu();
@@ -208,9 +209,9 @@ public class MenuFragment extends Fragment {
 
     private void initCountPet(QuerySnapshot queryDocumentSnapshots) {
         TextView _countPet = getView().findViewById(R.id.menu_show_count_pet);
-        if(_getProfile.getAccount_type().equals("customer")) {
+        if (_getProfile.getAccount_type().equals("customer")) {
             _countPet.setText("จำนวนสัตว์เลี้ยงทั้งหมดของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
-        } else if(_getProfile.getAccount_type().equals("veterinary")){
+        } else {
             _countPet.setText("จำนวนสัตว์เลี้ยงที่ได้รับอนุญาติของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
         }
     }
@@ -258,7 +259,7 @@ public class MenuFragment extends Fragment {
         _countpet.setVisibility(View.VISIBLE);
         _profile.setVisibility(View.VISIBLE);
         _pets.setVisibility(View.VISIBLE);
-        if(!_getProfile.getAccount_type().equals("veterinary")) {
+        if (!_getProfile.getAccount_type().equals("veterinary")) {
             _veterinary.setVisibility(View.VISIBLE);
             _history.setVisibility(View.VISIBLE);
             _medicine.setVisibility(View.VISIBLE);

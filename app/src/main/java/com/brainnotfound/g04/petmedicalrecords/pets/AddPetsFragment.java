@@ -197,7 +197,7 @@ public class AddPetsFragment extends Fragment {
             Toast.makeText(getActivity(), "กรุณาเลือกรูปภาพของสัตว์เลี้ยง", Toast.LENGTH_SHORT).show();
         } else {
             csprogress.show();
-            final DateFormat dateFormat = new SimpleDateFormat("ddMMYYYYHHmmss");
+            final DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
             final Date date = new Date();
 
             storageReference = mStorage.getReference().child("images/pets/" + _userUid + "/" + petnameStr);
