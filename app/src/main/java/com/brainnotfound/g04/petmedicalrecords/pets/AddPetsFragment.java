@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +35,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AddPetsFragment extends Fragment {
 
@@ -194,8 +197,8 @@ public class AddPetsFragment extends Fragment {
             Toast.makeText(getActivity(), "กรุณาเลือกรูปภาพของสัตว์เลี้ยง", Toast.LENGTH_SHORT).show();
         } else {
             csprogress.show();
-            DateFormat dateFormat = new SimpleDateFormat("ddMMYYYYHHmmss");
-            Date date = new Date();
+            final DateFormat dateFormat = new SimpleDateFormat("ddMMYYYYHHmmss");
+            final Date date = new Date();
 
             storageReference = mStorage.getReference().child("images/pets/" + _userUid + "/" + petnameStr);
 
@@ -209,19 +212,33 @@ public class AddPetsFragment extends Fragment {
             intoDataPetStore.setKey(dateFormat.format(date));
 
 
+            Map<String, Object> uid = new HashMap<>();
+            uid.put("uid", userUid);
+
             mStore.collection("pets").document(_userUid)
-                    .collection("detail").document(dateFormat.format(date))
-                    .set(intoDataPetStore).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    .set(uid).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
-                    storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    mStore.collection("pets").document(_userUid)
+                            .collection("detail").document(dateFormat.format(date))
+                            .set(intoDataPetStore).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(getActivity(), "เพิ่มข้อมูลสัตว์เลี้ยงเรียบร้อย", Toast.LENGTH_LONG).show();
-                            csprogress.dismiss();
-                            getActivity().getSupportFragmentManager().beginTransaction()
-                                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                                    .replace(R.id.main_view, new PetsFragment()).commit();
+                        public void onSuccess(Void aVoid) {
+                            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                    Toast.makeText(getActivity(), "เพิ่มข้อมูลสัตว์เลี้ยงเรียบร้อย", Toast.LENGTH_LONG).show();
+                                    csprogress.dismiss();
+                                    getActivity().getSupportFragmentManager().beginTransaction()
+                                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                            .replace(R.id.main_view, new PetsFragment()).commit();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
@@ -234,6 +251,7 @@ public class AddPetsFragment extends Fragment {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    Log.d("ADDPETS", e.getMessage());
                 }
             });
         }

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.brainnotfound.g04.petmedicalrecords.pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.brainnotfound.g04.petmedicalrecords.veterinary.pets.PetsVeterinaryFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -79,6 +80,7 @@ public class MenuFragment extends Fragment {
             public void onClick(View v) {
                 saveFragment.setName("LoginFragment");
                 _getProfile.setFirstname(null);
+                _getProfile = null;
                 mAuth.signOut();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
@@ -107,10 +109,17 @@ public class MenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveFragment.setName("PetsFragment");
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                        .addToBackStack(null)
-                        .replace(R.id.main_view, new PetsFragment()).commit();
+                if(_getProfile.getAccount_type().equals("customer")) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .addToBackStack(null)
+                            .replace(R.id.main_view, new PetsFragment()).commit();
+                } else {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .addToBackStack(null)
+                            .replace(R.id.main_view, new PetsVeterinaryFragment()).commit();
+                }
             }
         });
     }
@@ -201,7 +210,7 @@ public class MenuFragment extends Fragment {
         TextView _countPet = getView().findViewById(R.id.menu_show_count_pet);
         if(_getProfile.getAccount_type().equals("customer")) {
             _countPet.setText("จำนวนสัตว์เลี้ยงทั้งหมดของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
-        } else {
+        } else if(_getProfile.getAccount_type().equals("veterinary")){
             _countPet.setText("จำนวนสัตว์เลี้ยงที่ได้รับอนุญาติของคุณคือ " + queryDocumentSnapshots.size() + " ตัว");
         }
     }
