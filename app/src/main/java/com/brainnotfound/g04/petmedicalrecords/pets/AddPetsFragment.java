@@ -200,7 +200,7 @@ public class AddPetsFragment extends Fragment {
             final DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
             final Date date = new Date();
 
-            storageReference = mStorage.getReference().child("images/pets/" + _userUid + "/" + petnameStr);
+            storageReference = mStorage.getReference().child("images/pets/" + _userUid + "/" + dateFormat.format(date) + "/" + petnameStr);
 
             intoDataPetStore.setPet_name(petnameStr);
             intoDataPetStore.setPet_type(typeStr);

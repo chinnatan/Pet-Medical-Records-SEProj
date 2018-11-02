@@ -205,7 +205,7 @@ public class PetInformationEditFragment extends Fragment {
         } else if(_imagePet.getDrawable() == null) {
             Toast.makeText(getActivity(), "กรุณาเลือกรูปภาพของสัตว์เลี้ยง", Toast.LENGTH_SHORT).show();
         } else {
-            StorageReference storageReferencePut = mStorage.getReference().child("images/pets/" + userUid + "/" + petnameStr);
+            StorageReference storageReferencePut = mStorage.getReference().child("images/pets/" + userUid + "/" + pets.getKey() + "/" + petnameStr);
 
             mStore.collection("pets").document(userUid)
                     .collection("detail").document(pets.getKey())
