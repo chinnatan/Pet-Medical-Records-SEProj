@@ -15,7 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.R;
+import com.brainnotfound.g04.petmedicalrecords.module.Profile;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.brainnotfound.g04.petmedicalrecords.veterinary.pets.PetsVeterinaryFragment;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -36,6 +38,7 @@ public class PetInformationFragment extends Fragment {
     private StorageReference storageReference;
     private StorageReference deleteRef;
     private ProgressDialog csprogress;
+    private Profile profile;
 
     @Nullable
     @Override
@@ -49,7 +52,13 @@ public class PetInformationFragment extends Fragment {
 
         petInformation = Pets.getGetPetsInstance();
         saveFragment = SaveFragment.getSaveFragmentInstance();
-        saveFragment.setName("PetInformationFragment");
+        profile = Profile.getProfileInstance();
+
+        if(profile.getAccount_type().equals("customer")) {
+            saveFragment.setName("PetInformationFragment");
+        } else {
+            saveFragment.setName("PetInformationFragment_To_PetsVeterinaryFragment");
+        }
 
         mAuth = FirebaseAuth.getInstance();
         mStore = FirebaseFirestore.getInstance();
@@ -100,9 +109,16 @@ public class PetInformationFragment extends Fragment {
         _backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                        .replace(R.id.main_view, new PetsFragment()).commit();
+                if(profile.getAccount_type().equals("customer")) {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .replace(R.id.main_view, new PetsFragment()).commit();
+                } else {
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                            .replace(R.id.main_view, new PetsVeterinaryFragment()).commit();
+                }
+
             }
         });
     }

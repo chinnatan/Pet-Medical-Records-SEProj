@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.main_view, new PetsVeterinaryFragment()).commit();
+        } else if (SaveFragment.getName().equals("PetInformationFragment_To_PetsVeterinaryFragment")){
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new PetsVeterinaryFragment()).commit();
         } else if (SaveFragment.getName().equals("MenuFragment")){
             finish();
         } else {
