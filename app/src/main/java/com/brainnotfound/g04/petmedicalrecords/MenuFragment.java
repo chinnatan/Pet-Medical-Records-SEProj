@@ -81,6 +81,7 @@ public class MenuFragment extends Fragment {
             public void onClick(View v) {
                 saveFragment.setName("LoginFragment");
                 _getProfile.setFirstname(null);
+                _getProfile.setAccount_type(null);
                 _getProfile = null;
                 mAuth.signOut();
                 getActivity().getSupportFragmentManager().beginTransaction()
@@ -257,14 +258,14 @@ public class MenuFragment extends Fragment {
         _signoutBtn.setVisibility(View.VISIBLE);
         _name.setVisibility(View.VISIBLE);
         _countpet.setVisibility(View.VISIBLE);
-        _profile.setVisibility(View.VISIBLE);
-        _pets.setVisibility(View.VISIBLE);
-        if (!_getProfile.getAccount_type().equals("veterinary")) {
-            _veterinary.setVisibility(View.VISIBLE);
-            _history.setVisibility(View.VISIBLE);
-            _medicine.setVisibility(View.VISIBLE);
-            _request.setVisibility(View.VISIBLE);
-            _setting.setVisibility(View.VISIBLE);
+        if (_getProfile.getAccount_type().equals("veterinary") || _getProfile.getAccount_type().equals("customer")) {
+            _profile.setVisibility(View.VISIBLE);
+            _pets.setVisibility(View.VISIBLE);
         }
+//        _veterinary.setVisibility(View.VISIBLE);
+//        _history.setVisibility(View.VISIBLE);
+//        _medicine.setVisibility(View.VISIBLE);
+//        _request.setVisibility(View.VISIBLE);
+//        _setting.setVisibility(View.VISIBLE);
     }
 }
