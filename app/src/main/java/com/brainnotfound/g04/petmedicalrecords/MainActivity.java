@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.brainnotfound.g04.petmedicalrecords.pets.PetInformationFragment;
 import com.brainnotfound.g04.petmedicalrecords.pets.PetsFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.SaveFragment;
+import com.brainnotfound.g04.petmedicalrecords.veterinary.pets.PetsVeterinaryFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction()
                     .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                     .replace(R.id.main_view, new PetInformationFragment()).commit();
+        } else if (SaveFragment.getName().equals("AddPetsVeterinaryFragment")){
+            getSupportFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                    .replace(R.id.main_view, new PetsVeterinaryFragment()).commit();
         } else if (SaveFragment.getName().equals("MenuFragment")){
             finish();
         } else {

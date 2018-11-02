@@ -136,22 +136,30 @@ public class ProfileEditFragment extends Fragment {
             profile.setFirstname(_firstnameStr);
             profile.setLastname(_lastnameStr);
             profile.setPhonenumber(_phonenumberStr);
-            storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    csprogress.dismiss();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-                            .replace(R.id.main_view, new ProfileFragment()).commit();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    csprogress.dismiss();
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    Log.d("UPDATEPROFILEIMAGE", e.getMessage());
-                }
-            });
+
+            if(uri == null) {
+                csprogress.dismiss();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                        .replace(R.id.main_view, new ProfileFragment()).commit();
+            } else {
+                storageReference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        csprogress.dismiss();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .replace(R.id.main_view, new ProfileFragment()).commit();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        csprogress.dismiss();
+                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.d("UPDATEPROFILEIMAGE", e.getMessage());
+                    }
+                });
+            }
         }
     }
 
