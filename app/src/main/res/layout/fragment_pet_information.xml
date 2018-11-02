@@ -163,31 +163,50 @@
 
                     <Button
                         android:id="@+id/frg_pet_inf_editBtn"
-                        android:layout_width="110dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button"
                         android:text="@string/petInfFrg_editInfBtn"
-                        android:textColor="@color/colorWhite"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+                <!--End Frame Button 1-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal">
 
                     <Button
-                        android:layout_width="110dp"
+                        android:id="@+id/frg_pet_inf_historyBtn"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button"
                         android:text="@string/petInfFrg_historyTreatmentBtn"
-                        android:textColor="@color/colorWhite"
-                        android:layout_marginRight="10dp"/>
+                        android:textColor="@color/colorWhite"/>
+
+                </LinearLayout>
+                <!--End Frame Button 2-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal">
 
                     <Button
                         android:id="@+id/frg_pet_inf_deleteBtn"
-                        android:layout_width="110dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_delete"
                         android:text="@string/petInfFrg_deleteBtn"
                         android:textColor="@color/colorWhite" />
 
                 </LinearLayout>
-                <!--End Frame Button 1-->
+                <!--End Frame Button 3-->
 
             </LinearLayout>
 

@@ -54,10 +54,16 @@ public class PetInformationFragment extends Fragment {
         saveFragment = SaveFragment.getSaveFragmentInstance();
         profile = Profile.getProfileInstance();
 
-        if(profile.getAccount_type().equals("customer")) {
+        if (profile.getAccount_type().equals("customer")) {
             saveFragment.setName("PetInformationFragment");
         } else {
             saveFragment.setName("PetInformationFragment_To_PetsVeterinaryFragment");
+            Button _editBtn = getView().findViewById(R.id.frg_pet_inf_editBtn);
+            Button _deleteBtn = getView().findViewById(R.id.frg_pet_inf_deleteBtn);
+//            Button _historyBtn = getView().findViewById(R.id.frg_pet_inf_historyBtn);
+
+            _editBtn.setVisibility(View.INVISIBLE);
+            _deleteBtn.setVisibility(View.INVISIBLE);
         }
 
         mAuth = FirebaseAuth.getInstance();
@@ -109,7 +115,7 @@ public class PetInformationFragment extends Fragment {
         _backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(profile.getAccount_type().equals("customer")) {
+                if (profile.getAccount_type().equals("customer")) {
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right, android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                             .replace(R.id.main_view, new PetsFragment()).commit();
