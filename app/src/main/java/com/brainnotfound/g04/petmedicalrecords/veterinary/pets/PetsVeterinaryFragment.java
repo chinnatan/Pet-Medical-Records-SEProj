@@ -82,45 +82,45 @@ public class PetsVeterinaryFragment extends Fragment {
                                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                request.setStatus(documentSnapshot.getString("status"));
-                                request.setKey(documentSnapshot.getString("key"));
+                                if(documentSnapshot != null) {
+                                    if (documentSnapshot.exists()) {
+                                        request.setStatus(documentSnapshot.getString("status"));
+                                        request.setKey(documentSnapshot.getString("key"));
 
-                                if(documentSnapshot.exists()) {
+                                        mStore.collection("pets").document(queryDocumentSnapshot.getId())
+                                                .collection("detail")
+                                                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                petsVeterinaryAdapter.clear();
+                                                loadingVeterinaryPets.setVisibility(View.GONE);
 
-                                    mStore.collection("pets").document(queryDocumentSnapshot.getId())
-                                            .collection("detail")
-                                            .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                            petsVeterinaryAdapter.clear();
-                                            loadingVeterinaryPets.setVisibility(View.GONE);
+                                                if (queryDocumentSnapshots.isEmpty()) {
+                                                    veterinaryPetsNotFound.setVisibility(View.VISIBLE);
+                                                } else {
+                                                    List<DocumentSnapshot> listPetsData = queryDocumentSnapshots.getDocuments();
 
-                                            if (queryDocumentSnapshots.isEmpty()) {
-                                                veterinaryPetsNotFound.setVisibility(View.VISIBLE);
-                                            } else {
-                                                List<DocumentSnapshot> listPetsData = queryDocumentSnapshots.getDocuments();
-
-                                                for (DocumentSnapshot _doc : listPetsData) {
-                                                    Pets _petData = _doc.toObject(Pets.class);
-                                                    if (_petData.getKey().equals(request.getKey())) {
-                                                        pets.add(_petData);
+                                                    for (DocumentSnapshot _doc : listPetsData) {
+                                                        Pets _petData = _doc.toObject(Pets.class);
+                                                        if (_petData.getKey().equals(request.getKey())) {
+                                                            pets.add(_petData);
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            petsVeterinaryAdapter.notifyDataSetChanged();
-                                            veterinaryPetsList.setAdapter(petsVeterinaryAdapter);
-                                        }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
-                                            Log.d("LOADPETS_PETSVETERINARY", e.getMessage());
-                                        }
-                                    });
-                                } else {
-                                    loadingVeterinaryPets.setVisibility(View.GONE);
-                                    veterinaryPetsNotFound.setVisibility(View.VISIBLE);
+                                                petsVeterinaryAdapter.notifyDataSetChanged();
+                                                veterinaryPetsList.setAdapter(petsVeterinaryAdapter);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+                                                Log.d("LOADPETS_PETSVETERINARY", e.getMessage());
+                                            }
+                                        });
+                                    } else {
+                                        loadingVeterinaryPets.setVisibility(View.GONE);
+                                    }
                                 }
                             }
                         }).addOnFailureListener(new OnFailureListener() {

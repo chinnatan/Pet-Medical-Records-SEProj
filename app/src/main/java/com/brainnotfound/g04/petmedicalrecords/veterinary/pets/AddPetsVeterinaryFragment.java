@@ -213,17 +213,6 @@ public class AddPetsVeterinaryFragment extends Fragment {
                     } else {
                         Log.d("PULL", "Error getting documents: ", task.getException());
                     }
-                    // Delay Check
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (checkLoop.equals("notfound")) {
-                                csprogress.dismiss();
-                                invisibleInformation();
-                                Toast.makeText(getActivity(), "ไม่พบสัตว์เลี้ยงที่คุณค้นหา", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }, 2000);
                 }
             });
         }
