@@ -1,65 +1,22 @@
 <resources>
     <string name="app_name">PetMedicalRecords</string>
+    <string name="title_home">หน้าหลัก</string>
+    <string name="title_profile">โปรไฟล์</string>
+    <string name="title_veterinary">สัตวแพทย์</string>
+    <string name="title_request">คำขอ</string>
+    <string name="title_editmy">แก้ไขข้อมูล</string>
+    <string name="title_logout">ออกจากระบบ</string>
 
-    <!--All Fragment Use Everthing-->
-    <string name="loginBtn">เข้าสู่ระบบ</string>
-    <string name="registerBtn">สมัครสมาชิก</string>
+    <string name="edittext_email">อีเมล์</string>
+    <string name="edittext_password">รหัสผ่าน</string>
+    <string name="edittext_repassword">ยืนยันรหัสผ่าน</string>
+    <string name="edittext_fullname">ชื่อ - นามสกุล</string>
+    <string name="edittext_phonenumber">เบอร์โทรศัพท์</string>
 
-    <!--Intro Fragment-->
-    <string name="title_intro_frag">Pet Medical Records</string>
+    <string name="button_login">เข้าสู่ระบบ</string>
+    <string name="button_register">ลงทะเบียน</string>
+    <string name="button_save">บันทึก</string>
 
-    <!--Login Fragment-->
-    <string name="loginFrg_emailHintTxt">somchai@gmail.com</string>
-    <string name="loginFrg_passwordHintTxt">รหัสผ่านมากกว่า 6 ตัวอักษร</string>
-    <string name="loginFrg_passwordForgotTxt">Forgot Password?</string>
-
-    <!--Register Fragment-->
-    <string name="registerFrg_registerTxt">ลงทะเบียน</string>
-    <string name="registerFrg_firstnameHintTxt">Somchai</string>
-    <string name="registerFrg_lastnameHintTxt">Chaichan</string>
-    <string name="registerFrg_emailHintTxt">somchai@gmail.com</string>
-    <string name="registerFrg_passwordHintTxt">รหัสผ่านมากกว่า 6 ตัวอักษร</string>
-    <string name="registerFrg_password2HintTxt">ยืนยันรหัสผ่านเดิมอีกครั้ง</string>
-    <string name="registerFrg_phonenumberHintTxt">0910000000</string>
-
-    <!--Menu Fragment-->
-    <string name="menuFrg_signoutTxt">Sign out</string>
-
-    <!--Profile Fragment-->
-    <string name="profileFrg_header">Your Profile</string>
-    <string name="profileFrg_name">ชื่อ : </string>
-    <string name="profileFrg_phonenumber">เบอร์โทรศัพท์ : </string>
-    <string name="profileFrg_rule">บทบาท : </string>
-    <string name="profileFrg_edit">แก้ไขข้อมูลส่วนตัว</string>
-
-    <!--Edit Profile Fragment-->
-    <string name="editProfileFrg_header">Edit Your Profile</string>
-    <string name="editProfileFrg_submit">ยืนยัน</string>
-
-    <!--Pet Fragment-->
-    <string name="petFrg_header">Your Pets</string>
-    <string name="petFrg_notfound">Pet Not Found..</string>
-    <string name="petFrg_addpet">Add Your Pet</string>
-    <string name="petFrg_petType">ประเภท </string>
-    <string name="petFrg_petName">ชื่อสัตว์เลี้ยง</string>
-    <string name="petFrg_petSex">เพศสัตว์เลี้ยง</string>
-    <string name="petFrg_petAge">อายุสัตว์เลี้ยง</string>
-    <string name="petFrg_petAgeDay">วัน</string>
-    <string name="petFrg_petAgeMonth">เดือน</string>
-    <string name="petFrg_petAgeYear">ปี</string>
-    <string name="petFrg_addPetBtn">เพิ่มสัตว์เลี้ยง</string>
-    <string name="petFrgVer_petcode">รหัสประจำตัวสัตว์เลี้ยง</string>
-    <string name="petFrgVer_petsearch">ค้นหาสัตว์เลี้ยง</string>
-    <string name="petFrgVer_petrequest">ขออนุญาตการเข้าถึง</string>
-
-    <!--Pet Information Fragment-->
-    <string name="petInfFrg_header">Pet Information</string>
-    <string name="petInfFrg_editInfBtn">แก้ไขข้อมูล</string>
-    <string name="petInfFrg_qrCodeBtn">QR CODE</string>
-    <string name="petInfFrg_deleteBtn">ลบข้อมูล</string>
-    <string name="petInfFrg_historyTreatmentBtn">ประวัติการรักษา</string>
-
-    <!--Pet Information Edit Fragment-->
-    <string name="petInfEditFrg_header">Pet Information Edit</string>
-    <string name="petInfEditFrg_submit">ยืนยันการแก้ไขข้อมูล</string>
+    <string name="textview_register">ลงทะเบียน</string>
+    <string name="textview_unregister">คุณยังไม่มีบัญชีใช่หรือไม่.</string>
 </resources>

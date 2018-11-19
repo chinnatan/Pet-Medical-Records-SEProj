@@ -1,66 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/register_title_warp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         android:background="@color/colorPrimaryDark"
-        android:orientation="vertical"
-        android:padding="10dp"
-        android:elevation="1dp">
+        android:elevation="8dp">
+
+        <android.widget.Toolbar
+            android:id="@+id/register_action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ToolbarTheme" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_title_warp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/register_backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ic_back"
-                android:backgroundTint="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/registerFrg_registerTxt"
-                android:textColor="@color/colorWhite"
-                android:textSize="20dp"
-                android:gravity="end"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-    <!--End Frame 1 (Back Button)-->
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="50dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/register_profileImage"
-                    android:layout_width="150dp"
-                    android:layout_height="149dp"
-                    android:background="@mipmap/ic_camera_circle"
-                    android:layout_gravity="center_horizontal"/>
-
-            </LinearLayout>
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,89 +42,175 @@
                 android:orientation="vertical"
                 android:padding="35dp">
 
-                <EditText
-                    android:id="@+id/register_emailTxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/registerFrg_emailHintTxt"
-                    android:inputType="textEmailAddress"
-                    android:drawableLeft="@drawable/ic_acount_email"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="5dp"
-                    android:layout_marginBottom="5dp"/>
+                <RelativeLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:elevation="8dp">
 
-                <EditText
-                    android:id="@+id/register_passwordTxt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/registerFrg_passwordHintTxt"
-                    android:inputType="textPassword"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="5dp"
-                    android:layout_marginBottom="5dp"/>
-                <EditText
-                    android:id="@+id/register_password2Txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/registerFrg_password2HintTxt"
-                    android:inputType="textPassword"
-                    android:drawableLeft="@drawable/ic_password"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:elevation="1dp"
+                        android:gravity="end|bottom">
 
-                <EditText
-                    android:id="@+id/register_firstnameTxt"
+                        <ImageView
+                            android:id="@+id/frg_reg_imageme_click"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
+                            android:background="@mipmap/ic_camera_import"
+                            android:layout_centerVertical="true"
+                            android:layout_centerHorizontal="true"
+                            android:elevation="1dp" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/frg_reg_imageme"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/logo"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"/>
+
+                </RelativeLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/registerFrg_firstnameHintTxt"
-                    android:drawableLeft="@drawable/ic_user"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/register_lastnameTxt"
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="true">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/frg_reg_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edittext_email"
+                            android:inputType="textEmailAddress" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/registerFrg_lastnameHintTxt"
-                    android:drawableLeft="@drawable/ic_user"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/register_phonenumberTxt"
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:passwordToggleEnabled="true"
+                        app:hintEnabled="true">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/frg_reg_password"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edittext_password"
+                            android:inputType="textPassword" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/registerFrg_phonenumberHintTxt"
-                    android:maxLength="10"
-                    android:inputType="number"
-                    android:drawableLeft="@drawable/ic_phonenumber"
-                    android:background="@drawable/edittext_rounded"
-                    android:padding="5dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:orientation="horizontal">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:background="@color/colorLine"/>
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:passwordToggleEnabled="true"
+                        app:hintEnabled="true">
 
-                <Button
-                    android:id="@+id/register_registerBtn"
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/frg_reg_repassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edittext_repassword"
+                            android:inputType="textPassword" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/button"
-                    android:textColor="@color/colorWhite"
-                    android:text="@string/registerBtn"
-                    android:layout_marginBottom="5dp"/>
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="true">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/frg_reg_fullname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edittext_fullname"
+                            android:inputType="textEmailAddress" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:hintEnabled="true">
+
+                        <android.support.design.widget.TextInputEditText
+                            android:id="@+id/frg_reg_phonenumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/edittext_phonenumber"
+                            android:maxLength="10"
+                            android:inputType="number" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/frg_reg_submitbutton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/login_button"
+                        android:fontFamily="@font/k2d"
+                        android:shadowColor="#FF000000"
+                        android:shadowDx="0"
+                        android:shadowDy="-1"
+                        android:shadowRadius="0.2"
+                        android:text="@string/button_register"
+                        android:textColor="@android:color/white"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
