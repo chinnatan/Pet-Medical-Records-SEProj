@@ -90,6 +90,7 @@ public class LoginFragment extends Fragment {
                             "กรุณากรอกข้อมูลให้ครบถ้วน",
                             Toast.LENGTH_SHORT)
                             .show();
+                    progressDialog.dismiss();
                 } else {
                     firebaseAuth.signInWithEmailAndPassword(email, password)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
