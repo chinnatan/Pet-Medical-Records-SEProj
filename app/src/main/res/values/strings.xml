@@ -12,11 +12,25 @@
     <string name="edittext_repassword">ยืนยันรหัสผ่าน</string>
     <string name="edittext_fullname">ชื่อ - นามสกุล</string>
     <string name="edittext_phonenumber">เบอร์โทรศัพท์</string>
+    <string name="edittext_petname">ชื่อสัตว์เลี้ยง</string>
+
+    <string name="radio_male">ผู้</string>
+    <string name="radio_female">เมีย</string>
+    <string name="radio_dog">สุนัข</string>
+    <string name="radio_cat">แมว</string>
 
     <string name="button_login">เข้าสู่ระบบ</string>
     <string name="button_register">ลงทะเบียน</string>
     <string name="button_save">บันทึก</string>
+    <string name="button_add">เพิ่ม</string>
 
     <string name="textview_register">ลงทะเบียน</string>
     <string name="textview_unregister">คุณยังไม่มีบัญชีใช่หรือไม่.</string>
+    <string name="textview_sex">เพศ</string>
+    <string name="textview_type">ประเภท</string>
+    <string name="textview_year">ปี</string>
+    <string name="textview_month">เดือน</string>
+    <string name="textview_day">วัน</string>
+
+    <string name="spinner_age">อายุ</string>
 </resources>

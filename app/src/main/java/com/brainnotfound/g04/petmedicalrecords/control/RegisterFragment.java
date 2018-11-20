@@ -51,7 +51,6 @@ public class RegisterFragment extends Fragment {
     private final String title = "ลงทะเบียน";
 
     private Uri uriImage;
-    private Uri imageUpload;
     private Toolbar mToolBar;
     private ImageView mImageViewMe;
     private ImageView mImageChoose;

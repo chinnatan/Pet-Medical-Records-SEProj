@@ -110,7 +110,6 @@ public class MyFragment extends Fragment {
 
     }
 
-
     private void loadMy() {
         Log.d(TAG, "load my");
         storageReference.child(user.getImage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

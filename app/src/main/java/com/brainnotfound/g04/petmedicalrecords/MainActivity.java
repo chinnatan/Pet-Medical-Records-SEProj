@@ -8,10 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.brainnotfound.g04.petmedicalrecords.control.HomeFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.LoginFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.MyFragment;
+import com.brainnotfound.g04.petmedicalrecords.module.User;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,14 +31,19 @@ public class MainActivity extends AppCompatActivity {
     private Fragment fragmentRequest;
     private Fragment fragmentMy;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        init(savedInstanceState);
-        setupNav();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
         fragmentHome = new HomeFragment();
         fragmentMy = new MyFragment();
+        init(savedInstanceState);
+        setupNav();
     }
 
     @Override
@@ -44,12 +56,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void init(Bundle bundle) {
-        if(bundle == null) {
-            fragment = new LoginFragment();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.main_view, fragment)
-                    .commit();
+        if(firebaseAuth.getCurrentUser() == null) {
+            if (bundle == null) {
+                fragment = new LoginFragment();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.main_view, fragment)
+                        .commit();
+            }
+        } else if(firebaseAuth.getCurrentUser() != null) {
+            if (bundle == null) {
+                fragment = new HomeFragment();
+                firebaseFirestore.collection("account").document(firebaseAuth.getCurrentUser().getUid())
+                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        User user = User.getUserInstance();
+                        user.setUid(firebaseAuth.getCurrentUser().getUid());
+                        user.setFullname(documentSnapshot.getString("fullname"));
+                        user.setPhonenumber(documentSnapshot.getString("phonenumber"));
+                        user.setImage(documentSnapshot.getString("image"));
+                        user.setType(documentSnapshot.getString("type"));
+                        getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.main_view, fragment)
+                                .commit();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(MainActivity.this, "LOAD DATA ERROR - " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 
