@@ -34,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         fragmentMy = new MyFragment();
     }
 
+    @Override
+    public void onBackPressed() {
+        if(getSupportFragmentManager().getBackStackEntryCount() >= 1) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            finish();
+        }
+    }
+
     private void init(Bundle bundle) {
         if(bundle == null) {
             fragment = new LoginFragment();
