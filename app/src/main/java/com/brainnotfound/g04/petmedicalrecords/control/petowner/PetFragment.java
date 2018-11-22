@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords.control.petowner;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,10 +15,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.brainnotfound.g04.petmedicalrecords.MainActivity;
 import com.brainnotfound.g04.petmedicalrecords.R;
+import com.brainnotfound.g04.petmedicalrecords.control.HomeFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.LoginFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.MyEditFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
@@ -25,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,8 +47,10 @@ public class PetFragment extends Fragment {
     private TextView zPettype;
     private TextView zPetsex;
     private TextView zPetage;
+    private ProgressDialog zLoadingDialog;
 
     private Pet pet;
+    private FirebaseFirestore firebaseFirestore;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
 
@@ -61,7 +67,10 @@ public class PetFragment extends Fragment {
         MainActivity.onFragmentChanged(TAG);
         petFragmentElements();
 
+        zLoadingDialog = new ProgressDialog(getActivity());
+
         pet = Pet.getPetInstance();
+        firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
@@ -103,11 +112,33 @@ public class PetFragment extends Fragment {
                         return true;
                     case R.id.navigation_delete:
                         Log.d(TAG, "menu item click : delete");
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new LoginFragment()).commit();
+                        zLoadingDialog.setMessage("กำลังลบข้อมูล...");
+                        zLoadingDialog.setCancelable(false);
+                        zLoadingDialog.setCanceledOnTouchOutside(false);
+                        zLoadingDialog.show();
+                        deletePet();
                         return true;
                     default:
                         return true;
                 }
+            }
+        });
+    }
+
+    private void deletePet() {
+        firebaseFirestore.collection("pet").document(pet.getPetkey())
+                .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                zLoadingDialog.dismiss();
+                Toast.makeText(getActivity(), "ลบข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new HomeFragment()).commit();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "DELETE ERROR : " + e.getMessage());
+                zLoadingDialog.dismiss();
             }
         });
     }
