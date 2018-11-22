@@ -6,6 +6,7 @@
     <string name="title_request">คำขอ</string>
     <string name="title_editmy">แก้ไขข้อมูล</string>
     <string name="title_logout">ออกจากระบบ</string>
+    <string name="title_delete">ลบข้อมูล</string>
 
     <string name="edittext_email">อีเมล์</string>
     <string name="edittext_password">รหัสผ่าน</string>

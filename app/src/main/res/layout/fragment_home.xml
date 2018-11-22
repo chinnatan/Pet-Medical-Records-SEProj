@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -8,7 +7,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/home_title_warp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimaryDark"
         android:elevation="8dp">
 
         <android.widget.Toolbar
@@ -17,7 +17,23 @@
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimaryDark"
             android:minHeight="?attr/actionBarSize"
-            android:theme="@style/ToolbarTheme.Black" />
+            android:theme="@style/ToolbarTheme.Black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/home_loading"
+            style="@android:style/Widget.Material.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorAccent"
+            android:minHeight="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -83,6 +99,5 @@
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
-
 
 </android.support.constraint.ConstraintLayout>

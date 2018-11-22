@@ -19,7 +19,7 @@ public class Pet {
     }
 
     public static Pet getPetInstance() {
-        if(petInstance == null) {
+        if (petInstance == null) {
             petInstance = new Pet();
         }
         return petInstance;
@@ -95,5 +95,9 @@ public class Pet {
 
     public void setPetimage(String petimage) {
         this.petimage = petimage;
+    }
+
+    public void clear() {
+        petInstance = null;
     }
 }
