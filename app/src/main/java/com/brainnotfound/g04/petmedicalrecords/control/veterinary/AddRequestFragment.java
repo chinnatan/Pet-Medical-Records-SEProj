@@ -50,7 +50,7 @@ public class AddRequestFragment extends Fragment {
         MainActivity.onFragmentChanged(TAG);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-        zPetRequestAdapter = new PetRequestAdapter(getActivity(), R.layout.fragment_addrequest_item, zPetArrayList);
+        zPetRequestAdapter = new PetRequestAdapter(getActivity(), R.layout.fragment_addrequest_item, zPetArrayList, getActivity());
 
         addrequestFragmentElements();
         searchbar();
