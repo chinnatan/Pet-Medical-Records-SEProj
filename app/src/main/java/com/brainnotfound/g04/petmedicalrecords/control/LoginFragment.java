@@ -110,6 +110,10 @@ public class LoginFragment extends Fragment {
                                                 user.setFullname(documentSnapshot.getString("fullname"));
                                                 user.setPhonenumber(documentSnapshot.getString("phonenumber"));
                                                 user.setImage(documentSnapshot.getString("image"));
+                                                user.setType(documentSnapshot.getString("type"));
+
+                                                MainActivity.onBottomNavigationChanged(user.getType());
+
                                                 progressDialog.dismiss();
                                                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new HomeFragment()).commit();
                                             }
@@ -160,6 +164,7 @@ public class LoginFragment extends Fragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        progressDialog.dismiss();
                     }
                 })
                 .show();

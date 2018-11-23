@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.brainnotfound.g04.petmedicalrecords.MainActivity;
@@ -40,6 +41,7 @@ public class HomeFragment extends Fragment {
     private ImageButton zAddBtn;
     private ListView zListPet;
     private ProgressBar zLoading;
+    private TextView zNotfound;
     private ArrayList<Pet> zPetArrayList = new ArrayList<>();
     private PetAdapter zPetAdapter;
 
@@ -69,34 +71,42 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPet() {
-        firebaseFirestore.collection("pet").whereEqualTo("petownerUid", user.getUid())
-                .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                zPetAdapter.clear();
-                if(!queryDocumentSnapshots.isEmpty()) {
+        if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+            firebaseFirestore.collection("pet").whereEqualTo("petownerUid", user.getUid())
+                    .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                @Override
+                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    zPetAdapter.clear();
+                    if (!queryDocumentSnapshots.isEmpty()) {
 
-                    List<DocumentSnapshot> listPetData = queryDocumentSnapshots.getDocuments();
+                        List<DocumentSnapshot> listPetData = queryDocumentSnapshots.getDocuments();
 
-                    for (DocumentSnapshot document : listPetData) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                        Pet petData = document.toObject(Pet.class);
-                        zPetArrayList.add(petData);
+                        for (DocumentSnapshot document : listPetData) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            Pet petData = document.toObject(Pet.class);
+                            zPetArrayList.add(petData);
+                        }
+
+                        zPetAdapter.notifyDataSetChanged();
+                        zListPet.setAdapter(zPetAdapter);
+                        zLoading.setVisibility(View.GONE);
+                    } else {
+                        Log.d(TAG, "document is empty");
+                        zLoading.setVisibility(View.GONE);
+                        zNotfound.setVisibility(View.VISIBLE);
                     }
-
-                    zPetAdapter.notifyDataSetChanged();
-                    zListPet.setAdapter(zPetAdapter);
-                    zLoading.setVisibility(View.GONE);
-                } else {
-                    Log.d(TAG, "document is empty");
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "LOAD DOCUMENT ERROR : " + e.getMessage());
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "LOAD DOCUMENT ERROR : " + e.getMessage());
+                }
+            });
+        } else if(user.getType().equals("สัตวแพทย์")) {
+            zLoading.setVisibility(View.GONE);
+            zNotfound.setText("คุณยังไม่ได้ส่งคำขอ");
+            zNotfound.setVisibility(View.VISIBLE);
+        }
     }
 
     private void createMenu() {
@@ -110,13 +120,16 @@ public class HomeFragment extends Fragment {
         zAddBtn = getView().findViewById(R.id.frg_home_addbtn);
         zListPet = getView().findViewById(R.id.home_list);
         zLoading = getView().findViewById(R.id.home_loading);
+        zNotfound = getView().findViewById(R.id.home_notfound);
     }
 
     private void initAddBtn() {
         zAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new AddPetFragment()).addToBackStack(null).commit();
+                if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new AddPetFragment()).addToBackStack(null).commit();
+                }
             }
         });
     }
