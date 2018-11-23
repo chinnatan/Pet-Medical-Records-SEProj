@@ -20,6 +20,7 @@ import com.brainnotfound.g04.petmedicalrecords.R;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.AddPetFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.PetAdapter;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.PetFragment;
+import com.brainnotfound.g04.petmedicalrecords.control.veterinary.AddRequestFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -57,10 +58,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        user = User.getUserInstance();
         MainActivity.onFragmentChanged(TAG);
+        MainActivity.onBottomNavigationChanged(user.getType());
 
         zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList);
-        user = User.getUserInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         homeFragmentElements();
@@ -129,6 +131,8 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new AddPetFragment()).addToBackStack(null).commit();
+                } else {
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new AddRequestFragment()).addToBackStack(null).commit();
                 }
             }
         });

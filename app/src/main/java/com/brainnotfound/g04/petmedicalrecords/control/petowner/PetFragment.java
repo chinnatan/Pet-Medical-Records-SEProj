@@ -47,6 +47,7 @@ public class PetFragment extends Fragment {
     private TextView zPettype;
     private TextView zPetsex;
     private TextView zPetage;
+    private TextView zPetid;
     private ProgressDialog zLoadingDialog;
 
     private Pet pet;
@@ -86,6 +87,7 @@ public class PetFragment extends Fragment {
         zPettype = getView().findViewById(R.id.frg_pet_type);
         zPetsex = getView().findViewById(R.id.frg_pet_sex);
         zPetage = getView().findViewById(R.id.frg_pet_age);
+        zPetid = getView().findViewById(R.id.frg_pet_id);
     }
 
     private void createMenu() {
@@ -151,11 +153,13 @@ public class PetFragment extends Fragment {
                     if(isAdded()) {
                         Glide.with(getActivity()).load(task.getResult()).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
                         zPetname.setText(pet.getPetname());
+                        zPetid.setText("PET ID : " + pet.getPetkey());
                         zPettype.setText("ประเภท : " + pet.getPettype());
                         zPetsex.setText("เพศ : " + pet.getPetsex());
                         zPetage.setText("อายุ : " + pet.getPetyear() + " ปี " + pet.getPetmonth() + " เดือน " + pet.getPetday() + " วัน");
                         zImageViewPet.setVisibility(View.VISIBLE);
                         zPetname.setVisibility(View.VISIBLE);
+                        zPetid.setVisibility(View.VISIBLE);
                         zPettype.setVisibility(View.VISIBLE);
                         zPetsex.setVisibility(View.VISIBLE);
                         zPetage.setVisibility(View.VISIBLE);

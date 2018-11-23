@@ -72,6 +72,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
     }
 
+    private void setupNav() {
+        if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+            bottomNavigationView.getMenu().clear();
+            bottomNavigationView.inflateMenu(R.menu.navigation);
+        } else {
+            bottomNavigationView.getMenu().clear();
+            bottomNavigationView.inflateMenu(R.menu.navigation_veterinary);
+        }
+    }
+
     private void checkCurrentUser() {
         if (firebaseAuth.getCurrentUser() != null) {
             fragment = new HomeFragment();
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             .beginTransaction()
                             .replace(R.id.main_view, fragment)
                             .commit();
+                    setupNav();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -110,10 +121,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         Log.d(TAG, "check nav 3");
                         bottomNavigationView.getMenu().getItem(3).setChecked(true);
                     }
-//            else if (fragmentName.equals("ME")) {
-//                Log.d(TAG, "check nav 2");
-//                bottomNavigationView.getMenu().getItem(2).setChecked(true);
-//            }
                     Log.d(TAG, "Visible nav");
                     bottomNavigationView.setVisibility(View.VISIBLE);
                 } else {
@@ -129,10 +136,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         Log.d(TAG, "check nav 1");
                         bottomNavigationView.getMenu().getItem(1).setChecked(true);
                     }
-//            else if (fragmentName.equals("ME")) {
-//                Log.d(TAG, "check nav 2");
-//                bottomNavigationView.getMenu().getItem(2).setChecked(true);
-//            }
                     Log.d(TAG, "Visible nav");
                     bottomNavigationView.setVisibility(View.VISIBLE);
                 } else {
@@ -172,7 +175,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     fragment = fragmentMy;
                     break;
             }
-
             if (fragment != null) {
                 Log.d(TAG, "Change page");
                 getSupportFragmentManager()
@@ -181,6 +183,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         .commit();
             }
             return true;
+
         } else if (user.getType().equals("สัตวแพทย์")) {
             switch (menuItem.getItemId()) {
                 case R.id.navigation_home:
