@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords.control;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.brainnotfound.g04.petmedicalrecords.MainActivity;
@@ -21,10 +23,16 @@ import com.brainnotfound.g04.petmedicalrecords.control.petowner.AddPetFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.PetAdapter;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.PetFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.veterinary.AddRequestFragment;
+import com.brainnotfound.g04.petmedicalrecords.control.veterinary.PetVeterinaryAdapter;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
+import com.brainnotfound.g04.petmedicalrecords.module.Request;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -44,9 +52,12 @@ public class HomeFragment extends Fragment {
     private ProgressBar zLoading;
     private TextView zNotfound;
     private ArrayList<Pet> zPetArrayList = new ArrayList<>();
+    private ArrayList<Request> zRequestArrayList = new ArrayList<>();
     private PetAdapter zPetAdapter;
+    private PetVeterinaryAdapter zPetVeterinaryAdapter;
 
     private User user;
+    private Request requestData;
     private FirebaseFirestore firebaseFirestore;
 
     @Nullable
@@ -62,7 +73,11 @@ public class HomeFragment extends Fragment {
         MainActivity.onFragmentChanged(TAG);
         MainActivity.onBottomNavigationChanged(user.getType());
 
-        zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList);
+        if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+            zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList);
+        } else {
+            zPetVeterinaryAdapter = new PetVeterinaryAdapter(getActivity(), R.layout.fragment_pet_veterinary_item, zPetArrayList, zRequestArrayList);
+        }
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         homeFragmentElements();
@@ -73,7 +88,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadPet() {
-        if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+        if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
             firebaseFirestore.collection("pet").whereEqualTo("petownerUid", user.getUid())
                     .get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                 @Override
@@ -104,10 +119,56 @@ public class HomeFragment extends Fragment {
                     Log.d(TAG, "LOAD DOCUMENT ERROR : " + e.getMessage());
                 }
             });
-        } else if(user.getType().equals("สัตวแพทย์")) {
-            zLoading.setVisibility(View.GONE);
-            zNotfound.setText("คุณยังไม่ได้ส่งคำขอ");
-            zNotfound.setVisibility(View.VISIBLE);
+        } else if (user.getType().equals("สัตวแพทย์")) {
+
+            firebaseFirestore.collection("request").whereEqualTo("veterinaryuid", user.getUid()).get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            zPetVeterinaryAdapter.clear();
+                            if(!queryDocumentSnapshots.isEmpty()) {
+
+                                for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                    requestData = documentSnapshot.toObject(Request.class);
+                                    zRequestArrayList.add(requestData);
+
+                                    firebaseFirestore.collection("pet").whereEqualTo("petkey", requestData.getPetkey())
+                                            .get()
+                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                @Override
+                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                    if(!queryDocumentSnapshots.isEmpty()) {
+                                                        for(DocumentSnapshot petDoc : queryDocumentSnapshots.getDocuments()) {
+                                                            Pet petData = petDoc.toObject(Pet.class);
+                                                            zPetArrayList.add(petData);
+                                                        }
+
+                                                        zPetVeterinaryAdapter.notifyDataSetChanged();
+                                                        zListPet.setAdapter(zPetVeterinaryAdapter);
+                                                        zLoading.setVisibility(View.GONE);
+                                                    }
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Log.d(TAG, "Load pet failed : " + e.getMessage());
+                                        }
+                                    });
+                                }
+
+                            } else {
+                                Log.d(TAG, "document is empty");
+                                zLoading.setVisibility(View.GONE);
+                                zNotfound.setText("คุณยังไม่ได้ส่งคำขอ");
+                                zNotfound.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.d(TAG, "Load request failed : " + e.getMessage());
+                }
+            });
         }
     }
 
@@ -129,7 +190,7 @@ public class HomeFragment extends Fragment {
         zAddBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+                if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new AddPetFragment()).addToBackStack(null).commit();
                 } else {
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new AddRequestFragment()).addToBackStack(null).commit();
@@ -142,19 +203,23 @@ public class HomeFragment extends Fragment {
         zListPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Pet petAdapter = (Pet) parent.getAdapter().getItem(position);
-                Pet pet = Pet.getPetInstance();
-                pet.setPetimage(petAdapter.getPetimage());
-                pet.setPetname(petAdapter.getPetname());
-                pet.setPettype(petAdapter.getPettype());
-                pet.setPetsex(petAdapter.getPetsex());
-                pet.setPetownerUid(petAdapter.getPetownerUid());
-                pet.setPetkey(petAdapter.getPetkey());
-                pet.setPetday(petAdapter.getPetday());
-                pet.setPetmonth(petAdapter.getPetmonth());
-                pet.setPetyear(petAdapter.getPetyear());
+                Pet petData = (Pet) parent.getAdapter().getItem(position);
 
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
+                if(!zRequestArrayList.get(position).getStatus().equals("รออนุมัติ")) {
+                    Pet pet = Pet.getPetInstance();
+                    pet.setPetimage(petData.getPetimage());
+                    pet.setPetname(petData.getPetname());
+                    pet.setPettype(petData.getPettype());
+                    pet.setPetsex(petData.getPetsex());
+                    pet.setPetownerUid(petData.getPetownerUid());
+                    pet.setPetkey(petData.getPetkey());
+                    pet.setPetday(petData.getPetday());
+                    pet.setPetmonth(petData.getPetmonth());
+                    pet.setPetyear(petData.getPetyear());
+                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
+                } else {
+                    Toast.makeText(getActivity(), "กรุณารอการอนุมัติจากเจ้าของสัตว์เลี้ยง", Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
