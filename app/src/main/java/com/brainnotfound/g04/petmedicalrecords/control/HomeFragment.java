@@ -71,7 +71,6 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         user = User.getUserInstance();
         MainActivity.onFragmentChanged(TAG);
-        MainActivity.onBottomNavigationChanged(user.getType());
 
         if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
             zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList);

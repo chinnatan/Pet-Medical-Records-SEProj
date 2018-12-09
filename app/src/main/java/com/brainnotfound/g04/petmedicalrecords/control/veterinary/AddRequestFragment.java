@@ -84,6 +84,7 @@ public class AddRequestFragment extends Fragment {
                             zLoading.setVisibility(View.GONE);
                         } else if (queryDocumentSnapshots.isEmpty()) {
                             Toast.makeText(getActivity(), "ไม่พบสัตว์เลี้ยงที่คุณค้นหา", Toast.LENGTH_SHORT).show();
+                            zLoading.setVisibility(View.INVISIBLE);
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -103,8 +104,13 @@ public class AddRequestFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                zLoading.setVisibility(View.VISIBLE);
-                searchPet(newText);
+                if(newText.length() == 14) {
+                    zLoading.setVisibility(View.VISIBLE);
+                    searchPet(newText);
+                } else {
+                    zLoading.setVisibility(View.INVISIBLE);
+                    zPetRequestAdapter.clear();
+                }
                 return true;
             }
         });

@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         checkCurrentUser();
         bottomNavigationView = findViewById(R.id.navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -76,9 +77,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
             bottomNavigationView.getMenu().clear();
             bottomNavigationView.inflateMenu(R.menu.navigation);
+            bottomNavigationView.setVisibility(View.VISIBLE);
         } else {
             bottomNavigationView.getMenu().clear();
             bottomNavigationView.inflateMenu(R.menu.navigation_veterinary);
+            bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -153,8 +156,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.getMenu().clear();
         if (usertype.equals("เจ้าของสัตว์เลี้ยง")) {
             bottomNavigationView.inflateMenu(R.menu.navigation);
+            bottomNavigationView.setVisibility(View.VISIBLE);
         } else if (usertype.equals("สัตวแพทย์")) {
             bottomNavigationView.inflateMenu(R.menu.navigation_veterinary);
+            bottomNavigationView.setVisibility(View.VISIBLE);
         }
     }
 
