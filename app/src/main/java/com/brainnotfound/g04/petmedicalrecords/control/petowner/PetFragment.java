@@ -12,7 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,8 +27,10 @@ import com.brainnotfound.g04.petmedicalrecords.control.HomeFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.LoginFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.MyEditFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.adapter.HistoryAdapter;
+import com.brainnotfound.g04.petmedicalrecords.control.veterinary.AddHistoryFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.History;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
+import com.brainnotfound.g04.petmedicalrecords.module.User;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,10 +66,13 @@ public class PetFragment extends Fragment {
     private TextView zHistoryNotfound;
     private ProgressBar zHistoryLoading;
     private ListView zHistoryList;
+    private ImageButton zHistoryAdd;
+    private LinearLayout zHistoryAddBg;
 
     private ArrayList<History> zHistoryArrayList = new ArrayList<>();
     private HistoryAdapter zHistoryAdapter;
 
+    private User user;
     private Pet pet;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseStorage firebaseStorage;
@@ -86,6 +93,7 @@ public class PetFragment extends Fragment {
 
         zLoadingDialog = new ProgressDialog(getActivity());
 
+        user = User.getUserInstance();
         pet = Pet.getPetInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseStorage = FirebaseStorage.getInstance();
@@ -95,6 +103,7 @@ public class PetFragment extends Fragment {
         loadPet();
 
         zHistoryAdapter = new HistoryAdapter(getActivity(), R.layout.fragment_history_item, zHistoryArrayList);
+        addHistoryPet();
     }
 
     private void petFragmentElements() {
@@ -110,6 +119,8 @@ public class PetFragment extends Fragment {
         zHistoryNotfound = getView().findViewById(R.id.pet_history_notfound);
         zHistoryLoading = getView().findViewById(R.id.pet_history_loading);
         zHistoryList = getView().findViewById(R.id.pet_history_list);
+        zHistoryAdd = getView().findViewById(R.id.pet_history_add);
+        zHistoryAddBg = getView().findViewById(R.id.pet_history_add_bg);
     }
 
     private void createMenu() {
@@ -147,6 +158,11 @@ public class PetFragment extends Fragment {
                 }
             }
         });
+
+        if (!user.getType().equals("สัตวแพทย์")) {
+            zHistoryAdd.setVisibility(View.INVISIBLE);
+            zHistoryAddBg.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void deletePet() {
@@ -202,11 +218,11 @@ public class PetFragment extends Fragment {
         firebaseFirestore.collection("pet").document(pet.getPetkey())
                 .collection("history")
                 .orderBy("date", Query.Direction.DESCENDING)
-                .orderBy("datetime", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                            @Override
                                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                               zHistoryAdapter.clear();
                                                if (task.isSuccessful()) {
                                                    for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
                                                        Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
@@ -224,30 +240,14 @@ public class PetFragment extends Fragment {
                                            }
                                        }
                 );
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        zHistoryAdapter.clear();
-//                        if(!queryDocumentSnapshots.isEmpty()) {
-//                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
-//                                Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
-//                                History historyData = documentSnapshot.toObject(History.class);
-//                                zHistoryArrayList.add(historyData);
-//                            }
-//
-//                            zHistoryAdapter.notifyDataSetChanged();
-//                            zHistoryList.setAdapter(zHistoryAdapter);
-//                            zHistoryLoading.setVisibility(View.GONE);
-//                        } else {
-//                            zHistoryLoading.setVisibility(View.GONE);
-//                            zHistoryNotfound.setVisibility(View.VISIBLE);
-//                        }
-//                    }
-//                }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d(TAG, "Load history is failed : " + e.getMessage());
-//            }
-//        });
+    }
+
+    private void addHistoryPet() {
+        zHistoryAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new AddHistoryFragment()).addToBackStack(null).commit();
+            }
+        });
     }
 }

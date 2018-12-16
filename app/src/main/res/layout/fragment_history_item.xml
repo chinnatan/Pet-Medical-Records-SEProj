@@ -39,7 +39,6 @@
                             android:id="@+id/histoery_item_title"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="หัวข้อการรักษา"
                             android:textStyle="bold"
                             android:textSize="18dp"
                             android:gravity="center_vertical"/>
@@ -62,7 +61,6 @@
                             android:id="@+id/histoery_item_addby"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="เพิ่มโดย : แพทย์"
                             android:textSize="16dp"
                             android:gravity="center_vertical"/>
 
@@ -84,7 +82,6 @@
                             android:id="@+id/histoery_item_date"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="วันที่ 10/10/2018 | เวลา : 00.00 น."
                             android:textSize="15dp"
                             android:gravity="center_vertical"/>
 

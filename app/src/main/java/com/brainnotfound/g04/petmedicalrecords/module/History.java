@@ -1,5 +1,8 @@
 package com.brainnotfound.g04.petmedicalrecords.module;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class History {
 
     private String petid;
@@ -7,6 +10,7 @@ public class History {
     private String historyid;
     private String title;
     private String detail;
+    private ArrayList<String> vaccine;
     private String addby;
     private String date;
     private String datetime;
@@ -14,11 +18,12 @@ public class History {
     public History() {
     }
 
-    public History(String petid, String historyid, String title, String detail, String addby, String date, String datetime) {
+    public History(String petid, String historyid, String title, String detail, ArrayList<String> vaccine, String addby, String date, String datetime) {
         this.setPetid(petid);
         this.setHistoryid(historyid);
         this.setTitle(title);
         this.setDetail(detail);
+        this.vaccine = vaccine;
         this.setAddby(addby);
         this.setDate(date);
         this.setDatetime(datetime);
@@ -78,5 +83,13 @@ public class History {
 
     public void setDatetime(String datetime) {
         this.datetime = datetime;
+    }
+
+    public ArrayList<String> getVaccine() {
+        return vaccine;
+    }
+
+    public void setVaccine(ArrayList<String> vaccine) {
+        this.vaccine = vaccine;
     }
 }

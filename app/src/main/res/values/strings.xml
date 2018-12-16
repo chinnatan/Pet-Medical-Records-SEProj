@@ -24,6 +24,7 @@
     <string name="button_register">ลงทะเบียน</string>
     <string name="button_save">บันทึก</string>
     <string name="button_add">เพิ่ม</string>
+    <string name="button_addhistory">เพิ่มประวัติการรักษา</string>
 
     <string name="textview_register">ลงทะเบียน</string>
     <string name="textview_unregister">คุณยังไม่มีบัญชีใช่หรือไม่.</string>
@@ -32,6 +33,28 @@
     <string name="textview_year">ปี</string>
     <string name="textview_month">เดือน</string>
     <string name="textview_day">วัน</string>
+    <string name="textview_historytitle">หัวข้อการรักษา</string>
+    <string name="textview_historydetail">รายละเอียดการรักษา</string>
+    <string name="textview_vaccine">วัคซีน</string>
+    <string name="textview_historyheader">ประวัติการรักษา</string>
 
     <string name="spinner_age">อายุ</string>
+    
+    <!--Vaccine Cat-->
+    <string name="vaccine_cat_1">ป้องกันโรคหัวใจ</string>
+    <string name="vaccine_cat_2">ป้องกันโรคหวัดแมว</string>
+    <string name="vaccine_cat_3">ป้องกันโรคติดเชื้อคลามัยเดีย</string>
+    <string name="vaccine_cat_4">ป้องกันโรคภูมิคุ้มกันบกพร่อง</string>
+    <string name="vaccine_cat_5">ป้องกันโรคหัด</string>
+    <string name="vaccine_cat_6">ป้องกันโรคลิวคีเมีย</string>
+    <string name="vaccine_cat_7">ป้องกันโรคพิษสุนัขบ้า</string>
+    <string name="vaccine_cat_8">ป้องกันโรคเยื่อบุช่องท้องอักเสบติดต่อ</string>
+
+    <!--Vaccine Dog-->
+    <string name="vaccine_dog_1">ป้องกันโรคหวัด</string>
+    <string name="vaccine_dog_2">ป้องกันโรคหลอดลมอักเสบติดต่อ</string>
+    <string name="vaccine_dog_3">ป้องกันโรคไข้หัดสุนัข</string>
+    <string name="vaccine_dog_4">ป้องกันโรคลำไส้อักเสบ</string>
+    <string name="vaccine_dog_5">ป้องกันโรคตับอักเสบเลปโตสไปโรซิส</string>
+    <string name="vaccine_dog_6">ป้องกันโรคพิษสุนัขบ้า</string>
 </resources>

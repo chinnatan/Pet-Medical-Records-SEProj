@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
-        android:elevation="8dp"
+        android:elevation="5dp"
         app:layout_constraintTop_toBottomOf="@+id/pet_title_warp">
 
         <LinearLayout
@@ -194,6 +194,49 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="8dp"
+                        android:layout_height="30dp"
+                        android:orientation="horizontal"
+                        android:layout_marginRight="4dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shapecoloraccent"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/textview_historyheader"
+                            android:textSize="17dp"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -252,182 +295,43 @@
 
     </ScrollView>
 
-    <!--<ScrollView-->
-    <!--android:id="@+id/pet_scrollview"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:fillViewport="true"-->
-    <!--app:layout_constraintTop_toBottomOf="@id/pet_title_warp"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent">-->
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/pet_footer_warp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:orientation="vertical">-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="right"
+            android:padding="15dp">
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical">-->
+            <LinearLayout
+                android:id="@+id/pet_history_add_bg"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:elevation="5dp"
+                android:orientation="vertical"
+                android:background="@drawable/add_button"
+                android:gravity="center_vertical|center_horizontal"
+                android:clickable="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp">
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:background="@color/colorPrimary"-->
-    <!--android:elevation="3dp"-->
-    <!--android:padding="35dp">-->
+                <ImageButton
+                    android:id="@+id/pet_history_add"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_plus" />
 
-    <!--<LinearLayout-->
-    <!--android:layout_width="150dp"-->
-    <!--android:layout_height="150dp"-->
-    <!--android:orientation="vertical">-->
+            </LinearLayout>
 
-    <!--<ImageView-->
-    <!--android:id="@+id/frg_pet_image"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="@drawable/logo"-->
-    <!--android:visibility="invisible"/>-->
+        </LinearLayout>
 
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:layout_marginTop="5dp">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/frg_pet_name"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="ชื่อ"-->
-    <!--android:textSize="24dp"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:visibility="invisible"/>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="vertical"-->
-    <!--android:layout_marginTop="5dp">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/frg_pet_id"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="ชื่อ"-->
-    <!--android:textSize="24dp"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:visibility="invisible"/>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:padding="10dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="ข้อมูลสัตว์เลี้ยง"-->
-    <!--android:textSize="16dp"-->
-    <!--android:textStyle="bold"/>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:paddingLeft="10dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/frg_pet_type"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="ประเภท"-->
-    <!--android:textSize="16dp"-->
-    <!--android:visibility="invisible"/>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:paddingLeft="10dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/frg_pet_sex"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="เพศ"-->
-    <!--android:textSize="16dp"-->
-    <!--android:visibility="invisible"/>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:gravity="center_horizontal"-->
-    <!--android:paddingLeft="10dp">-->
-
-    <!--<LinearLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal">-->
-
-    <!--<TextView-->
-    <!--android:id="@+id/frg_pet_age"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="อายุ"-->
-    <!--android:textSize="16dp"-->
-    <!--android:visibility="invisible"/>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
-
-    <!--</ScrollView>-->
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
