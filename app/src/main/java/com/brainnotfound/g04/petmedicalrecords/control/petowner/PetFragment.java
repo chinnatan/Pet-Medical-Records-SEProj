@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +24,8 @@ import com.brainnotfound.g04.petmedicalrecords.R;
 import com.brainnotfound.g04.petmedicalrecords.control.HomeFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.LoginFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.MyEditFragment;
+import com.brainnotfound.g04.petmedicalrecords.control.petowner.adapter.HistoryAdapter;
+import com.brainnotfound.g04.petmedicalrecords.module.History;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -30,10 +33,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class PetFragment extends Fragment {
@@ -49,6 +57,14 @@ public class PetFragment extends Fragment {
     private TextView zPetage;
     private TextView zPetid;
     private ProgressDialog zLoadingDialog;
+
+    // History Pet
+    private TextView zHistoryNotfound;
+    private ProgressBar zHistoryLoading;
+    private ListView zHistoryList;
+
+    private ArrayList<History> zHistoryArrayList = new ArrayList<>();
+    private HistoryAdapter zHistoryAdapter;
 
     private Pet pet;
     private FirebaseFirestore firebaseFirestore;
@@ -77,6 +93,8 @@ public class PetFragment extends Fragment {
 
         createMenu();
         loadPet();
+
+        zHistoryAdapter = new HistoryAdapter(getActivity(), R.layout.fragment_history_item, zHistoryArrayList);
     }
 
     private void petFragmentElements() {
@@ -88,6 +106,10 @@ public class PetFragment extends Fragment {
         zPetsex = getView().findViewById(R.id.frg_pet_sex);
         zPetage = getView().findViewById(R.id.frg_pet_age);
         zPetid = getView().findViewById(R.id.frg_pet_id);
+
+        zHistoryNotfound = getView().findViewById(R.id.pet_history_notfound);
+        zHistoryLoading = getView().findViewById(R.id.pet_history_loading);
+        zHistoryList = getView().findViewById(R.id.pet_history_list);
     }
 
     private void createMenu() {
@@ -149,12 +171,12 @@ public class PetFragment extends Fragment {
         storageReference.child(pet.getPetimage()).getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
             @Override
             public void onComplete(@NonNull Task<Uri> task) {
-                if(task.isSuccessful()) {
-                    if(isAdded()) {
+                if (task.isSuccessful()) {
+                    if (isAdded()) {
                         Glide.with(getActivity()).load(task.getResult()).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
                         zPetname.setText(pet.getPetname());
                         zPetid.setText("PET ID : " + pet.getPetkey());
-                        zPettype.setText("ประเภท : " + pet.getPettype());
+                        zPettype.setText(pet.getPettype());
                         zPetsex.setText("เพศ : " + pet.getPetsex());
                         zPetage.setText("อายุ : " + pet.getPetyear() + " ปี " + pet.getPetmonth() + " เดือน " + pet.getPetday() + " วัน");
                         zImageViewPet.setVisibility(View.VISIBLE);
@@ -164,6 +186,7 @@ public class PetFragment extends Fragment {
                         zPetsex.setVisibility(View.VISIBLE);
                         zPetage.setVisibility(View.VISIBLE);
                         zLoading.setVisibility(View.GONE);
+                        loadHistoryPet();
                     }
                 }
             }
@@ -173,5 +196,58 @@ public class PetFragment extends Fragment {
                 Log.d(TAG, "LOAD IMAGE : " + e.getMessage());
             }
         });
+    }
+
+    private void loadHistoryPet() {
+        firebaseFirestore.collection("pet").document(pet.getPetkey())
+                .collection("history")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .orderBy("datetime", Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                           @Override
+                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                               if (task.isSuccessful()) {
+                                                   for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                                       Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
+                                                       History historyData = documentSnapshot.toObject(History.class);
+                                                       zHistoryArrayList.add(historyData);
+                                                   }
+
+                                                   zHistoryAdapter.notifyDataSetChanged();
+                                                   zHistoryList.setAdapter(zHistoryAdapter);
+                                                   zHistoryLoading.setVisibility(View.GONE);
+                                               } else {
+                                                   zHistoryLoading.setVisibility(View.GONE);
+                                                   zHistoryNotfound.setVisibility(View.VISIBLE);
+                                               }
+                                           }
+                                       }
+                );
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        zHistoryAdapter.clear();
+//                        if(!queryDocumentSnapshots.isEmpty()) {
+//                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+//                                Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
+//                                History historyData = documentSnapshot.toObject(History.class);
+//                                zHistoryArrayList.add(historyData);
+//                            }
+//
+//                            zHistoryAdapter.notifyDataSetChanged();
+//                            zHistoryList.setAdapter(zHistoryAdapter);
+//                            zHistoryLoading.setVisibility(View.GONE);
+//                        } else {
+//                            zHistoryLoading.setVisibility(View.GONE);
+//                            zHistoryNotfound.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "Load history is failed : " + e.getMessage());
+//            }
+//        });
     }
 }
