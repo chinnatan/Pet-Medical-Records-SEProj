@@ -40,7 +40,7 @@ import java.util.Date;
 
 public class PetRequestAdapter extends ArrayAdapter {
 
-    private static final String TAG = "REQUESTADAPTER";
+    private static final String TAG = "PETREQUESTADAPTER";
 
     private ArrayList<Pet> petList = new ArrayList<Pet>();
     private Context context;

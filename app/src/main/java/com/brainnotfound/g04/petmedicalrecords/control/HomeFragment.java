@@ -204,7 +204,7 @@ public class HomeFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Pet petData = (Pet) parent.getAdapter().getItem(position);
 
-                if(!zRequestArrayList.get(position).getStatus().equals("รออนุมัติ")) {
+                if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
                     Pet pet = Pet.getPetInstance();
                     pet.setPetimage(petData.getPetimage());
                     pet.setPetname(petData.getPetname());
@@ -215,9 +215,24 @@ public class HomeFragment extends Fragment {
                     pet.setPetday(petData.getPetday());
                     pet.setPetmonth(petData.getPetmonth());
                     pet.setPetyear(petData.getPetyear());
+
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
                 } else {
-                    Toast.makeText(getActivity(), "กรุณารอการอนุมัติจากเจ้าของสัตว์เลี้ยง", Toast.LENGTH_LONG).show();
+                    if (!zRequestArrayList.get(position).getStatus().equals("รออนุมัติ")) {
+                        Pet pet = Pet.getPetInstance();
+                        pet.setPetimage(petData.getPetimage());
+                        pet.setPetname(petData.getPetname());
+                        pet.setPettype(petData.getPettype());
+                        pet.setPetsex(petData.getPetsex());
+                        pet.setPetownerUid(petData.getPetownerUid());
+                        pet.setPetkey(petData.getPetkey());
+                        pet.setPetday(petData.getPetday());
+                        pet.setPetmonth(petData.getPetmonth());
+                        pet.setPetyear(petData.getPetyear());
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
+                    } else {
+                        Toast.makeText(getActivity(), "กรุณารอการอนุมัติจากเจ้าของสัตว์เลี้ยง", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         });
