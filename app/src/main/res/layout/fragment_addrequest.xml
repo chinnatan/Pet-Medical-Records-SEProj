@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:iconifiedByDefault="false"
             android:queryHint="ค้นหาสัตว์เลี้ยง"
-            android:inputType="number"/>
+            android:inputType="number" />
 
         <ProgressBar
             android:id="@+id/addrequest_loading"

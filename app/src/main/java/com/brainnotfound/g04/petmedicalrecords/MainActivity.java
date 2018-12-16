@@ -14,6 +14,7 @@ import com.brainnotfound.g04.petmedicalrecords.control.HomeFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.LoginFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.MyFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.RequestFragment;
+import com.brainnotfound.g04.petmedicalrecords.control.petowner.VeterinaryFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         fragmentHome = new HomeFragment();
         fragmentMy = new MyFragment();
         fragmentRequest = new RequestFragment();
+        fragmentVeterinary = new VeterinaryFragment();
         user = User.getUserInstance();
         init(savedInstanceState);
         checkCurrentUser();
@@ -118,10 +120,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Log.d(TAG, "onFragmentChanged: (Change to page)" + fragmentName);
         if (user.getType() != null) {
             if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
-                if (fragmentName.equalsIgnoreCase("HOME") || fragmentName.equalsIgnoreCase("MY") || fragmentName.equalsIgnoreCase("REQUEST")) {
+                if (fragmentName.equalsIgnoreCase("HOME") || fragmentName.equalsIgnoreCase("MY") || fragmentName.equalsIgnoreCase("REQUEST") || fragmentName.equalsIgnoreCase("VETERINARY")) {
                     if (fragmentName.equals("HOME")) {
                         Log.d(TAG, "check nav 0");
                         bottomNavigationView.getMenu().getItem(0).setChecked(true);
+                    } else if (fragmentName.equals("VETERINARY")) {
+                        Log.d(TAG, "check nav 1");
+                        bottomNavigationView.getMenu().getItem(1).setChecked(true);
                     } else if (fragmentName.equals("REQUEST")) {
                         Log.d(TAG, "check nav 2");
                         bottomNavigationView.getMenu().getItem(2).setChecked(true);

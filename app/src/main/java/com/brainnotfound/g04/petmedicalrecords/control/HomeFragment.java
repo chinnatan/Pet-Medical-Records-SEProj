@@ -1,6 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords.control;
 
-import android.net.Uri;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -20,19 +20,15 @@ import android.widget.Toolbar;
 import com.brainnotfound.g04.petmedicalrecords.MainActivity;
 import com.brainnotfound.g04.petmedicalrecords.R;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.AddPetFragment;
-import com.brainnotfound.g04.petmedicalrecords.control.petowner.PetAdapter;
+import com.brainnotfound.g04.petmedicalrecords.control.petowner.adapter.PetAdapter;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.PetFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.veterinary.AddRequestFragment;
-import com.brainnotfound.g04.petmedicalrecords.control.veterinary.PetVeterinaryAdapter;
+import com.brainnotfound.g04.petmedicalrecords.control.veterinary.adapter.PetVeterinaryAdapter;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
 import com.brainnotfound.g04.petmedicalrecords.module.Request;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -59,6 +55,7 @@ public class HomeFragment extends Fragment {
     private User user;
     private Request requestData;
     private FirebaseFirestore firebaseFirestore;
+    private ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -71,6 +68,8 @@ public class HomeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         user = User.getUserInstance();
         MainActivity.onFragmentChanged(TAG);
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.dismiss();
 
         if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
             zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList);

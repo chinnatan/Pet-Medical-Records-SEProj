@@ -15,7 +15,7 @@ import android.widget.Toolbar;
 
 import com.brainnotfound.g04.petmedicalrecords.MainActivity;
 import com.brainnotfound.g04.petmedicalrecords.R;
-import com.brainnotfound.g04.petmedicalrecords.control.petowner.adapter.RequestAdapter;
+import com.brainnotfound.g04.petmedicalrecords.control.petowner.adapter.VeterinaryAdapter;
 import com.brainnotfound.g04.petmedicalrecords.module.Request;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,26 +27,27 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class RequestFragment extends Fragment {
+public class VeterinaryFragment extends Fragment {
 
-    private static final String TAG = "REQUEST";
-    private final String title = "คำขอ";
+    private static final String TAG = "VETERINARY";
 
-    private TextView zNotfound;
+    private final String title = "สัตวแพทย์";
+
     private Toolbar zToolbar;
     private ProgressBar zLoading;
-    private ListView zRequestlist;
+    private ListView zVetlist;
+    private TextView zNotfound;
 
     private User user;
     private FirebaseFirestore firebaseFirestore;
 
-    private ArrayList<Request> zRequestArrayList = new ArrayList<>();
-    private RequestAdapter zRequestAdapter;
+    private ArrayList<Request> zVeterinaryArrayList = new ArrayList<>();
+    private VeterinaryAdapter zVeterinaryAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_petowner_request, container, false);
+        return inflater.inflate(R.layout.fragment_petowner_veterinary, container, false);
     }
 
     @Override
@@ -56,36 +57,34 @@ public class RequestFragment extends Fragment {
         user = User.getUserInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        requestFragmentElements();
+        veterinaryFragmentElements();
         createMenu();
 
-        zRequestAdapter = new RequestAdapter(getActivity(), R.layout.fragment_petowner_request_item, zRequestArrayList, getActivity());
-        loadRequest();
+        zVeterinaryAdapter = new VeterinaryAdapter(getActivity(), R.layout.fragment_petowner_veterinary_item, zVeterinaryArrayList, getActivity());
+        loadVeterinary();
     }
 
-    private void loadRequest() {
+    private void loadVeterinary() {
         firebaseFirestore.collection("request")
                 .whereEqualTo("customeruid", user.getUid())
-                .whereEqualTo("status", "รออนุมัติ")
+                .whereEqualTo("status", "อนุมัติ")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        zRequestAdapter.clear();
-                        if(!queryDocumentSnapshots.isEmpty()) {
+                        zVeterinaryAdapter.clear();
+                        if (!queryDocumentSnapshots.isEmpty()) {
                             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                if(document.getString("customeruid").equals(user.getUid()) && document.getString("status").equals("รออนุมัติ")) {
-                                    Request requestData = document.toObject(Request.class);
-                                    zRequestArrayList.add(requestData);
-                                }
+                                Request requestData = document.toObject(Request.class);
+                                zVeterinaryArrayList.add(requestData);
                             }
 
-                            zRequestAdapter.notifyDataSetChanged();
-                            zRequestlist.setAdapter(zRequestAdapter);
+                            zVeterinaryAdapter.notifyDataSetChanged();
+                            zVetlist.setAdapter(zVeterinaryAdapter);
                             zLoading.setVisibility(View.GONE);
                         } else {
-                            zNotfound.setText("ไม่พบคำขอ");
+                            zNotfound.setText("ไม่พบสัตวแพทย์");
                             zNotfound.setVisibility(View.VISIBLE);
                             zLoading.setVisibility(View.GONE);
                         }
@@ -99,12 +98,11 @@ public class RequestFragment extends Fragment {
         });
     }
 
-    private void requestFragmentElements() {
-        Log.d(TAG, "registed elements");
-        zNotfound = getView().findViewById(R.id.request_notfound);
+    private void veterinaryFragmentElements() {
         zToolbar = getView().findViewById(R.id.toolbar);
-        zLoading = getView().findViewById(R.id.request_loading);
-        zRequestlist = getView().findViewById(R.id.request_list);
+        zLoading = getView().findViewById(R.id.petowner_veterinary_loading);
+        zVetlist = getView().findViewById(R.id.petowner_veterinary_list);
+        zNotfound = getView().findViewById(R.id.petowner_veterinary_notfound);
     }
 
     private void createMenu() {

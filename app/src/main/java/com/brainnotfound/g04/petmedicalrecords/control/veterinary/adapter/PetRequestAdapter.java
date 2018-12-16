@@ -1,4 +1,4 @@
-package com.brainnotfound.g04.petmedicalrecords.control.veterinary;
+package com.brainnotfound.g04.petmedicalrecords.control.veterinary.adapter;
 
 import android.app.ProgressDialog;
 import android.content.Context;
