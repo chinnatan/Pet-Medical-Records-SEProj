@@ -215,31 +215,57 @@ public class PetFragment extends Fragment {
     }
 
     private void loadHistoryPet() {
+        Log.d(TAG, "PET ID : " + pet.getPetkey());
+//        firebaseFirestore.collection("pet").document(pet.getPetkey())
+//                .collection("history")
+//                .orderBy("date", Query.Direction.DESCENDING)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                                           @Override
+//                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                                               if (task.isSuccessful()) {
+//                                                   zHistoryAdapter.clear();
+//                                                   for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+//                                                       Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
+//                                                       History historyData = documentSnapshot.toObject(History.class);
+//                                                       zHistoryArrayList.add(historyData);
+//                                                   }
+//
+//                                                   zHistoryAdapter.notifyDataSetChanged();
+//                                                   zHistoryList.setAdapter(zHistoryAdapter);
+//                                                   zHistoryLoading.setVisibility(View.GONE);
+//                                               } else {
+//                                                   zHistoryLoading.setVisibility(View.GONE);
+//                                                   zHistoryNotfound.setVisibility(View.VISIBLE);
+//                                               }
+//                                           }
+//                                       }
+//                );
+
         firebaseFirestore.collection("pet").document(pet.getPetkey())
                 .collection("history")
                 .orderBy("date", Query.Direction.DESCENDING)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                           @Override
-                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                               zHistoryAdapter.clear();
-                                               if (task.isSuccessful()) {
-                                                   for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                                                       Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
-                                                       History historyData = documentSnapshot.toObject(History.class);
-                                                       zHistoryArrayList.add(historyData);
-                                                   }
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if(queryDocumentSnapshots.isEmpty()) {
+                            zHistoryLoading.setVisibility(View.GONE);
+                            zHistoryNotfound.setVisibility(View.VISIBLE);
+                        } else {
+                            zHistoryAdapter.clear();
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
+                                History historyData = documentSnapshot.toObject(History.class);
+                                zHistoryArrayList.add(historyData);
+                            }
 
-                                                   zHistoryAdapter.notifyDataSetChanged();
-                                                   zHistoryList.setAdapter(zHistoryAdapter);
-                                                   zHistoryLoading.setVisibility(View.GONE);
-                                               } else {
-                                                   zHistoryLoading.setVisibility(View.GONE);
-                                                   zHistoryNotfound.setVisibility(View.VISIBLE);
-                                               }
-                                           }
-                                       }
-                );
+                            zHistoryAdapter.notifyDataSetChanged();
+                            zHistoryList.setAdapter(zHistoryAdapter);
+                            zHistoryLoading.setVisibility(View.GONE);
+                        }
+                    }
+                });
     }
 
     private void addHistoryPet() {

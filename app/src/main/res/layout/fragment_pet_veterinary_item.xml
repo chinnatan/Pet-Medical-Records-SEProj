@@ -44,13 +44,13 @@
                         android:gravity="center_vertical">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <TextView
                                 android:id="@+id/frg_pet_vet_petname"
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:text="ชื่อสัตว์เลี้ยง"
                                 android:textStyle="bold"
@@ -72,7 +72,7 @@
 
                                 <TextView
                                     android:id="@+id/frg_pet_vet_pettype"
-                                    android:layout_width="60dp"
+                                    android:layout_width="70dp"
                                     android:layout_height="match_parent"
                                     android:background="@drawable/sex_shape"
                                     android:text="แมว"
@@ -90,23 +90,31 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical">
 
-                        <TextView
-                            android:id="@+id/frg_pet_vet_status"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:text="รออนุมัติ"
-                            android:textSize="22dp"
-                            android:textColor="@color/colorAccent"
-                            android:gravity="center_vertical|right"
-                            android:visibility="invisible"/>
+                            android:orientation="vertical"
+                            android:gravity="right">
+
+                            <TextView
+                                android:id="@+id/frg_pet_vet_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:text="รออนุมัติ"
+                                android:textSize="22dp"
+                                android:textColor="@color/colorAccent"
+                                android:gravity="center_vertical|right"
+                                android:visibility="invisible"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
-
 
             </LinearLayout>
 

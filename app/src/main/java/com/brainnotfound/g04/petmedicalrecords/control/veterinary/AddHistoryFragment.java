@@ -166,6 +166,66 @@ public class AddHistoryFragment extends Fragment {
 
                     if (historytitle.isEmpty() || historydetail.isEmpty()) {
                         Toast.makeText(getActivity(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    } else {
+                        History historyPet;
+                        if (vaccineList.isEmpty()) {
+                            vaccineList.add("-");
+                        }
+                        historyPet = new History(pet.getPetkey(), "HT" + dateFormat.format(date), historytitle, historydetail, vaccineList,
+                                user.getUid(), fulldate.format(date), datetime.format(date));
+
+                        firebaseFirestore.collection("pet").document(pet.getPetkey())
+                                .collection("history").document("HT" + dateFormat.format(date))
+                                .set(historyPet)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getActivity(), "เพิ่มประวัติการรักษาสำเร็จ", Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                        getActivity().getSupportFragmentManager().popBackStack();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "add history is failed : " + e.getMessage());
+                                progressDialog.dismiss();
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            zSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "submit button : clicked");
+                    progressDialog.show();
+
+                    DateFormat dateFormat = new SimpleDateFormat("ddMMyyyyHHmmss");
+                    DateFormat fulldate = new SimpleDateFormat("dd/MM/yyyy");
+                    DateFormat datetime = new SimpleDateFormat("HH:mm:ss");
+                    Date date = new Date();
+
+                    String historytitle = zHistoryTitle.getText().toString();
+                    String historydetail = zHistoryDetail.getText().toString();
+
+                    List<CheckBox> vaccineItems = new ArrayList<CheckBox>();
+                    vaccineItems.add(zHistoryVaccineDog1);
+                    vaccineItems.add(zHistoryVaccineDog2);
+                    vaccineItems.add(zHistoryVaccineDog3);
+                    vaccineItems.add(zHistoryVaccineDog4);
+                    vaccineItems.add(zHistoryVaccineDog5);
+                    vaccineItems.add(zHistoryVaccineDog6);
+                    for (CheckBox item : vaccineItems) {
+                        if (item.isChecked()) {
+                            vaccineList.add(item.getText().toString());
+                        }
+                    }
+
+                    if (historytitle.isEmpty() || historydetail.isEmpty()) {
+                        Toast.makeText(getActivity(), "กรุณากรอกข้อมูลให้ครบถ้วน", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
                     } else {
                         History historyPet;
                         if (vaccineList.isEmpty()) {
