@@ -2,6 +2,7 @@ package com.brainnotfound.g04.petmedicalrecords.module;
 
 public class Request {
 
+    private String requestdate;
     private String requestkey;
     private String petkey;
     private String customeruid;
@@ -57,5 +58,13 @@ public class Request {
 
     public void setRequestkey(String requestkey) {
         this.requestkey = requestkey;
+    }
+
+    public String getRequestdate() {
+        return requestdate;
+    }
+
+    public void setRequestdate(String requestdate) {
+        this.requestdate = requestdate;
     }
 }

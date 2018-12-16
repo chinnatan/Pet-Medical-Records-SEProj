@@ -105,7 +105,8 @@ public class PetRequestAdapter extends ArrayAdapter {
                 final Date date = new Date();
 
                 final Request request = new Request(String.valueOf(row.getPetkey()), row.getPetownerUid(), user.getUid(), "รออนุมัติ");
-                request.setRequestkey("re" + dateFormatDoc.format(date));
+                request.setRequestkey("RQ" + dateFormatDoc.format(date));
+                request.setRequestdate(dateFormatDoc.format(date));
 
                 firebaseFirestore.collection("request").whereEqualTo("petkey", row.getPetkey())
                         .get()

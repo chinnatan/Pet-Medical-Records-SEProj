@@ -48,7 +48,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:text="ชื่อสัตวแพทย์"
                             android:textSize="16dp"
                             android:textStyle="bold" />
 
@@ -70,7 +69,6 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical|center_horizontal"
                                 android:padding="3dp"
-                                android:text="PET ID : 0000000000"
                                 android:textSize="14dp" />
 
                         </LinearLayout>
@@ -99,7 +97,8 @@
                             android:gravity="center_vertical|center_horizontal"
                             android:text="อนุมัติ"
                             android:textColor="@android:color/white"
-                            android:textSize="14dp" />
+                            android:textSize="14dp"
+                            android:visibility="invisible"/>
 
                     </LinearLayout>
 
@@ -116,7 +115,8 @@
                             android:gravity="center_vertical|center_horizontal"
                             android:text="ไม่อนุมัติ"
                             android:textColor="@android:color/white"
-                            android:textSize="14dp" />
+                            android:textSize="14dp"
+                            android:visibility="invisible"/>
 
                     </LinearLayout>
 

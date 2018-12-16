@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -62,12 +63,15 @@ public class RequestFragment extends Fragment {
         requestFragmentElements();
         createMenu();
 
-        zRequestAdapter = new RequestAdapter(getActivity(), R.layout.fragment_petowner_request_item, zRequestArrayList);
+        zRequestAdapter = new RequestAdapter(getActivity(), R.layout.fragment_petowner_request_item, zRequestArrayList, getActivity());
         loadRequest();
     }
 
     private void loadRequest() {
-        firebaseFirestore.collection("request").get()
+        firebaseFirestore.collection("request")
+                .whereEqualTo("customeruid", user.getUid())
+                .whereEqualTo("status", "รออนุมัติ")
+                .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -75,7 +79,7 @@ public class RequestFragment extends Fragment {
                         if(!queryDocumentSnapshots.isEmpty()) {
                             for (DocumentSnapshot document : queryDocumentSnapshots.getDocuments()) {
                                 Log.d(TAG, document.getId() + " => " + document.getData());
-                                if(document.getString("customeruid").equals(user.getUid())) {
+                                if(document.getString("customeruid").equals(user.getUid()) && document.getString("status").equals("รออนุมัติ")) {
                                     Request requestData = document.toObject(Request.class);
                                     zRequestArrayList.add(requestData);
                                 }
@@ -87,12 +91,14 @@ public class RequestFragment extends Fragment {
                         } else {
                             zNotfound.setText("ไม่พบคำขอ");
                             zNotfound.setVisibility(View.VISIBLE);
+                            zLoading.setVisibility(View.GONE);
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, "load request is failed : " + e.getMessage());
+                zLoading.setVisibility(View.GONE);
             }
         });
     }
