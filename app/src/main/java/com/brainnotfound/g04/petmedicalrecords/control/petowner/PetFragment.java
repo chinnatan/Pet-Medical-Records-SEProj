@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +30,7 @@ import com.brainnotfound.g04.petmedicalrecords.control.LoginFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.MyEditFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.petowner.adapter.HistoryAdapter;
 import com.brainnotfound.g04.petmedicalrecords.control.veterinary.AddHistoryFragment;
+import com.brainnotfound.g04.petmedicalrecords.control.veterinary.EditHistoryFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.History;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
@@ -216,32 +219,6 @@ public class PetFragment extends Fragment {
 
     private void loadHistoryPet() {
         Log.d(TAG, "PET ID : " + pet.getPetkey());
-//        firebaseFirestore.collection("pet").document(pet.getPetkey())
-//                .collection("history")
-//                .orderBy("date", Query.Direction.DESCENDING)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                                           @Override
-//                                           public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                                               if (task.isSuccessful()) {
-//                                                   zHistoryAdapter.clear();
-//                                                   for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-//                                                       Log.d(TAG, documentSnapshot.getId() + " => " + documentSnapshot.getData());
-//                                                       History historyData = documentSnapshot.toObject(History.class);
-//                                                       zHistoryArrayList.add(historyData);
-//                                                   }
-//
-//                                                   zHistoryAdapter.notifyDataSetChanged();
-//                                                   zHistoryList.setAdapter(zHistoryAdapter);
-//                                                   zHistoryLoading.setVisibility(View.GONE);
-//                                               } else {
-//                                                   zHistoryLoading.setVisibility(View.GONE);
-//                                                   zHistoryNotfound.setVisibility(View.VISIBLE);
-//                                               }
-//                                           }
-//                                       }
-//                );
-
         firebaseFirestore.collection("pet").document(pet.getPetkey())
                 .collection("history")
                 .orderBy("date", Query.Direction.DESCENDING)
@@ -266,6 +243,29 @@ public class PetFragment extends Fragment {
                         }
                     }
                 });
+
+        if(user.getType().equals("สัตวแพทย์")) {
+            zHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    History historyData = (History) parent.getAdapter().getItem(position);
+
+                    Fragment editHistoryFragment = new EditHistoryFragment();
+                    Bundle historyBundle = new Bundle();
+                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
+
+                    historyBundle.putString("petid", historyData.getPetid());
+                    historyBundle.putString("historyid", historyData.getHistoryid());
+                    historyBundle.putString("historytitle", historyData.getTitle());
+                    historyBundle.putString("historydetail", historyData.getDetail());
+                    historyBundle.putStringArrayList("historyvaccine", historyData.getVaccine());
+
+                    editHistoryFragment.setArguments(historyBundle);
+                    fragmentTransaction.replace(R.id.main_view, editHistoryFragment);
+                    fragmentTransaction.commit();
+                }
+            });
+        }
     }
 
     private void addHistoryPet() {
