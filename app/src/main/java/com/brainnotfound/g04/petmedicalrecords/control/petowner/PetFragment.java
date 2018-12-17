@@ -1,6 +1,8 @@
 package com.brainnotfound.g04.petmedicalrecords.control.petowner;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,6 +36,7 @@ import com.brainnotfound.g04.petmedicalrecords.control.veterinary.AddHistoryFrag
 import com.brainnotfound.g04.petmedicalrecords.control.veterinary.EditHistoryFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.History;
 import com.brainnotfound.g04.petmedicalrecords.module.Pet;
+import com.brainnotfound.g04.petmedicalrecords.module.Request;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -151,11 +154,7 @@ public class PetFragment extends Fragment {
                         return true;
                     case R.id.navigation_delete:
                         Log.d(TAG, "menu item click : delete");
-                        zLoadingDialog.setMessage("กำลังลบข้อมูล...");
-                        zLoadingDialog.setCancelable(false);
-                        zLoadingDialog.setCanceledOnTouchOutside(false);
-                        zLoadingDialog.show();
-                        deletePet();
+                        displayConfirmDeleteDialog();
                         return true;
                     default:
                         return true;
@@ -185,6 +184,29 @@ public class PetFragment extends Fragment {
                 zLoadingDialog.dismiss();
             }
         });
+    }
+
+    private void displayConfirmDeleteDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), android.R.style.Theme_Material_Light_Dialog_Alert);
+        builder.setTitle("ยืนยันการลบสัตว์เลี้ยง")
+                .setMessage("คุณแน่ใจหรือไม่ที่จะลบสัตว์เลี้ยงของคุณ")
+                .setPositiveButton("ยืนยีน", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        zLoadingDialog.setMessage("กำลังลบข้อมูล...");
+                        zLoadingDialog.setCancelable(false);
+                        zLoadingDialog.setCanceledOnTouchOutside(false);
+                        zLoadingDialog.show();
+                        deletePet();
+                    }
+                })
+                .setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                })
+                .show();
     }
 
     private void loadPet() {
