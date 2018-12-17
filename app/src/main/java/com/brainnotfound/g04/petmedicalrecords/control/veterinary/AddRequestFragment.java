@@ -109,6 +109,7 @@ public class AddRequestFragment extends Fragment {
                     searchPet(newText);
                 } else {
                     zLoading.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getActivity(), "ไม่พบสัตว์เลี้ยงที่คุณค้นหา", Toast.LENGTH_SHORT).show();
                     zPetRequestAdapter.clear();
                 }
                 return true;
