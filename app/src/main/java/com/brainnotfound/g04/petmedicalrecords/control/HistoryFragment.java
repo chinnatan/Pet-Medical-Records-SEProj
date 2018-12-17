@@ -1,5 +1,6 @@
 package com.brainnotfound.g04.petmedicalrecords.control;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toolbar;
@@ -19,10 +21,14 @@ import com.brainnotfound.g04.petmedicalrecords.MainActivity;
 import com.brainnotfound.g04.petmedicalrecords.R;
 import com.brainnotfound.g04.petmedicalrecords.control.veterinary.EditHistoryFragment;
 import com.brainnotfound.g04.petmedicalrecords.module.User;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -33,8 +39,10 @@ public class HistoryFragment extends Fragment {
     private Bundle historyBundle;
     private User user;
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
 
-    private String title;
+    private String title = "รายละเอียดประวัติการรักษา";
     private Toolbar zToolbar;
     private ProgressBar zLoading;
     private TextView zHistoryTitle;
@@ -42,6 +50,7 @@ public class HistoryFragment extends Fragment {
     private TextView zHistoryDate;
     private TextView zHistoryVaccine;
     private TextView zHistoryAddby;
+    private ImageView zVetImage;
 
     // History Bundle
     private String petid;
@@ -65,11 +74,13 @@ public class HistoryFragment extends Fragment {
         MainActivity.onFragmentChanged(TAG);
         user = User.getUserInstance();
         firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
 
         historyFragmentElements();
         loadHistoryBundle();
-        createMenu();
         loadHistory();
+        createMenu();
     }
 
     private void loadHistoryBundle() {
@@ -96,28 +107,49 @@ public class HistoryFragment extends Fragment {
 
                 String vaccineLine = "";
                 for (int vaccine = 0; vaccine < vaccineList.size(); vaccine++) {
-                    vaccineLine += (vaccine + 1) + "." + vaccineList.get(vaccine) + "\n";
+                    if(vaccineList.get(vaccine).equals("-")) {
+                        vaccineLine += "ไม่ได้ใช้";
+                    } else {
+                        vaccineLine += (vaccine + 1) + "." + vaccineList.get(vaccine) + "\n";
+                    }
                 }
 
                 zHistoryVaccine.setText(vaccineLine);
-                firebaseFirestore.collection("account").document(historyaddby)
-                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "load pet history is failed : " + e.getMessage());
+            }
+        });
+
+        firebaseFirestore.collection("account").document(historyaddby)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                zHistoryAddby.setText(documentSnapshot.getString("fullname"));
+
+                storageReference.child(documentSnapshot.getString("image")).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        zHistoryAddby.setText("เพิ่มโดย : " + documentSnapshot.getString("fullname"));
-                        zLoading.setVisibility(View.GONE);
+                    public void onSuccess(Uri uri) {
+                        Log.d(TAG, "load image and my : success");
+                        if (isAdded()) {
+                            Glide.with(getActivity()).load(uri).apply(RequestOptions.circleCropTransform()).into(zVetImage);
+                            zVetImage.setVisibility(View.VISIBLE);
+                            zLoading.setVisibility(View.GONE);
+                        }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "load account is failed : " + e.getMessage());
+                        Log.d(TAG, "load image failed : " + e.getMessage());
                     }
                 });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "load pet history is failed : " + e.getMessage());
+                Log.d(TAG, "load account is failed : " + e.getMessage());
             }
         });
     }
@@ -131,6 +163,7 @@ public class HistoryFragment extends Fragment {
         zHistoryDate = getView().findViewById(R.id.history_date);
         zHistoryVaccine = getView().findViewById(R.id.history_vaccine);
         zHistoryAddby = getView().findViewById(R.id.history_addby);
+        zVetImage = getView().findViewById(R.id.history_image);
     }
 
     private void createMenu() {

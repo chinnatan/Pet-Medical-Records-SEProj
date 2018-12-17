@@ -10,6 +10,7 @@
     </corners>
 
     <size
-        android:width="82dp"
-        android:height="82dp" />
+        android:width="@android:dimen/thumbnail_width"
+        android:height="@android:dimen/thumbnail_height"
+        />
 </shape>
