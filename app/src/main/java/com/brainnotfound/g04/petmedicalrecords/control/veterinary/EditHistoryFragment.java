@@ -34,6 +34,7 @@ public class EditHistoryFragment extends Fragment {
 
     private Pet pet;
     private FirebaseFirestore firebaseFirestore;
+    private Bundle historyBundle;
 
     private Toolbar zToolbar;
     private TextInputEditText zHistoryTitle;
@@ -233,7 +234,7 @@ public class EditHistoryFragment extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getActivity(), "เพิ่มประวัติการรักษาสำเร็จ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "บันทึกประวัติการรักษาสำเร็จ", Toast.LENGTH_SHORT).show();
                                         progressDialog.dismiss();
                                         getActivity().getSupportFragmentManager().popBackStack();
                                     }
@@ -289,7 +290,7 @@ public class EditHistoryFragment extends Fragment {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getActivity(), "เพิ่มประวัติการรักษาสำเร็จ", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity(), "บันทึกประวัติการรักษาสำเร็จ", Toast.LENGTH_SHORT).show();
                                         progressDialog.dismiss();
                                         getActivity().getSupportFragmentManager().popBackStack();
                                     }

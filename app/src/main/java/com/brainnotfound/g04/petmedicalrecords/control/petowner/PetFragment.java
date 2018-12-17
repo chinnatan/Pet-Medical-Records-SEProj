@@ -25,6 +25,7 @@ import android.widget.Toolbar;
 
 import com.brainnotfound.g04.petmedicalrecords.MainActivity;
 import com.brainnotfound.g04.petmedicalrecords.R;
+import com.brainnotfound.g04.petmedicalrecords.control.HistoryFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.HomeFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.LoginFragment;
 import com.brainnotfound.g04.petmedicalrecords.control.MyEditFragment;
@@ -226,7 +227,7 @@ public class PetFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        if(queryDocumentSnapshots.isEmpty()) {
+                        if (queryDocumentSnapshots.isEmpty()) {
                             zHistoryLoading.setVisibility(View.GONE);
                             zHistoryNotfound.setVisibility(View.VISIBLE);
                         } else {
@@ -244,28 +245,29 @@ public class PetFragment extends Fragment {
                     }
                 });
 
-        if(user.getType().equals("สัตวแพทย์")) {
-            zHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    History historyData = (History) parent.getAdapter().getItem(position);
+        zHistoryList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                History historyData = (History) parent.getAdapter().getItem(position);
 
-                    Fragment editHistoryFragment = new EditHistoryFragment();
-                    Bundle historyBundle = new Bundle();
-                    FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                Fragment historyFragment = new HistoryFragment();
+                Bundle historyBundle = new Bundle();
+                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
 
-                    historyBundle.putString("petid", historyData.getPetid());
-                    historyBundle.putString("historyid", historyData.getHistoryid());
-                    historyBundle.putString("historytitle", historyData.getTitle());
-                    historyBundle.putString("historydetail", historyData.getDetail());
-                    historyBundle.putStringArrayList("historyvaccine", historyData.getVaccine());
+                historyBundle.putString("petid", historyData.getPetid());
+                historyBundle.putString("historyid", historyData.getHistoryid());
+                historyBundle.putString("historytitle", historyData.getTitle());
+                historyBundle.putString("historydetail", historyData.getDetail());
+                historyBundle.putStringArrayList("historyvaccine", historyData.getVaccine());
+                historyBundle.putString("historydate", historyData.getDate());
+                historyBundle.putString("historydatetime", historyData.getDatetime());
+                historyBundle.putString("historyaddby", historyData.getAddby());
 
-                    editHistoryFragment.setArguments(historyBundle);
-                    fragmentTransaction.replace(R.id.main_view, editHistoryFragment);
-                    fragmentTransaction.commit();
-                }
-            });
-        }
+                historyFragment.setArguments(historyBundle);
+                fragmentTransaction.replace(R.id.main_view, historyFragment);
+                fragmentTransaction.commit();
+            }
+        });
     }
 
     private void addHistoryPet() {
