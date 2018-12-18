@@ -159,9 +159,7 @@ public class EditPetFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         getActivity()
                                 .getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.main_view, new PetFragment())
-                                .commit();
+                                .popBackStack();
                     }
                 })
                 .show();

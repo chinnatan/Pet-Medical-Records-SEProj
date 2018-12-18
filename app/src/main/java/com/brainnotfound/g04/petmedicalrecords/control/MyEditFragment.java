@@ -145,9 +145,7 @@ public class MyEditFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         getActivity()
                                 .getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.main_view, new MyFragment())
-                                .commit();
+                                .popBackStack();
                     }
                 })
                 .show();

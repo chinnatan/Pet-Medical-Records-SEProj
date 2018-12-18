@@ -122,9 +122,10 @@ public class PetRequestAdapter extends ArrayAdapter {
                                 if(!queryDocumentSnapshots.isEmpty()) {
                                     for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
                                         if(documentSnapshot.getString("veterinaryuid").equals(user.getUid())) {
-                                            Toast.makeText(fragmentActivity, "คุณเคยส่งคำขอแล้ว. กรุณารอเจ้าของอนุมัติ", Toast.LENGTH_SHORT).show();
                                             progressDialog.dismiss();
+                                            Toast.makeText(fragmentActivity, "คุณเคยส่งคำขอแล้ว. กรุณารอเจ้าของอนุมัติ", Toast.LENGTH_SHORT).show();
                                         } else {
+                                            progressDialog.dismiss();
                                             firebaseFirestore.collection("request").document(request.getRequestkey())
                                                     .set(request)
                                                     .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -140,7 +141,6 @@ public class PetRequestAdapter extends ArrayAdapter {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
                                                     Log.d(TAG, "SET DATA FAILED : " + e.getMessage());
-                                                    progressDialog.dismiss();
                                                 }
                                             });
                                         }

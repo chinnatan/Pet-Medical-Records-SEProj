@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PetMedicalRecords</string>
+    <string name="app_name">PMR</string>
     <string name="title_home">หน้าหลัก</string>
     <string name="title_profile">โปรไฟล์</string>
     <string name="title_veterinary">สัตวแพทย์</string>
