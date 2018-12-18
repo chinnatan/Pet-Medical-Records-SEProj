@@ -156,8 +156,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     bottomNavigationView.setVisibility(View.GONE);
                 }
             }
-        } else {
-            bottomNavigationView.setVisibility(View.GONE);
         }
     }
 
