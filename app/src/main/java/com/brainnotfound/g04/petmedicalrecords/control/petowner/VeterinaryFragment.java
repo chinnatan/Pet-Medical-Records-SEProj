@@ -60,7 +60,7 @@ public class VeterinaryFragment extends Fragment {
         veterinaryFragmentElements();
         createMenu();
 
-        zVeterinaryAdapter = new VeterinaryAdapter(getActivity(), R.layout.fragment_petowner_veterinary_item, zVeterinaryArrayList, getActivity());
+        zVeterinaryAdapter = new VeterinaryAdapter(getActivity(), R.layout.fragment_petowner_veterinary_item, zVeterinaryArrayList, getActivity(), this.isAdded());
         loadVeterinary();
     }
 

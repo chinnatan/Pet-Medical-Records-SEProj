@@ -72,9 +72,9 @@ public class HomeFragment extends Fragment {
         progressDialog.dismiss();
 
         if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
-            zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList);
+            zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList, this.isAdded());
         } else {
-            zPetVeterinaryAdapter = new PetVeterinaryAdapter(getActivity(), R.layout.fragment_pet_veterinary_item, zPetArrayList, zRequestArrayList);
+            zPetVeterinaryAdapter = new PetVeterinaryAdapter(getActivity(), R.layout.fragment_pet_veterinary_item, zPetArrayList, zRequestArrayList, this.isAdded());
         }
         firebaseFirestore = FirebaseFirestore.getInstance();
 

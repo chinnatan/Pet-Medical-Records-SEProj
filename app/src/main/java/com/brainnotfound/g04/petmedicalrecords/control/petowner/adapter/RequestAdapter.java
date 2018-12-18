@@ -42,13 +42,15 @@ public class RequestAdapter extends ArrayAdapter {
     private User user;
     private FragmentActivity fragmentActivity;
     private RequestAdapter adapter;
+    private boolean isFragmentAdded = false;
 
-    public RequestAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Request> objects, FragmentActivity fragmentActivity) {
+    public RequestAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Request> objects, FragmentActivity fragmentActivity, boolean isFragmentAdded) {
         super(context, resourse, objects);
         this.requestArrayList = objects;
         this.context = context;
         this.fragmentActivity = fragmentActivity;
         this.adapter = this;
+        this.isFragmentAdded = isFragmentAdded;
     }
 
     @NonNull
@@ -74,19 +76,32 @@ public class RequestAdapter extends ArrayAdapter {
             @Override
             public void onSuccess(final DocumentSnapshot documentSnapshot) {
                 zVetname.setText(documentSnapshot.getString("fullname"));
-                zPetid.setText("PET ID : " + row.getPetkey());
                 zAcceptBtn.setVisibility(View.VISIBLE);
                 zDeclineBtn.setVisibility(View.VISIBLE);
                 storageReference.child(documentSnapshot.getString("image")).getDownloadUrl()
                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Glide.with(listRequestItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewVet);
+                                if(isFragmentAdded) {
+                                    Glide.with(listRequestItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewVet);
+                                }
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.d(TAG, "load image is failed : " + e.getMessage());
+                    }
+                });
+                firebaseFirestore.collection("pet").document(row.getPetkey())
+                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        zPetid.setText("PET NAME : " + documentSnapshot.getString("petname"));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "load pet is failed : " + e.getMessage());
                     }
                 });
             }

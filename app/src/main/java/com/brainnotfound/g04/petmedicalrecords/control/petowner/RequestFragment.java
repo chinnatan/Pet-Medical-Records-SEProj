@@ -59,7 +59,7 @@ public class RequestFragment extends Fragment {
         requestFragmentElements();
         createMenu();
 
-        zRequestAdapter = new RequestAdapter(getActivity(), R.layout.fragment_petowner_request_item, zRequestArrayList, getActivity());
+        zRequestAdapter = new RequestAdapter(getActivity(), R.layout.fragment_petowner_request_item, zRequestArrayList, getActivity(), this.isAdded());
         loadRequest();
     }
 

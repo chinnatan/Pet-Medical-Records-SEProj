@@ -48,16 +48,18 @@ public class VeterinaryAdapter extends ArrayAdapter {
     private User user;
     private FragmentActivity fragmentActivity;
     private VeterinaryAdapter adapter;
+    private boolean isFragmentAdded = false;
 
     private float ratingValue;
     private float ratingShow;
 
-    public VeterinaryAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Request> objects, FragmentActivity fragmentActivity) {
+    public VeterinaryAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Request> objects, FragmentActivity fragmentActivity, boolean isFragmentAdded) {
         super(context, resourse, objects);
         this.requestArrayList = objects;
         this.context = context;
         this.fragmentActivity = fragmentActivity;
         this.adapter = this;
+        this.isFragmentAdded = isFragmentAdded;
     }
 
     @NonNull
@@ -88,7 +90,9 @@ public class VeterinaryAdapter extends ArrayAdapter {
                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Glide.with(listRequestItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewVet);
+                                if(isFragmentAdded) {
+                                    Glide.with(listRequestItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewVet);
+                                }
                                 zVetname.setText(documentSnapshot.getString("fullname"));
                                 zVetphone.setText(documentSnapshot.getString("phonenumber"));
                                 firebaseFirestore.collection("pet").document(row.getPetkey())

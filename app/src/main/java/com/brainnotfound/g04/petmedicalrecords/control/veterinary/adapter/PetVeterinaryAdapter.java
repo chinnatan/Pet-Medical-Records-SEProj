@@ -38,12 +38,14 @@ public class PetVeterinaryAdapter extends ArrayAdapter {
     private FirebaseFirestore firebaseFirestore;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
+    private boolean isFragmentAdded = false;
 
-    public PetVeterinaryAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Pet> objects, @NonNull ArrayList<Request> requestObj) {
+    public PetVeterinaryAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Pet> objects, @NonNull ArrayList<Request> requestObj, boolean isFragmentAdded) {
         super(context, resourse, objects);
         this.petList = objects;
         this.requestList = requestObj;
         this.context = context;
+        this.isFragmentAdded = isFragmentAdded;
     }
 
     @NonNull
@@ -67,7 +69,9 @@ public class PetVeterinaryAdapter extends ArrayAdapter {
         storageReference.child(row.getPetimage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
+                if(isFragmentAdded) {
+                    Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
+                }
                 zImageViewPet.setVisibility(View.VISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {

@@ -38,10 +38,13 @@ public class PetAdapter extends ArrayAdapter {
     private TextView zPetname;
     private TextView zPettype;
 
-    public PetAdapter(@NonNull Context context, int resourse, @NonNull List<Pet> objects) {
+    private boolean isFragmentAdded = false;
+
+    public PetAdapter(@NonNull Context context, int resourse, @NonNull List<Pet> objects, boolean isFragmentAdded) {
         super(context, resourse, objects);
         this.petList = objects;
         this.context = context;
+        this.isFragmentAdded = isFragmentAdded;
     }
 
     @NonNull
@@ -60,7 +63,9 @@ public class PetAdapter extends ArrayAdapter {
         storageReference.child(row.getPetimage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
+                if(isFragmentAdded) {
+                    Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

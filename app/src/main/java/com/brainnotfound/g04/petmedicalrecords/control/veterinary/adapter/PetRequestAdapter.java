@@ -53,12 +53,14 @@ public class PetRequestAdapter extends ArrayAdapter {
     private User user;
     private FragmentActivity fragmentActivity;
     private ProgressDialog progressDialog;
+    private boolean isFragmentAdded = false;
 
-    public PetRequestAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Pet> objects, FragmentActivity fragmentActivity) {
+    public PetRequestAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Pet> objects, FragmentActivity fragmentActivity, boolean isFragmentAdded) {
         super(context, resourse, objects);
         this.petList = objects;
         this.context = context;
         this.fragmentActivity = fragmentActivity;
+        this.isFragmentAdded = isFragmentAdded;
     }
 
     @NonNull
@@ -81,7 +83,9 @@ public class PetRequestAdapter extends ArrayAdapter {
         storageReference.child(row.getPetimage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
+                if(isFragmentAdded) {
+                    Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
+                }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
