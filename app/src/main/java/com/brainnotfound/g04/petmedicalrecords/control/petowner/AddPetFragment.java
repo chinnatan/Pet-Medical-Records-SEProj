@@ -164,9 +164,7 @@ public class AddPetFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         getActivity()
                                 .getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.main_view, new HomeFragment())
-                                .commit();
+                                .popBackStack();
                     }
                 })
                 .show();
@@ -206,7 +204,7 @@ public class AddPetFragment extends Fragment {
             zMonthData.add(month);
         }
 
-        for (int day = 0; day <= 15; day++) {
+        for (int day = 0; day <= 30; day++) {
             zDayData.add(day);
         }
     }

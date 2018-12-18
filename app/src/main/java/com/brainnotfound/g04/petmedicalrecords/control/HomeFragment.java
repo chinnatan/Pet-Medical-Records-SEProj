@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
         if (user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
             zPetAdapter = new PetAdapter(getActivity(), R.layout.fragment_pet_item, zPetArrayList, this.isAdded());
         } else {
-            zPetVeterinaryAdapter = new PetVeterinaryAdapter(getActivity(), R.layout.fragment_pet_veterinary_item, zPetArrayList, zRequestArrayList, this.isAdded());
+            zPetVeterinaryAdapter = new PetVeterinaryAdapter(getActivity(), R.layout.fragment_pet_veterinary_item, zRequestArrayList, this.isAdded());
         }
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -118,7 +118,6 @@ public class HomeFragment extends Fragment {
                 }
             });
         } else if (user.getType().equals("สัตวแพทย์")) {
-
             firebaseFirestore.collection("request").whereEqualTo("veterinaryuid", user.getUid()).get()
                     .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                         @Override
@@ -130,28 +129,9 @@ public class HomeFragment extends Fragment {
                                     requestData = documentSnapshot.toObject(Request.class);
                                     zRequestArrayList.add(requestData);
 
-                                    firebaseFirestore.collection("pet").whereEqualTo("petkey", requestData.getPetkey())
-                                            .get()
-                                            .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                                @Override
-                                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                                    if(!queryDocumentSnapshots.isEmpty()) {
-                                                        for(DocumentSnapshot petDoc : queryDocumentSnapshots.getDocuments()) {
-                                                            Pet petData = petDoc.toObject(Pet.class);
-                                                            zPetArrayList.add(petData);
-                                                        }
-
-                                                        zPetVeterinaryAdapter.notifyDataSetChanged();
-                                                        zListPet.setAdapter(zPetVeterinaryAdapter);
-                                                        zLoading.setVisibility(View.GONE);
-                                                    }
-                                                }
-                                            }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.d(TAG, "Load pet failed : " + e.getMessage());
-                                        }
-                                    });
+                                    zPetVeterinaryAdapter.notifyDataSetChanged();
+                                    zListPet.setAdapter(zPetVeterinaryAdapter);
+                                    zLoading.setVisibility(View.GONE);
                                 }
 
                             } else {
@@ -201,9 +181,8 @@ public class HomeFragment extends Fragment {
         zListPet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Pet petData = (Pet) parent.getAdapter().getItem(position);
-
                 if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+                    Pet petData = (Pet) parent.getAdapter().getItem(position);
                     Pet pet = Pet.getPetInstance();
                     pet.setPetimage(petData.getPetimage());
                     pet.setPetname(petData.getPetname());
@@ -214,23 +193,35 @@ public class HomeFragment extends Fragment {
                     pet.setPetday(petData.getPetday());
                     pet.setPetmonth(petData.getPetmonth());
                     pet.setPetyear(petData.getPetyear());
-
                     getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
                 } else {
-                    if (!zRequestArrayList.get(position).getStatus().equals("รออนุมัติ")) {
-                        Pet pet = Pet.getPetInstance();
-                        pet.setPetimage(petData.getPetimage());
-                        pet.setPetname(petData.getPetname());
-                        pet.setPettype(petData.getPettype());
-                        pet.setPetsex(petData.getPetsex());
-                        pet.setPetownerUid(petData.getPetownerUid());
-                        pet.setPetkey(petData.getPetkey());
-                        pet.setPetday(petData.getPetday());
-                        pet.setPetmonth(petData.getPetmonth());
-                        pet.setPetyear(petData.getPetyear());
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
-                    } else {
+                    Request requestData = (Request) parent.getAdapter().getItem(position);
+                    if(requestData.getStatus().equals("รออนุมัติ")) {
                         Toast.makeText(getActivity(), "กรุณารอการอนุมัติจากเจ้าของสัตว์เลี้ยง", Toast.LENGTH_LONG).show();
+                    } else {
+                        firebaseFirestore.collection("pet").document(requestData.getPetkey())
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        Pet pet = Pet.getPetInstance();
+                                        pet.setPetimage(documentSnapshot.getString("petimage"));
+                                        pet.setPetname(documentSnapshot.getString("petname"));
+                                        pet.setPettype(documentSnapshot.getString("pettype"));
+                                        pet.setPetsex(documentSnapshot.getString("petsex"));
+                                        pet.setPetownerUid(documentSnapshot.getString("petownerUid"));
+                                        pet.setPetkey(documentSnapshot.getString("petkey"));
+                                        pet.setPetday(documentSnapshot.getString("petday"));
+                                        pet.setPetmonth(documentSnapshot.getString("petmonth"));
+                                        pet.setPetyear(documentSnapshot.getString("petyear"));
+                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d(TAG, "load pet is failed : " + e.getMessage());
+                            }
+                        });
                     }
                 }
             }

@@ -162,14 +162,13 @@
 
                         <TextView
                             android:id="@+id/frg_pet_type"
-                            android:layout_width="70dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/sex_shape"
                             android:text="แมว"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
-                            android:textSize="20dp"
-                            android:visibility="invisible" />
+                            android:textSize="16dp" />
 
                     </LinearLayout>
 

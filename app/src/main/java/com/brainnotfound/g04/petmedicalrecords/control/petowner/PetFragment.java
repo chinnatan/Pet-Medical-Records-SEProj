@@ -142,25 +142,28 @@ public class PetFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
-        zToolBar.setOverflowIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_more_event));
-        zToolBar.inflateMenu(R.menu.navigation_pet);
-        zToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.navigation_edit:
-                        Log.d(TAG, "menu item click : edit");
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new EditPetFragment()).addToBackStack(null).commit();
-                        return true;
-                    case R.id.navigation_delete:
-                        Log.d(TAG, "menu item click : delete");
-                        displayConfirmDeleteDialog();
-                        return true;
-                    default:
-                        return true;
+
+        if(user.getType().equals("เจ้าของสัตว์เลี้ยง")) {
+            zToolBar.setOverflowIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_more_event));
+            zToolBar.inflateMenu(R.menu.navigation_pet);
+            zToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.navigation_edit:
+                            Log.d(TAG, "menu item click : edit");
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new EditPetFragment()).addToBackStack(null).commit();
+                            return true;
+                        case R.id.navigation_delete:
+                            Log.d(TAG, "menu item click : delete");
+                            displayConfirmDeleteDialog();
+                            return true;
+                        default:
+                            return true;
+                    }
                 }
-            }
-        });
+            });
+        }
 
         if (!user.getType().equals("สัตวแพทย์")) {
             zHistoryAdd.setVisibility(View.INVISIBLE);
@@ -174,8 +177,38 @@ public class PetFragment extends Fragment {
             @Override
             public void onSuccess(Void aVoid) {
                 zLoadingDialog.dismiss();
-                Toast.makeText(getActivity(), "ลบข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new HomeFragment()).commit();
+                firebaseFirestore.collection("request").get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                if(!queryDocumentSnapshots.isEmpty()) {
+                                    for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments()) {
+                                        if(documentSnapshot.getString("petkey").equals(pet.getPetkey())) {
+                                            firebaseFirestore.collection("request").document(documentSnapshot.getString("requestkey"))
+                                                    .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getActivity(), "ลบข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
+                                                    getActivity().getSupportFragmentManager().popBackStack();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.d(TAG, "DELETE ERROR : " + e.getMessage());
+                                                    zLoadingDialog.dismiss();
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "DELETE ERROR : " + e.getMessage());
+                        zLoadingDialog.dismiss();
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

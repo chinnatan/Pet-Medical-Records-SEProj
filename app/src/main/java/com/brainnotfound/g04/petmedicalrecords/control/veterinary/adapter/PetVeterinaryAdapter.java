@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -40,10 +41,9 @@ public class PetVeterinaryAdapter extends ArrayAdapter {
     private StorageReference storageReference;
     private boolean isFragmentAdded = false;
 
-    public PetVeterinaryAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Pet> objects, @NonNull ArrayList<Request> requestObj, boolean isFragmentAdded) {
+    public PetVeterinaryAdapter(@NonNull Context context, int resourse, @NonNull ArrayList<Request> objects, boolean isFragmentAdded) {
         super(context, resourse, objects);
-        this.petList = objects;
-        this.requestList = requestObj;
+        this.requestList = objects;
         this.context = context;
         this.isFragmentAdded = isFragmentAdded;
     }
@@ -62,28 +62,39 @@ public class PetVeterinaryAdapter extends ArrayAdapter {
         final ImageView zImageViewPet = listPetItem.findViewById(R.id.frg_pet_vet_image);
         final TextView zPetname = listPetItem.findViewById(R.id.frg_pet_vet_petname);
         final TextView zPettype = listPetItem.findViewById(R.id.frg_pet_vet_pettype);
-        final TextView zStatus = listPetItem.findViewById(R.id.frg_pet_vet_status);
+        TextView zStatus = listPetItem.findViewById(R.id.frg_pet_vet_status);
 
-        final Pet row = petList.get(position);
-        final Request requestRow = requestList.get(position);
-        storageReference.child(row.getPetimage()).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+        final Request row = requestList.get(position);
+        firebaseFirestore.collection("pet").document(row.getPetkey())
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Uri uri) {
-                if(isFragmentAdded) {
-                    Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
-                }
-                zImageViewPet.setVisibility(View.VISIBLE);
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                zPetname.setText(documentSnapshot.getString("petname"));
+                zPettype.setText(documentSnapshot.getString("pettype"));
+                storageReference.child(documentSnapshot.getString("petimage")).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        if(isFragmentAdded) {
+                            Glide.with(listPetItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewPet);
+                        }
+                        zImageViewPet.setVisibility(View.VISIBLE);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Load image failed : " + e.getMessage());
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "Load image failed : " + e.getMessage());
+                Log.d(TAG, "Load pet failed : " + e.getMessage());
             }
         });
 
-        zPetname.setText(row.getPetname());
-        zPettype.setText(row.getPettype());
-        zStatus.setText(requestRow.getStatus());
+
+        zStatus.setText(row.getStatus());
         zPetname.setVisibility(View.VISIBLE);
         zPettype.setVisibility(View.VISIBLE);
         zStatus.setVisibility(View.VISIBLE);
