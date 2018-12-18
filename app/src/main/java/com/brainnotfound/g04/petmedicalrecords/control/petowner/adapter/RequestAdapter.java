@@ -73,15 +73,15 @@ public class RequestAdapter extends ArrayAdapter {
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(final DocumentSnapshot documentSnapshot) {
+                zVetname.setText(documentSnapshot.getString("fullname"));
+                zPetid.setText("PET ID : " + row.getPetkey());
+                zAcceptBtn.setVisibility(View.VISIBLE);
+                zDeclineBtn.setVisibility(View.VISIBLE);
                 storageReference.child(documentSnapshot.getString("image")).getDownloadUrl()
                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
                                 Glide.with(listRequestItem).load(uri).apply(RequestOptions.circleCropTransform()).into(zImageViewVet);
-                                zVetname.setText(documentSnapshot.getString("fullname"));
-                                zPetid.setText("PET ID : " + row.getPetkey());
-                                zAcceptBtn.setVisibility(View.VISIBLE);
-                                zDeclineBtn.setVisibility(View.VISIBLE);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
