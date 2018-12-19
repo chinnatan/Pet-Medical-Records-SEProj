@@ -188,8 +188,34 @@ public class PetFragment extends Fragment {
                                                     .delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(getActivity(), "ลบข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
-                                                    getActivity().getSupportFragmentManager().popBackStack();
+                                                    firebaseFirestore.collection("pet").document(pet.getPetkey())
+                                                            .collection("history")
+                                                            .document().delete()
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                @Override
+                                                                public void onSuccess(Void aVoid) {
+                                                                    storageReference.child(pet.getPetimage()).delete()
+                                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                                                @Override
+                                                                                public void onSuccess(Void aVoid) {
+                                                                                    Toast.makeText(getActivity(), "ลบข้อมูลเรียบร้อย", Toast.LENGTH_LONG).show();
+                                                                                    getActivity().getSupportFragmentManager().popBackStack();
+                                                                                }
+                                                                            }).addOnFailureListener(new OnFailureListener() {
+                                                                        @Override
+                                                                        public void onFailure(@NonNull Exception e) {
+                                                                            Log.d(TAG, "DELETE IMAGE ERROR : " + e.getMessage());
+                                                                            zLoadingDialog.dismiss();
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }).addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.d(TAG, "DELETE ERROR : " + e.getMessage());
+                                                            zLoadingDialog.dismiss();
+                                                        }
+                                                    });
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
@@ -307,7 +333,11 @@ public class PetFragment extends Fragment {
 
                 Fragment historyFragment = new HistoryFragment();
                 Bundle historyBundle = new Bundle();
-                FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
+                FragmentTransaction fragmentTransaction = getActivity()
+                        .getSupportFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                        .addToBackStack(null);
 
                 historyBundle.putString("petid", historyData.getPetid());
                 historyBundle.putString("historyid", historyData.getHistoryid());

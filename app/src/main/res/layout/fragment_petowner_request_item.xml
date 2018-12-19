@@ -48,7 +48,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
-                            android:textSize="16dp"
+                            android:textSize="14dp"
                             android:textStyle="bold" />
 
                     </LinearLayout>
@@ -91,7 +91,7 @@
 
                         <Button
                             android:id="@+id/petowner_request_item_accept"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:background="@drawable/accept_button"
                             android:gravity="center_vertical|center_horizontal"

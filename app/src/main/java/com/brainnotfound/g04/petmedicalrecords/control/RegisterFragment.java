@@ -188,6 +188,12 @@ public class RegisterFragment extends Fragment {
                             Toast.LENGTH_LONG)
                             .show();
                     progressDialog.dismiss();
+                } else if(phonenumber.length() != 10) {
+                    Toast.makeText(getActivity(),
+                            "กรุณากรอกเบอร์โทรศัพท์ให้ครบถ้วน",
+                            Toast.LENGTH_LONG)
+                            .show();
+                    progressDialog.dismiss();
                 } else {
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

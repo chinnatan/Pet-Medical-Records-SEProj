@@ -193,7 +193,12 @@ public class HomeFragment extends Fragment {
                     pet.setPetday(petData.getPetday());
                     pet.setPetmonth(petData.getPetmonth());
                     pet.setPetyear(petData.getPetyear());
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
+                    getActivity()
+                            .getSupportFragmentManager()
+                            .beginTransaction()
+                            .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                            .replace(R.id.main_view, new PetFragment())
+                            .addToBackStack(null).commit();
                 } else {
                     Request requestData = (Request) parent.getAdapter().getItem(position);
                     if(requestData.getStatus().equals("รออนุมัติ")) {
@@ -214,7 +219,12 @@ public class HomeFragment extends Fragment {
                                         pet.setPetday(documentSnapshot.getString("petday"));
                                         pet.setPetmonth(documentSnapshot.getString("petmonth"));
                                         pet.setPetyear(documentSnapshot.getString("petyear"));
-                                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.main_view, new PetFragment()).addToBackStack(null).commit();
+                                        getActivity()
+                                                .getSupportFragmentManager()
+                                                .beginTransaction()
+                                                .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
+                                                .replace(R.id.main_view, new PetFragment())
+                                                .addToBackStack(null).commit();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                             @Override

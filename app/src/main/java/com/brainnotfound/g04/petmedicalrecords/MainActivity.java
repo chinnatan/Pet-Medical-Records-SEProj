@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() >= 1) {
-            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager()
+                    .popBackStack();
         } else {
             finish();
         }
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private void init(Bundle bundle) {
         if (firebaseAuth.getCurrentUser() == null) {
             if (bundle == null) {
-                fragment = new LoginFragment();
+                fragment = new SplashScreenFragment();
                 getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.main_view, fragment)
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private void checkCurrentUser() {
         if (firebaseAuth.getCurrentUser() != null) {
-            fragment = new HomeFragment();
+            fragment = new SplashScreenFragment();
             firebaseFirestore.collection("account").document(firebaseAuth.getCurrentUser().getUid())
                     .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override

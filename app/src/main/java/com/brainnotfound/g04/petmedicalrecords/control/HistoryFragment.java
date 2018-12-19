@@ -179,27 +179,27 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-        if (user.getType().equals("สัตวแพทย์")) {
-            zToolbar.setOverflowIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_more_event));
-            zToolbar.inflateMenu(R.menu.navigation_history);
-            zToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_edit:
-                            Log.d(TAG, "menu item click : edit");
-                            Fragment editHistoryFragment = new EditHistoryFragment();
-                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
-                            editHistoryFragment.setArguments(historyBundle);
-                            fragmentTransaction.replace(R.id.main_view, editHistoryFragment);
-                            fragmentTransaction.commit();
-                            return true;
-                        default:
-                            return true;
-                    }
-                }
-            });
-        }
+//        if (user.getType().equals("สัตวแพทย์")) {
+//            zToolbar.setOverflowIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_more_event));
+//            zToolbar.inflateMenu(R.menu.navigation_history);
+//            zToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//                @Override
+//                public boolean onMenuItemClick(MenuItem item) {
+//                    switch (item.getItemId()) {
+//                        case R.id.navigation_edit:
+//                            Log.d(TAG, "menu item click : edit");
+//                            Fragment editHistoryFragment = new EditHistoryFragment();
+//                            FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction().addToBackStack(null);
+//                            editHistoryFragment.setArguments(historyBundle);
+//                            fragmentTransaction.replace(R.id.main_view, editHistoryFragment);
+//                            fragmentTransaction.commit();
+//                            return true;
+//                        default:
+//                            return true;
+//                    }
+//                }
+//            });
+//        }
 
     }
 }
